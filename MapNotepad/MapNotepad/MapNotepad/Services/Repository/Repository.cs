@@ -19,13 +19,13 @@ namespace MapNotepad.Services.Repository
                 var path = Path.Combine(Environment.GetFolderPath(Environment
                                          .SpecialFolder.LocalApplicationData), "contacts.bd");
                 var database = new SQLiteAsyncConnection(path);
-                
+                database.CreateTableAsync<UserModel>().Wait();
                 return database;
             });
         }
 
 
-        #region --- Common Methods ---
+        #region --- Public Methods ---
         public Task<int> DeleteAsync<T>(T entity) where T : IEntityBase, new()
         {
             return _database.Value.DeleteAsync(entity);

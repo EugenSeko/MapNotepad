@@ -1,5 +1,6 @@
 ﻿using MapNotepad.Model;
 using MapNotepad.View;
+using MapNotepad.ViewModel;
 using Prism.Ioc;
 using Prism.Unity;
 using System;
@@ -16,14 +17,16 @@ namespace MapNotepad
         #region --- Overrides ---
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            //navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage,MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<LoginAndRegisterPage, LoginAndRegisterPageViewModel>();
         }
         
         protected override void OnInitialized()
         {
             InitializeComponent();
-            NavigationService.NavigateAsync($"{nameof(MainPage)}");
+            NavigationService.NavigateAsync($"{nameof(LoginAndRegisterPage)}");
         }
 
         protected override void OnStart()
