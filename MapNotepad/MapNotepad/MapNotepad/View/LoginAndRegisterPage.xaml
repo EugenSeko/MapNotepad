@@ -6,8 +6,11 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="#FEFEFD">
             <Image Source="{local:ImageResource MapNotepad.Resources.Images.pic_enter_page.png}"
-                   BackgroundColor="#FEFEFD"></Image>
+                   BackgroundColor="#FEFEFD"
+                   Scale="2"
+                   Margin="0,140,0,0"></Image>
             <Label Text="MapNotepad"
+                   Margin="0,0,0,0"
                    BackgroundColor="#FEFEFD"
                    TextColor="#596EFB"
                    FontSize="27"
@@ -19,12 +22,16 @@
                     BackgroundColor="#596EFB"
                     TextColor="#FEFEFD"
                     FontSize="21"
+                    Margin="20,250,20,0"
                     FontFamily="Montserrat"
                     FontAttributes="Bold"></Button>
             <Button Text="Create account"
                     BackgroundColor="#FEFEFD"
                     BorderColor="#596EFB"
                     BorderWidth="1"
+                    Margin="20,10,20,0"
+                    FontSize="21"
+                    FontAttributes="Bold"
                     TextColor="#596EFB"></Button>
         </StackLayout>
     </ContentPage.Content>
