@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MapNotepad.Extensions;assembly=MapNotepad"
              x:Class="MapNotepad.View.LoginAndRegisterPage">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#FEFEFD">
-            <Image Source="pic_enter_page.png"
+            <Image Source="{local:ImageResource MapNotepad.Resources.Images.pic_enter_page.png}"
                    BackgroundColor="#FEFEFD"></Image>
             <Label Text="MapNotepad"
                    BackgroundColor="#FEFEFD"
