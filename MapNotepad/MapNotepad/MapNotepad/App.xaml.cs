@@ -27,7 +27,7 @@ namespace MapNotepad
         protected override void OnInitialized()
         {
             InitializeComponent();
-            NavigationService.NavigateAsync($"{nameof(LoginAndRegisterPage)}");
+            NavigationService.NavigateAsync($"{nameof(LoginPage)}");
         }
 
         protected override void OnStart()
