@@ -21,8 +21,9 @@ namespace MapNotepad
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage,MainPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginAndRegisterPage, LoginAndRegisterPageViewModel>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
         }
-        
+
         protected override void OnInitialized()
         {
             InitializeComponent();

@@ -9,8 +9,8 @@ using Xamarin.Forms.Xaml;
 
 namespace MapNotepad.View
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPage : ContentPage
+
+    public partial class LoginPage : BaseContentPage
     {
         public LoginPage()
         {
