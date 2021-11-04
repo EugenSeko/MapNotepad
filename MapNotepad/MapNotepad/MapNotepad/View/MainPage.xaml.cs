@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapNotepad.Controls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,7 +9,7 @@ using Xamarin.Forms;
 
 namespace MapNotepad.View
 {
-    public partial class MainPage : TabbedPage
+    public partial class MainPage : CustomTabbedPage
     {
         public MainPage()
         {

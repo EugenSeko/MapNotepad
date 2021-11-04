@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:MapNotepad.View;assembly=MapNotepad " 
-             x:Class="MapNotepad.View.MainPage">
-    <TabbedPage.Children>
+<controls:CustomTabbedPage  xmlns:controls="clr-namespace:MapNotepad.Controls" 
+                            xmlns="http://xamarin.com/schemas/2014/forms"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                            xmlns:local="clr-namespace:MapNotepad.View;assembly=MapNotepad " 
+                            x:Class="MapNotepad.View.MainPage">
+    
+    <controls:CustomTabbedPage.Children>
         <local:MapPage/>
         <local:PinsPage/>
-    </TabbedPage.Children>
+    </controls:CustomTabbedPage.Children>
     
-</TabbedPage>
+</controls:CustomTabbedPage>

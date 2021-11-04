@@ -9,7 +9,7 @@ using Xamarin.Forms.Xaml;
 
 namespace MapNotepad.Controls
 {
-    public partial class SearchBar : StackLayout
+    public partial class SearchBar : Grid
     {
         public SearchBar()
         {
