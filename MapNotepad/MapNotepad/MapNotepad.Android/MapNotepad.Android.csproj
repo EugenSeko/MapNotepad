@@ -102,12 +102,17 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\exit_icon.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MapNotepad\MapNotepad.csproj">
       <Project>{E99A3E2B-2DD7-4DA9-AAAC-F5F65E61ED7D}</Project>
       <Name>MapNotepad</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\settings_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\pic_enter_page.png" />

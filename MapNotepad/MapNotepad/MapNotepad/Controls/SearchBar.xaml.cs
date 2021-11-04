@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 
-namespace MapNotepad.View
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace MapNotepad.Controls
 {
-    public partial class MainPage : TabbedPage
+    public partial class SearchBar : StackLayout
     {
-        public MainPage()
+        public SearchBar()
         {
             InitializeComponent();
         }

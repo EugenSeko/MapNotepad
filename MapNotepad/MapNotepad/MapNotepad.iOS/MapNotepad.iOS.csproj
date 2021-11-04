@@ -71,7 +71,40 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\Images.imageset\Contents.json">
+    <ImageAsset Include="Assets.xcassets\exit_icon.png.imageset\exit_icon.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\exit_icon.png.imageset\exit_icon1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\exit_icon.png.imageset\exit_icon2.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\pic_enter_page.png.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\pic_enter_page.png.imageset\pic_enter_page.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\pic_enter_page.png.imageset\pic_enter_page1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\pic_enter_page.png.imageset\pic_enter_page2.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\settings_icon.png.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\settings_icon.png.imageset\settings_icon.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\settings_icon.png.imageset\settings_icon1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\settings_icon.png.imageset\settings_icon2.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\exit_icon.png.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
