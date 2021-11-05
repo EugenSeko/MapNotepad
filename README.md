@@ -1,2 +1,2 @@
 # NewXApp
-Training project for the second phase of the Headworks internship 
+Training project for the second phase of the Headworks internship .
