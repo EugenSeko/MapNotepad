@@ -15,6 +15,8 @@ namespace MapNotepad.View
         public MapPage()
         {
             InitializeComponent();
+            map.UiSettings.MyLocationButtonEnabled = true;
+            //map.IsShowingUser = true;
         }
     }
 }

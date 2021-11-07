@@ -1,37 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<d:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:MapNotepad.Extensions;assembly=MapNotepad"
-             xmlns:d="clr-namespace:MapNotepad.View;assembly=MapNotepad"
-             x:Class="MapNotepad.View.LoginAndRegisterPage">
+<d:BaseContentPage
+    x:Class="MapNotepad.View.LoginAndRegisterPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="clr-namespace:MapNotepad.View;assembly=MapNotepad"
+    xmlns:local="clr-namespace:MapNotepad.Extensions;assembly=MapNotepad">
     <ContentPage.Content>
         <StackLayout>
-            <Image Source="{local:ImageResource MapNotepad.Resources.Images.pic_enter_page.png}"
-                   Scale="2"
-                   Margin="0,140,0,0"></Image>
-            <Label Text="MapNotepad"
-                   Margin="0,0,0,0"
-                   TextColor="#596EFB"
-                   FontSize="27"
-                   FontFamily="Montserrat"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   ></Label>
-            <Button Text="Log in"
-                    BackgroundColor="#596EFB"
-                    TextColor="#FEFEFD"
-                    FontSize="21"
-                    Margin="20,250,20,0"
-                    FontFamily="Montserrat"
-                    FontAttributes="Bold"></Button>
-            <Button Text="Create account"
-                    BackgroundColor="#FEFEFD"
-                    BorderColor="#596EFB"
-                    BorderWidth="1"
-                    Margin="20,10,20,0"
-                    FontSize="21"
-                    FontAttributes="Bold"
-                    TextColor="#596EFB"></Button>
+            <Image
+                Margin="0,140,0,0"
+                Scale="2"
+                Source="{local:ImageResource MapNotepad.Resources.Images.pic_enter_page.png}" />
+            <Label
+                Margin="0,0,0,0"
+                FontAttributes="Bold"
+                FontFamily="Montserrat"
+                FontSize="27"
+                HorizontalOptions="Center"
+                Text="MapNotepad"
+                TextColor="#596EFB" />
+            <Button
+                Margin="20,250,20,0"
+                BackgroundColor="#596EFB"
+                FontAttributes="Bold"
+                FontFamily="Montserrat"
+                FontSize="21"
+                Text="Log in"
+                TextColor="#FEFEFD" />
+            <Button
+                Margin="20,10,20,0"
+                BackgroundColor="#FEFEFD"
+                BorderColor="#596EFB"
+                BorderWidth="1"
+                FontAttributes="Bold"
+                FontSize="21"
+                Text="Create account"
+                TextColor="#596EFB" />
         </StackLayout>
     </ContentPage.Content>
 </d:BaseContentPage>

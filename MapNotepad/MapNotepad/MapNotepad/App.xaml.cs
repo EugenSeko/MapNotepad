@@ -22,12 +22,23 @@ namespace MapNotepad
             containerRegistry.RegisterForNavigation<MainPage,MainPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginAndRegisterPage, LoginAndRegisterPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
+            containerRegistry.RegisterForNavigation<TestPage>();
+            containerRegistry.RegisterForNavigation<CameraPage>();
+            containerRegistry.RegisterForNavigation<BindingPinViewPage>();
+            containerRegistry.RegisterForNavigation<CustomPinsPage>();
+            containerRegistry.RegisterForNavigation<PinsPage>();
+
+
+
+
+
+
         }
 
         protected override void OnInitialized()
         {
             InitializeComponent();
-            NavigationService.NavigateAsync($"{nameof(MainPage)}");
+            NavigationService.NavigateAsync($"{nameof(PinsPage)}");
         }
 
         protected override void OnStart()
