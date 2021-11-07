@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.Xaml;
 
 namespace MapNotepad.View
@@ -16,7 +17,18 @@ namespace MapNotepad.View
         {
             InitializeComponent();
             map.UiSettings.MyLocationButtonEnabled = true;
-            //map.IsShowingUser = true;
+            map.MapLongClicked += AddPin;
+        }
+        void AddPin(object sender, MapLongClickedEventArgs e)
+        {
+            var pin = new Pin()
+            {
+                Type = PinType.Place,
+                Label = "myPin",
+                Position = e.Point,
+                
+            };
+            map.Pins.Add(pin);
         }
     }
 }

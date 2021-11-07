@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MapNotepad.Controls.Header"
+             ColumnDefinitions="0.2*,0.6*,0.2*">
+    <ImageButton Source="ic_left_blue.png" 
+                 Grid.Row="0" Grid.Column="0"/>
+    <Label HorizontalOptions="Center"
+        Grid.Row="0" Grid.Column="1" 
+        Text="{Binding HeaderText}" 
+        FontSize="Large"/>
+    
+    <ImageButton Source="ic_save.png" 
+                 Grid.Row="0" Grid.Column="2"/>
+
+</Grid>

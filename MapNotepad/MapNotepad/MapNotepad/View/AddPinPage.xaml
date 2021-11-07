@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+             x:Class="MapNotepad.View.AddPinPage">
+    <ContentPage.Content>
+        <Grid VerticalOptions="Fill">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid RowDefinitions="0.6*,0.6*,0.6*,0.6*,0.6*,0.6*">
+                <local:Header Grid.Row="0"/>
+                <Label Text="Label" Grid.Row="1"/>
+                <local:MyEntry Grid.Row="2"/>
+                <Label Text="Description" Grid.Row="3"/>
+                <local:MyEntry Grid.Row="4"/>
+                <Label Text="Coordinates" Grid.Row="5"/>
+                <StackLayout Grid.Row="6" Orientation="Horizontal">
+                    <local:MyEntry/>
+                    <local:MyEntry/>
+                </StackLayout>
+
+            </Grid>
+            
+            
+            <maps:Map x:Name="map"
+                      Grid.Row="1"
+                      VerticalOptions="FillAndExpand" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

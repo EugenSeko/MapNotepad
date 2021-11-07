@@ -22,6 +22,11 @@ namespace MapNotepad
             containerRegistry.RegisterForNavigation<MainPage,MainPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginAndRegisterPage, LoginAndRegisterPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
+            containerRegistry.RegisterForNavigation<PinsListPage, PinsListViewModel>();
+            containerRegistry.RegisterForNavigation<AddPinPage, AddPinViewModel>();
+
+
+
             containerRegistry.RegisterForNavigation<TestPage>();
             containerRegistry.RegisterForNavigation<CameraPage>();
             containerRegistry.RegisterForNavigation<BindingPinViewPage>();
@@ -33,12 +38,13 @@ namespace MapNotepad
 
 
 
+
         }
 
         protected override void OnInitialized()
         {
             InitializeComponent();
-            NavigationService.NavigateAsync($"{nameof(PinsPage)}");
+            NavigationService.NavigateAsync($"{nameof(MainPage)}");
         }
 
         protected override void OnStart()

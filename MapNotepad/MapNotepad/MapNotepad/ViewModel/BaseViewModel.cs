@@ -8,7 +8,7 @@ using System.Text;
 namespace MapNotepad.ViewModel
 {
 
-    class BaseViewModel : BindableBase
+     class BaseViewModel : BindableBase
     {
         private readonly INavigationService _navigationService;
         public BaseViewModel(INavigationService navigationService)
@@ -44,6 +44,10 @@ namespace MapNotepad.ViewModel
         public async void GoToLoginAndRegisterPage()
         {
             await _navigationService.NavigateAsync(nameof(LoginAndRegisterPage));
+        }
+        public async void GoToAddPinPage()
+        {
+            await _navigationService.NavigateAsync(nameof(AddPinPage));
         }
         #endregion
     }

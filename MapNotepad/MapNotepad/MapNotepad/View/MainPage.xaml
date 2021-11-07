@@ -8,7 +8,7 @@
 
     <controls:CustomTabbedPage.Children>
         <local:MapPage />
-        <local:PinsPage />
+        <local:PinsListPage />
     </controls:CustomTabbedPage.Children>
 
 </controls:CustomTabbedPage>
