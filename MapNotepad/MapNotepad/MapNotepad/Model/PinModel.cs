@@ -7,12 +7,12 @@ namespace MapNotepad.Model
     {
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int Id { get; set; }
-        public decimal Longitude { get; set; }
-        public decimal Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
         public string Label { get; set; }
         public string Description { get; set; }
         public bool IsFavorite { get; set; }
-        public int UserId { get; set; } // external key
+        public string UserId { get; set; } // external key
 
 
     }

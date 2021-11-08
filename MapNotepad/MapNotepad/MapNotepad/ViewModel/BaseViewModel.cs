@@ -16,7 +16,7 @@ namespace MapNotepad.ViewModel
             _navigationService = navigationService;
         }
         #region --- Navigation ---
-        public async void NavigateGoBack()
+        public async void GoBackAsync()
         {
             await _navigationService.GoBackAsync();
         }
@@ -48,6 +48,10 @@ namespace MapNotepad.ViewModel
         public async void GoToAddPinPage()
         {
             await _navigationService.NavigateAsync(nameof(AddPinPage));
+        }
+        public async void GoToPinsListPage()
+        {
+            await _navigationService.NavigateAsync(nameof(PinsListPage));
         }
         #endregion
     }
