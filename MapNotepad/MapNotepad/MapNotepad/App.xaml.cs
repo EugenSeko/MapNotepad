@@ -34,6 +34,8 @@ namespace MapNotepad
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
             containerRegistry.RegisterForNavigation<PinsListPage, PinsListViewModel>();
             containerRegistry.RegisterForNavigation<AddPinPage, AddPinViewModel>();
+            containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>();
+
             //test
             containerRegistry.RegisterForNavigation<TestPage>();
             containerRegistry.RegisterForNavigation<CameraPage>();

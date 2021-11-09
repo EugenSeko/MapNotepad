@@ -25,7 +25,7 @@ namespace MapNotepad.ViewModel
         }
 
         #region ---Command---
-        public ICommand OnButtonLeftCommand => new Command(GoToPinsListPage);
+        public ICommand OnButtonLeftCommand => new Command(GoToMainPageListPage);
         public ICommand OnButtonSaveCommand => new Command(SavePin);
         #endregion
 

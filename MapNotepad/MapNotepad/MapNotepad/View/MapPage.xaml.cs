@@ -16,19 +16,19 @@ namespace MapNotepad.View
         public MapPage()
         {
             InitializeComponent();
-            map.UiSettings.MyLocationButtonEnabled = true;
-            map.MapLongClicked += AddPin;
+            //map.UiSettings.MyLocationButtonEnabled = true;
+            //map.MapLongClicked += AddPin;
         }
-        void AddPin(object sender, MapLongClickedEventArgs e)
-        {
-            var pin = new Pin()
-            {
-                Type = PinType.Place,
-                Label = "myPin",
-                Position = e.Point,
+        //void AddPin(object sender, MapLongClickedEventArgs e)
+        //{
+        //    var pin = new Pin()
+        //    {
+        //        Type = PinType.Place,
+        //        Label = "myPin",
+        //        Position = e.Point,
                 
-            };
-            map.Pins.Add(pin);
-        }
+        //    };
+        //    map.Pins.Add(pin);
+        //}
     }
 }
