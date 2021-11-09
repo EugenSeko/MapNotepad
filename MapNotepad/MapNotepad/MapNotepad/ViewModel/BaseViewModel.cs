@@ -1,4 +1,4 @@
-﻿using MapNotepad.View;
+﻿using MapNotepad.Views;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;

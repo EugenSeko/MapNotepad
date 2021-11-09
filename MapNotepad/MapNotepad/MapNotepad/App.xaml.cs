@@ -3,13 +3,11 @@ using MapNotepad.Services.Authentification;
 using MapNotepad.Services.PinService;
 using MapNotepad.Services.Repository;
 using MapNotepad.Services.Settings;
-using MapNotepad.View;
+using MapNotepad.Views;
 using MapNotepad.ViewModel;
 using Prism.Ioc;
 using Prism.Unity;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace MapNotepad
 {
@@ -38,11 +36,6 @@ namespace MapNotepad
 
             //test
             containerRegistry.RegisterForNavigation<TestPage>();
-            containerRegistry.RegisterForNavigation<CameraPage>();
-            containerRegistry.RegisterForNavigation<BindingPinViewPage>();
-            containerRegistry.RegisterForNavigation<CustomPinsPage>();
-            containerRegistry.RegisterForNavigation<PinsPage>();
-
         }
 
         protected override void OnInitialized()

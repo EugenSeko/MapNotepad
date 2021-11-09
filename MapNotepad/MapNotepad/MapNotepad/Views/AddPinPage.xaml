@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MapNotepad.Views.AddPinPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
+    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+
+
+    <ContentPage.Content>
+        <Grid BackgroundColor="White" VerticalOptions="Fill">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid
+                Grid.Row="0"
+                ColumnDefinitions="0.5*,0.5*"
+                RowDefinitions="0.14*,0.14*,0.14*,0.14*,0.14*,0.14*,0.14*">
+                <local:Header
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2" />
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Text="Label"
+                    VerticalOptions="End" />
+                <local:MyEntry
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    BackgroundColor="#F1F3FD"
+                    Text="{Binding Label}" />
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Text="Description"
+                    VerticalOptions="End" />
+                <local:MyEntry
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    BackgroundColor="#F1F3FD"
+                    Text="{Binding Description}" />
+                <Label
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Text="Coordinates"
+                    VerticalOptions="End" />
+                <local:MyEntry
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    BackgroundColor="#F1F3FD"
+                    Text="{Binding Longitude, Mode=TwoWay}" />
+                <local:MyEntry
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    BackgroundColor="#F1F3FD"
+                    Text="{Binding Latitude, Mode=TwoWay}" />
+            </Grid>
+
+            <ContentView Grid.Row="1" Content="{Binding Map, Mode=TwoWay}" />
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+<!--<maps:Map x:Name="map"
+                      Grid.Row="1"
+                      VerticalOptions="FillAndExpand"
+                      >
+    <maps:Map.Behaviors>
+        <xct:EventToCommandBehavior
+                        EventName="MapLongClicked"
+                        Command="{Binding OnMapLongClickedCommand}"/>
+    </maps:Map.Behaviors>
+</maps:Map>-->
