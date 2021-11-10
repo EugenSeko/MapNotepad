@@ -23,6 +23,7 @@
         Source="settings_icon.png" />
 
     <local:MyEntry
+        Text="{Binding SearchEntry, Mode=TwoWay}"
         Grid.Row="1"
         Grid.Column="1"
         BackgroundColor="#F1F3FD"

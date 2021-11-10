@@ -13,6 +13,10 @@ namespace MapNotepad.ViewModel
 {
     class PinsListViewModel : BaseViewModel
     {
+        // TODO: Пользователь нажимает на вкладу Список пинов и видит список пинов, название,
+        // описание и локацию.По тапу на пин пользователь переходит на карту с фокусировкой на выбранном пине.
+        
+
         private readonly IPinService _pinservice;
         public PinsListViewModel(INavigationService navigationService, IPinService pinService):base(navigationService)
         {

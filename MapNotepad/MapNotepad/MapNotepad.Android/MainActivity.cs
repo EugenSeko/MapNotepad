@@ -24,7 +24,7 @@ namespace MapNotepad.Droid
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
             LoadApplication(new App());
 
-            // TROUBLE: Crash on first launch  after confirmation of permissions
+            // TROUBLE: Crash on first launch  after confirmation of permissions: Java.Lang.SecurityException: 'my location requires permission ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION'
             if (ContextCompat.CheckSelfPermission(this, Android.Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
             {
                 ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.AccessCoarseLocation, Manifest.Permission.AccessFineLocation }, 0);

@@ -17,6 +17,7 @@
             <controls:CustomMap
                 Grid.Row="1"
                 PinClickedCommand="{Binding PinClickCommand}"
+                PinClickArg="{Binding Pin}"
                 PinSource="{Binding PinList}">
                 <!--<controls:CustomMap.Behaviors>
                     <xct:EventToCommandBehavior

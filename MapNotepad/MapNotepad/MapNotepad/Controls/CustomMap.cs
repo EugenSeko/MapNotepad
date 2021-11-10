@@ -21,6 +21,7 @@ namespace MapNotepad.Controls
 
         private void CustomMap_PinClicked(object sender, PinClickedEventArgs e)
         {
+            PinClickArg = e;
             PinClickedCommand?.Execute(PinClickedCommandParameter);
         }
 
@@ -34,7 +35,7 @@ namespace MapNotepad.Controls
         }
 
         public static readonly BindableProperty PinClickedCommandParameterProperty =
-         BindableProperty.Create(nameof(PinClickedCommandParameter), typeof(object), typeof(CustomMap), null);
+         BindableProperty.Create(nameof(PinClickedCommandParameter), typeof(object), typeof(CustomMap), null, BindingMode.TwoWay);
 
         public ICommand PinClickedCommandParameter
         {
@@ -51,6 +52,15 @@ namespace MapNotepad.Controls
             get { return (List<PinModel>)GetValue(PinSourceProperty); }
             set { SetValue(PinSourceProperty, value);  }
         }
+
+        public PinClickedEventArgs PinClickArg //my
+        {
+            get { return (PinClickedEventArgs)GetValue(PinClickArgProperty); }
+            set { SetValue(PinClickArgProperty, value); }
+        }
+
+        public static readonly BindableProperty PinClickArgProperty =
+            BindableProperty.Create(nameof(PinClickArg), typeof(PinClickedEventArgs), typeof(CustomMap), null, BindingMode.TwoWay);
 
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

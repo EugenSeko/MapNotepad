@@ -8,6 +8,7 @@ using MapNotepad.ViewModel;
 using Prism.Ioc;
 using Prism.Unity;
 using Xamarin.Forms;
+using MapNotepad.Services.SearchService;
 
 namespace MapNotepad
 {
@@ -24,6 +25,8 @@ namespace MapNotepad
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IAuthentificationService>(Container.Resolve<AuthentificationService>());
             containerRegistry.RegisterInstance<IPinService>(Container.Resolve<PinService>());
+            containerRegistry.RegisterInstance<ISearchServise>(Container.Resolve<SearchService>());
+
 
             //navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
