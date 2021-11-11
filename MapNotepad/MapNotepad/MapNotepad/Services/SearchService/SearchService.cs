@@ -16,46 +16,48 @@ namespace MapNotepad.Services.SearchService
         {
             _pinservice = pinService;
         }
-
-
-
-
         public List<PinModel> Search(string search_query, IEnumerable<PinModel> list)
         {
-            //double doubleValue;
             List<PinModel> outValue = new List<PinModel>();
-            try
-            {
+            
                 var doubleResult = double.TryParse(search_query, out double doubleValue);
-              //  doubleValue = Convert.ToDouble(search_query);
-                System.Console.WriteLine(
-                    "The string as a double is {0}.", doubleValue);
-                if (doubleResult)
-                {
-                    var v =  DoubleSearch(doubleValue,list);
-                    foreach(PinModel pm in v)
-                    {
-                        outValue.Add(pm);
-                    }
-                }
-              
-            }
-            catch (OverflowException)
-            {
-                Console.WriteLine(
-                    "The conversion from string to decimal overflowed.");
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine(
-                    "The string is not formatted as a decimal.");
-            }
-            catch (ArgumentNullException)
-            {
-                Console.WriteLine(
-                    "The string is null.");
-            }
 
+           if (doubleResult)
+           { 
+              var searchResult =  DoubleSearch(doubleValue,list);
+               foreach(PinModel pinModel in searchResult)
+               {
+                   outValue.Add(pinModel);
+               }
+           }
+           else
+           {
+               var searchResult = list.Where(x => x.Label == search_query);
+                foreach (PinModel pinModel in searchResult)
+                {
+                   outValue.Add(pinModel);
+                }
+              if (outValue.Count==0)
+              {
+                    foreach(var pinModel in list)
+                    {
+                      var keywords = pinModel.Description?.Split(new Char[] { ' ', ',', '.', ':', ';', '!', '?', '\t' });
+                        if (keywords != null)
+                        {
+                            foreach (string keyword in keywords)
+                            {
+                                if (keyword == search_query)
+                                {
+                                    outValue.Add(pinModel);
+                                    break;
+                                }
+
+                            }
+                        }
+                      
+                    }
+              }
+           }
             return outValue;
         }
         #region --- Private Helpers---

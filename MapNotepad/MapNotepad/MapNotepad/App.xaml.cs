@@ -9,6 +9,7 @@ using Prism.Ioc;
 using Prism.Unity;
 using Xamarin.Forms;
 using MapNotepad.Services.SearchService;
+using System.Collections.Generic;
 
 namespace MapNotepad
 {

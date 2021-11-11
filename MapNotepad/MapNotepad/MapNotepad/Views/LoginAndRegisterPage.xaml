@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="clr-namespace:MapNotepad.Views;assembly=MapNotepad"
     xmlns:local="clr-namespace:MapNotepad.Extensions;assembly=MapNotepad">
-    <ContentPage.Content>
+    <d:BaseContentPage.Content>
         <StackLayout>
             <Image
                 Margin="0,140,0,0"
@@ -37,5 +37,5 @@
                 Text="Create account"
                 TextColor="#596EFB" />
         </StackLayout>
-    </ContentPage.Content>
+    </d:BaseContentPage.Content>
 </d:BaseContentPage>

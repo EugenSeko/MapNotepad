@@ -77,7 +77,7 @@ namespace MapNotepad.ViewModel
             set => SetProperty(ref _pinList, value);
         }
 
-        public bool ShowCurrentPinList => SearchEntry != null && SearchEntry !="";
+        public bool ShowCurrentPinList => SearchEntry != null && SearchEntry !="" && ObserPinList !=null;
 
         private string _searchEntry;
         public string SearchEntry
@@ -86,7 +86,7 @@ namespace MapNotepad.ViewModel
             set 
             {
                 SetProperty(ref _searchEntry, value);
-                RaisePropertyChanged(nameof(ShowCurrentPinList));    
+                RaisePropertyChanged(nameof(ShowCurrentPinList));
             }
         }
         #endregion
@@ -97,26 +97,34 @@ namespace MapNotepad.ViewModel
             base.OnPropertyChanged(args);
             if(args.PropertyName == nameof(SearchEntry))
             {
-                // TODO: передать значение поиска в поисковой сервис.. Поиск осуществляется через поля – название, координаты, ключевые слова в описании)
+                // TODO: передать значение поиска в поисковой сервис.. Поиск осуществляется через поля –
+                // название, координаты, ключевые слова в описании)
                 // Пользователь должен получить уведомление если по его запросу ничего не найдено.
-               PinList = _searchService.Search(SearchEntry,_list);
+               CurrentPin = null;
+
+               PinList = _searchService.Search(SearchEntry,_constPinList);
+
+               var oc = new ObservableCollection<PinModel>();
+
+                foreach (PinModel pm in PinList)
+                {
+                    oc.Add(pm);
+                }
+
+                ObserPinList = oc;
+
+                if (!ShowCurrentPinList) PinList = _constPinList;
             }
         }
 
         #endregion
 
         #region ---Private Helpers---
-        private List<PinModel> _list;
+        private List<PinModel> _constPinList;
         private async void InitAsync()
         {
-            var oc = new ObservableCollection<PinModel>();
             PinList = await _pinService.GetPins();
-            foreach(var pm in PinList)
-            {
-                oc.Add(pm);
-            }
-            ObserPinList = oc;
-            _list = PinList;
+            _constPinList = PinList;
         }
 
         #endregion
