@@ -22,18 +22,23 @@ namespace MapNotepad.Services.SearchService
 
         public List<PinModel> Search(string search_query, IEnumerable<PinModel> list)
         {
-            double doubleValue;
+            //double doubleValue;
             List<PinModel> outValue = new List<PinModel>();
             try
             {
-                doubleValue = Convert.ToDouble(search_query);
+                var doubleResult = double.TryParse(search_query, out double doubleValue);
+              //  doubleValue = Convert.ToDouble(search_query);
                 System.Console.WriteLine(
                     "The string as a double is {0}.", doubleValue);
-              var v =  DoubleSearch(doubleValue,list);
-                foreach(PinModel pm in v)
+                if (doubleResult)
                 {
-                    outValue.Add(pm);
+                    var v =  DoubleSearch(doubleValue,list);
+                    foreach(PinModel pm in v)
+                    {
+                        outValue.Add(pm);
+                    }
                 }
+              
             }
             catch (OverflowException)
             {

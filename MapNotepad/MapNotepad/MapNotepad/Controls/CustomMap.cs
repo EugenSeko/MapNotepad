@@ -1,6 +1,7 @@
 ﻿using MapNotepad.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
@@ -17,12 +18,27 @@ namespace MapNotepad.Controls
             MyLocationEnabled = true;
             UiSettings.ZoomControlsEnabled = false;
             PinClicked += CustomMap_PinClicked;
+            MapClicked += CustomMapClicked;
+        }
+
+        private void CustomMapClicked(object sender, MapClickedEventArgs e)
+        {
+            MapClickedCommand?.Execute(null);
         }
 
         private void CustomMap_PinClicked(object sender, PinClickedEventArgs e)
         {
-            PinClickArg = e;
-            PinClickedCommand?.Execute(PinClickedCommandParameter);
+            var model = PinSource?.FirstOrDefault(item => item.Label == e.Pin.Label);
+            if(model != null)   
+                PinClickedCommand?.Execute(model);
+        }
+
+        public static readonly BindableProperty MapClickedCommandProperty =
+          BindableProperty.Create(nameof(MapClickedCommand), typeof(ICommand), typeof(CustomMap), null, BindingMode.TwoWay);
+        public ICommand MapClickedCommand
+        {
+            get { return (ICommand)GetValue(MapClickedCommandProperty); }
+            set { SetValue(MapClickedCommandProperty, value); }
         }
 
         public static readonly BindableProperty PinClickedCommandProperty =
@@ -35,11 +51,11 @@ namespace MapNotepad.Controls
         }
 
         public static readonly BindableProperty PinClickedCommandParameterProperty =
-         BindableProperty.Create(nameof(PinClickedCommandParameter), typeof(object), typeof(CustomMap), null, BindingMode.TwoWay);
+         BindableProperty.Create(nameof(PinClickedCommandParameter), typeof(PinModel), typeof(CustomMap), null, BindingMode.TwoWay);
 
-        public ICommand PinClickedCommandParameter
+        public PinModel PinClickedCommandParameter
         {
-            get { return (ICommand)GetValue(PinClickedCommandParameterProperty); }
+            get { return (PinModel)GetValue(PinClickedCommandParameterProperty); }
             set { SetValue(PinClickedCommandParameterProperty, value); }
         }
 
@@ -78,7 +94,7 @@ namespace MapNotepad.Controls
                         var pin = new Pin()
                         {
                             Label = item.Label,
-                            Position = new Position(item.Latitude, item.Longitude)
+                            Position = new Position(item.Latitude, item.Longitude),
                         };
 
                         this.Pins.Add(pin);

@@ -15,44 +15,61 @@ namespace MapNotepad.ViewModel
 {
     class MapPageViewModel:BaseViewModel
     {
-        private readonly IPinService _pinservice;
-        private readonly ISearchServise _searchservise;
+        private readonly IPinService _pinService;
+        private readonly ISearchServise _searchService;
         public MapPageViewModel(INavigationService navigationService, 
                                 PinService pinService, 
                                 ISearchServise searchServise):base(navigationService)
         {
-            _pinservice = pinService;
-            _searchservise = searchServise;
+            _pinService = pinService;
+            _searchService = searchServise;
 
-            PinClickCommand = new Command(OnPinClick);
+            PinClickCommand = new Command<PinModel>(OnPinClick);
+            ClearClickCommand = new Command(OnClearClick);
+
             InitAsync();
         }
 
-        public void OnPinClick(object obj)
+        private void OnClearClick(object obj)
         {
-            var b = Pin;
-            if (b != null)
+            CurrentPin = null;
+        }
+
+        public void OnPinClick(PinModel pinModel)
+        {
+            if (pinModel != null)
             {
-                Console.WriteLine(b.Pin.Label);
-                Console.WriteLine(b.Pin.Position.Latitude);
-                Console.WriteLine(b.Pin.Position.Longitude);
-            } // TODO: сделать плашку с инфой о пине
+                CurrentPin = pinModel;
+            } 
             
         }
 
 
         #region ---Command---
-       // public ICommand OnButtonLeftCommand => new Command(GoToMainPageListPage);
         public ICommand PinClickCommand { get; set; }
+        public ICommand ClearClickCommand { get; set; }
         #endregion
 
         #region ---Public Properties---
-        //private ObservableCollection<PinModel> _pinList;
-        //public ObservableCollection<PinModel> PinList
-        //{
-        //    get => _pinList;
-        //    set => SetProperty(ref _pinList, value);
-        //}
+        private ObservableCollection<PinModel> _obserPinList;
+        public ObservableCollection<PinModel> ObserPinList
+        {
+            get => _obserPinList;
+            set => SetProperty(ref _obserPinList, value);
+        }
+        public bool ShowCurrentPinDescription => CurrentPin != null;
+
+        private PinModel _currentPin;
+        public PinModel CurrentPin
+        {
+            get => _currentPin;
+            set 
+            { 
+                SetProperty(ref _currentPin, value);
+                RaisePropertyChanged(nameof(ShowCurrentPinDescription));
+            }
+        }
+
         private List<PinModel> _pinList;
         public List<PinModel> PinList
         {
@@ -60,30 +77,18 @@ namespace MapNotepad.ViewModel
             set => SetProperty(ref _pinList, value);
         }
 
-        private PinClickedEventArgs _pin;
-        public PinClickedEventArgs Pin
-        {
-            get => _pin;
-            set => SetProperty(ref _pin, value);
-        }
-        private string _searchentry;
+        public bool ShowCurrentPinList => SearchEntry != null && SearchEntry !="";
+
+        private string _searchEntry;
         public string SearchEntry
         {
-            get => _searchentry;
-            set => SetProperty(ref _searchentry, value);
+            get => _searchEntry;
+            set 
+            {
+                SetProperty(ref _searchEntry, value);
+                RaisePropertyChanged(nameof(ShowCurrentPinList));    
+            }
         }
-        //private double _longitude;
-        //public double Longitude
-        //{
-        //    get => _longitude;
-        //    set => SetProperty(ref _longitude, value);
-        //}
-        //private double _latitude;
-        //public double Latitude
-        //{
-        //    get => _latitude;
-        //    set => SetProperty(ref _latitude, value);
-        //}
         #endregion
 
         #region ---Overrides ---
@@ -94,7 +99,7 @@ namespace MapNotepad.ViewModel
             {
                 // TODO: передать значение поиска в поисковой сервис.. Поиск осуществляется через поля – название, координаты, ключевые слова в описании)
                 // Пользователь должен получить уведомление если по его запросу ничего не найдено.
-               PinList = _searchservise.Search(SearchEntry,_list);
+               PinList = _searchService.Search(SearchEntry,_list);
             }
         }
 
@@ -104,15 +109,13 @@ namespace MapNotepad.ViewModel
         private List<PinModel> _list;
         private async void InitAsync()
         {
-            //var oc = new ObservableCollection<PinModel>();
-            //var pl = await _pinservice.GetPins();
-            //foreach(PinModel pm in pl)
-            //{
-            //    oc.Add(pm);
-            //}
-            //PinList = oc;
-
-            PinList = await _pinservice.GetPins();
+            var oc = new ObservableCollection<PinModel>();
+            PinList = await _pinService.GetPins();
+            foreach(var pm in PinList)
+            {
+                oc.Add(pm);
+            }
+            ObserPinList = oc;
             _list = PinList;
         }
 

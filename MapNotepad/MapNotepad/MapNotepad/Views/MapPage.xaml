@@ -8,34 +8,55 @@
     xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     Title="Maps">
     <ContentPage.Content>
+
         <Grid
             HorizontalOptions="Fill"
             RowDefinitions="0.07*,0.93*"
             VerticalOptions="Fill">
             <local:SearchBar Grid.Row="0" />
 
-            <controls:CustomMap
-                Grid.Row="1"
-                PinClickedCommand="{Binding PinClickCommand}"
-                PinClickArg="{Binding Pin}"
-                PinSource="{Binding PinList}">
-                <!--<controls:CustomMap.Behaviors>
-                    <xct:EventToCommandBehavior
-                        EventName="PinClickedCommand"
-                        Command="{Binding PinClickCommand}"/>
-                </controls:CustomMap.Behaviors>-->
+            <Grid Grid.Row="1">
+                <controls:CustomMap
+                    Grid.Row="0"
+                    Grid.RowSpan="3"
+                    MapClickedCommand="{Binding ClearClickCommand}"
+                    PinClickedCommand="{Binding PinClickCommand}"
+                    PinSource="{Binding PinList}" />
+                <ListView
+                    Grid.Row="0"
+                    BackgroundColor="White"
+                    IsVisible="{Binding ShowCurrentPinList}"
+                    ItemsSource="{Binding ObserPinList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout>
+                                        <Label Text="{Binding Label}" />
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
-            </controls:CustomMap>
+                <StackLayout
+                    Grid.Row="2"
+                    BackgroundColor="White"
+                    IsVisible="{Binding ShowCurrentPinDescription}">
+                    <Label Text="{Binding CurrentPin.Label}" />
+                    <BoxView
+                        Margin="16,8"
+                        BackgroundColor="Black"
+                        HeightRequest="1" />
+                    <StackLayout Orientation="Horizontal" Spacing="6">
+                        <Label Text="{Binding CurrentPin.Latitude}" />
+                        <Label Text="{Binding CurrentPin.Longitude}" />
 
-            <!--<maps:Map
-                x:Name="map"
-                Grid.Row="1"
-                InitialCameraUpdate="35.71, 139.81, 8, 30, 0"
-                MyLocationEnabled="True"
-                VerticalOptions="FillAndExpand" />-->
-            <!--<ContentView Grid.Row="1"
-                         Content="{Binding Map, Mode=TwoWay}"
-                          />-->
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+
         </Grid>
     </ContentPage.Content>
 </ContentPage>
