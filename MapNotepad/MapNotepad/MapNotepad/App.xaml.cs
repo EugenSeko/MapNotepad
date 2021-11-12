@@ -10,6 +10,7 @@ using Prism.Unity;
 using Xamarin.Forms;
 using MapNotepad.Services.SearchService;
 using System.Collections.Generic;
+using MapNotepad.Resources;
 
 namespace MapNotepad
 {
@@ -28,7 +29,6 @@ namespace MapNotepad
             containerRegistry.RegisterInstance<IPinService>(Container.Resolve<PinService>());
             containerRegistry.RegisterInstance<ISearchServise>(Container.Resolve<SearchService>());
 
-
             //navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage,MainPageViewModel>();
@@ -45,7 +45,10 @@ namespace MapNotepad
         protected override void OnInitialized()
         {
             InitializeComponent();
-            NavigationService.NavigateAsync($"{nameof(MainPage)}");
+
+            PrismApplication.Current.Resources.MergedDictionaries.Add(new BaseStyles());
+
+            NavigationService.NavigateAsync($"{nameof(LoginAndRegisterPage)}");
         }
 
         protected override void OnStart()

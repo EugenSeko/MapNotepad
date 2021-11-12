@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    x:Class="MapNotepad.Resources.BaseStyles"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <!--  System  -->
+    <Color x:Key="White">#FEFEFD</Color>
+    <Color x:Key="LightGray">#D7DDE8</Color>
+    <Color x:Key="Gray">#858E9E</Color>
+    <Color x:Key="DarkGray">#3D4E61</Color>
+    <Color x:Key="Black">#1E242B</Color>
+
+    <!--  Indications  -->
+    <Color x:Key="Error">#F24545</Color>
+    <Color x:Key="Confirm">#F6EA62</Color>
+    <Color x:Key="Success">#32D27F</Color>
+
+    <!--  Light  -->
+    <Color x:Key="Primary">#596EFB</Color>
+    <Color x:Key="Disabled">#C7CDF5</Color>
+    <Color x:Key="HoveredFocused">#273BC6</Color>
+    <Color x:Key="Pressed">#192680</Color>
+    <Color x:Key="Variant">#F1F3FD</Color>
+
+    <!--  Base Style  -->
+    <Style x:Key="BaseButton" TargetType="Button">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontFamily" Value="Montserrat-Medium" />
+        <Setter Property="TextTransform" Value="None" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="BorderWidth" Value="1" />
+    </Style>
+
+    <Style x:Key="GoogleButton" TargetType="ImageButton">
+        <Setter Property="Source" Value="ic_google.png" />
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="BorderColor" Value="{DynamicResource LightGray}" />
+        <Setter Property="BorderWidth" Value="1" />
+    </Style>
+    <Style
+        x:Key="BlueButton"
+        BasedOn="{StaticResource Key=BaseButton}"
+        TargetType="Button">
+        <Setter Property="BorderColor" Value="{DynamicResource Primary}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+        <Setter Property="TextColor" Value="{DynamicResource White}" />
+    </Style>
+    <Style
+        x:Key="WhiteButton"
+        BasedOn="{StaticResource Key=BaseButton}"
+        TargetType="Button">
+        <Setter Property="BorderColor" Value="{DynamicResource Primary}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
+        <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+    </Style>
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="{DynamicResource DarkGray}" />
+        <Setter Property="FontFamily" Value="Montserrat-Medium" />
+    </Style>
+    <Style x:Key="Logo" TargetType="Image">
+        <Setter Property="Source" Value="pic_enter_page.png" />
+        <Setter Property="HeightRequest" Value="185" />
+        <Setter Property="WidthRequest" Value="190" />
+    </Style>
+    <Style x:Key="TextBrend" TargetType="Label">
+        <Setter Property="FontFamily" Value="Montserrat-Bold" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+
+</ResourceDictionary>

@@ -4,38 +4,21 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="clr-namespace:MapNotepad.Views;assembly=MapNotepad"
-    xmlns:local="clr-namespace:MapNotepad.Extensions;assembly=MapNotepad">
     <d:BaseContentPage.Content>
         <StackLayout>
-            <Image
-                Margin="0,140,0,0"
-                Scale="2"
-                Source="{local:ImageResource MapNotepad.Resources.Images.pic_enter_page.png}" />
-            <Label
-                Margin="0,0,0,0"
-                FontAttributes="Bold"
-                FontFamily="Montserrat"
-                FontSize="27"
-                HorizontalOptions="Center"
-                Text="MapNotepad"
-                TextColor="#596EFB" />
-            <Button
-                Margin="20,250,20,0"
-                BackgroundColor="#596EFB"
-                FontAttributes="Bold"
-                FontFamily="Montserrat"
-                FontSize="21"
-                Text="Log in"
-                TextColor="#FEFEFD" />
-            <Button
-                Margin="20,10,20,0"
-                BackgroundColor="#FEFEFD"
-                BorderColor="#596EFB"
-                BorderWidth="1"
-                FontAttributes="Bold"
-                FontSize="21"
-                Text="Create account"
-                TextColor="#596EFB" />
+            <StackLayout Padding="16,0,16,40" VerticalOptions="EndAndExpand">
+                <Image Style="{DynamicResource Logo}" />
+                <Label Style="{DynamicResource TextBrend}" />
+            </StackLayout>
+            <StackLayout Padding="18,0,18,18" VerticalOptions="EndAndExpand">
+                <Button Style="{DynamicResource BlueButton}" Text="Log in" />
+                <Button
+                    Margin="0,14,0,0"
+                    Style="{DynamicResource WhiteButton}"
+                    Text="Create account" />
+            </StackLayout>
         </StackLayout>
     </d:BaseContentPage.Content>
 </d:BaseContentPage>
+
+              
