@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout
+    x:Class="MapNotepad.Controls.CustomOrLine"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="customOrLine">
+    <StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <BoxView
+                BackgroundColor="{Binding LineColor, Source={x:Reference customOrLine}}"
+                HeightRequest="1"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Center" />
+            <Label
+                FontFamily="Montserrat-Medium"
+                Text="{Binding Text, Source={x:Reference customOrLine}}"
+                TextColor="{Binding TextColor, Source={x:Reference customOrLine}}"
+                VerticalOptions="Center" />
+            <BoxView
+                BackgroundColor="{Binding LineColor, Source={x:Reference customOrLine}}"
+                HeightRequest="1"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Center" />
+        </StackLayout>
+    </StackLayout>
+</StackLayout>

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<StackLayout
+    x:Class="MapNotepad.Controls.CustomToolbar"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="customToolbar"
+    BackgroundColor="{Binding BackColor, Source={x:Reference customToolbar}}"
+    Spacing="0">
+    <StackLayout Padding="5,0,5,0" Orientation="Horizontal">
+        <ImageButton
+            BackgroundColor="Transparent"
+            Command="{Binding LeftButtonCommand, Source={x:Reference customToolbar}}"
+            HeightRequest="30"
+            HorizontalOptions="StartAndExpand"
+            Source="{Binding LeftImageSource, Source={x:Reference customToolbar}}"
+            WidthRequest="30" />
+        <Label
+            Margin="0,15,0,15"
+            FontFamily="{Binding FontFamily, Source={x:Reference customToolbar}}"
+            FontSize="20"
+            HorizontalOptions="CenterAndExpand"
+            Text="{Binding Title, Source={x:Reference customToolbar}}"
+            TextColor="{Binding TitleColor, Source={x:Reference customToolbar}}" />
+        <ImageButton
+            BackgroundColor="Transparent"
+            Command="{Binding RightButtonCommand, Source={x:Reference customToolbar}}"
+            HeightRequest="30"
+            HorizontalOptions="EndAndExpand"
+            Source="{Binding RightImageSource, Source={x:Reference customToolbar}}"
+            WidthRequest="30">
+
+            <ImageButton.Triggers>
+                <DataTrigger
+                    Binding="{Binding IsEnabledRightButton, Source={x:Reference customToolbar}}"
+                    TargetType="ImageButton"
+                    Value="True">
+                    <Setter Property="IsEnabled" Value="True" />
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding IsEnabledRightButton, Source={x:Reference customToolbar}}"
+                    TargetType="ImageButton"
+                    Value="False">
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+            </ImageButton.Triggers>
+        </ImageButton>
+    </StackLayout>
+    <BoxView BackgroundColor="{Binding LineColor, Source={x:Reference customToolbar}}" HeightRequest="1" />
+</StackLayout>

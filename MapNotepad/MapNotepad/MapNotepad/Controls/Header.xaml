@@ -10,7 +10,7 @@
         BackgroundColor="White"
         Command="{Binding OnButtonLeftCommand}"
         Scale="0.7"
-        Source="ic_left_blue3x.png" />
+        Source="ic_left_blue.png" />
     <Label
         Grid.Row="0"
         Grid.Column="1"
@@ -25,6 +25,6 @@
         BackgroundColor="White"
         Command="{Binding OnButtonSaveCommand}"
         Scale="0.7"
-        Source="ic_save3x.png" />
+        Source="ic_save.png" />
 
 </Grid>

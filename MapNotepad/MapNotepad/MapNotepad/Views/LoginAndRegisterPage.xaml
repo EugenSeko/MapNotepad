@@ -3,7 +3,7 @@
     x:Class="MapNotepad.Views.LoginAndRegisterPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:d="clr-namespace:MapNotepad.Views;assembly=MapNotepad"
+    xmlns:d="clr-namespace:MapNotepad.Views;assembly=MapNotepad">
     <d:BaseContentPage.Content>
         <StackLayout>
             <StackLayout Padding="16,0,16,40" VerticalOptions="EndAndExpand">
@@ -21,4 +21,4 @@
     </d:BaseContentPage.Content>
 </d:BaseContentPage>
 
-              
+

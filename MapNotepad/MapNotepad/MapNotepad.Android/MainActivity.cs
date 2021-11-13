@@ -17,11 +17,14 @@ namespace MapNotepad.Droid
         {
             base.OnCreate(savedInstanceState);
 
+           // Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");//lib ContextCellView
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-           
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
+            ContextMenu.Droid.ContextMenuViewRenderer.Preserve(); //lib ContextCellView
+
             LoadApplication(new App());
 
             // TROUBLE: Crash on first launch  after confirmation of permissions: Java.Lang.SecurityException: 'my location requires permission ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION'
@@ -33,6 +36,7 @@ namespace MapNotepad.Droid
             {
                 System.Diagnostics.Debug.WriteLine("Permission Granted!!!");
             }
+           
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

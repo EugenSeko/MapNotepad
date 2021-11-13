@@ -30,7 +30,7 @@
                     Grid.ColumnSpan="2"
                     Text="Label"
                     VerticalOptions="End" />
-                <local:MyEntry
+                <local:NoUnderlineEntry
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
@@ -42,7 +42,7 @@
                     Grid.ColumnSpan="2"
                     Text="Description"
                     VerticalOptions="End" />
-                <local:MyEntry
+                <local:NoUnderlineEntry
                     Grid.Row="4"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
@@ -54,12 +54,12 @@
                     Grid.ColumnSpan="2"
                     Text="Coordinates"
                     VerticalOptions="End" />
-                <local:MyEntry
+                <local:NoUnderlineEntry
                     Grid.Row="6"
                     Grid.Column="0"
                     BackgroundColor="#F1F3FD"
                     Text="{Binding Longitude, Mode=TwoWay}" />
-                <local:MyEntry
+                <local:NoUnderlineEntry
                     Grid.Row="6"
                     Grid.Column="1"
                     BackgroundColor="#F1F3FD"

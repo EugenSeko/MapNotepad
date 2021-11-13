@@ -32,19 +32,22 @@
 
 
             <Frame
+                Margin="20"
                 BackgroundColor="#596EFB"
                 CornerRadius="90"
                 HasShadow="True"
                 HorizontalOptions="End"
-                Scale="0.6"
+                Scale="1"
                 VerticalOptions="End">
                 <ImageButton
-                    Margin="0,0,0,0"
                     BackgroundColor="#596EFB"
+                    BorderColor="#596EFB"
+                    BorderWidth="6"
                     Command="{Binding OnAddButtonTap}"
-                    CornerRadius="45"
+                    CornerRadius="90"
                     HorizontalOptions="Center"
-                    Source="ic_plus3x.png"
+                    Scale="2.6"
+                    Source="ic_plus.png"
                     VerticalOptions="Center" />
             </Frame>
 

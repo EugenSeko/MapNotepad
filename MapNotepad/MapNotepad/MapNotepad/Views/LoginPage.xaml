@@ -3,16 +3,29 @@
     x:Class="MapNotepad.Views.LoginPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:d="clr-namespace:MapNotepad.Views;assembly=MapNotepad"
-    xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad">
-    <ContentPage.Content>
+    xmlns:controls="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
+    xmlns:d="clr-namespace:MapNotepad.Views;assembly=MapNotepad">
+    <d:BaseContentPage.Content>
         <StackLayout>
-            <Label
-                HorizontalOptions="CenterAndExpand"
-                Text="Welcome to Xamarin.Form!"
-                VerticalOptions="CenterAndExpand" />
-            <local:MyEntry HasUnderline="False" Placeholder="Enter email" />
-            <Label Text="Ya dolban" />
+            <controls:CustomToolbar Title="Log In"  />
+
+            <StackLayout Padding="20,5,30,5">
+                <Label Margin="20,1,0,2" Text="Email" />
+                <controls:CustomEntry Placeholder="Enter email" />
+
+                <Label Margin="20,25,0,2" Text="Password" />
+                <controls:CustomEntry IsPassword="True" Placeholder="Enter password" />
+
+                <Button
+                    Margin="0,44,0,0"
+                    Style="{DynamicResource BlueButton}"
+                    Text="Log in" />
+
+                <controls:CustomOrLine />
+
+                <ImageButton Style="{DynamicResource GoogleButton}" />
+
+            </StackLayout>
         </StackLayout>
-    </ContentPage.Content>
+    </d:BaseContentPage.Content>
 </d:BaseContentPage>

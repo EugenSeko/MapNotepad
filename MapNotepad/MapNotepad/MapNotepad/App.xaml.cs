@@ -37,6 +37,8 @@ namespace MapNotepad
             containerRegistry.RegisterForNavigation<PinsListPage, PinsListViewModel>();
             containerRegistry.RegisterForNavigation<AddPinPage, AddPinViewModel>();
             containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>();
+            containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>();
+
 
             //test
             containerRegistry.RegisterForNavigation<TestPage>();
@@ -46,9 +48,9 @@ namespace MapNotepad
         {
             InitializeComponent();
 
-            PrismApplication.Current.Resources.MergedDictionaries.Add(new BaseStyles());
-
-            NavigationService.NavigateAsync($"{nameof(LoginAndRegisterPage)}");
+            Current.Resources.MergedDictionaries.Add(new BaseStyles());
+            
+            NavigationService.NavigateAsync($"/{nameof(MainPage)}");
         }
 
         protected override void OnStart()

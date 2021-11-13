@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary
     x:Class="MapNotepad.Resources.BaseStyles"
-    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:controls ="clr-namespace:MapNotepad.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <!--  System  -->
     <Color x:Key="White">#FEFEFD</Color>
@@ -68,6 +69,28 @@
         <Setter Property="FontSize" Value="22" />
         <Setter Property="TextColor" Value="{DynamicResource Primary}" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+    <Style TargetType="controls:CustomOrLine">
+        <Setter Property="Text" Value="Or" />
+        <Setter Property="TextColor" Value="{DynamicResource LightGray}" />
+        <Setter Property="LineColor" Value="{DynamicResource LightGray}" />
+        <Setter Property="Margin" Value="0, 16, 0, 10" />
+    </Style>
+    <Style TargetType="controls:CustomToolbar">
+        <Setter Property="FontFamily" Value="Montserrat-Medium" />
+        <Setter Property="LeftImageSource" Value="ic_left_blue.png" />
+    </Style>
+    <Style TargetType="controls:CustomEntry">
+        <Setter Property="ClearImageSource" Value="ic_clear.png" />
+        <Setter Property="EyeOnImageSource" Value="ic_eye.png" />
+        <Setter Property="EyeOffImageSource" Value="ic_eye_off.png" />
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="FontFamily" Value="Montserrat-Light" />
+        <Setter Property="TextColor" Value="{DynamicResource Gray}" />
+        <Setter Property="PlaceholderColor" Value="{DynamicResource Gray}" />
+        <Setter Property="BorderColor" Value="{DynamicResource LightGray}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
     </Style>
 
 
