@@ -3,7 +3,7 @@
     x:Class="MapNotepad.Resources.BaseStyles"
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:controls ="clr-namespace:MapNotepad.Controls"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converters="clr-namespace:MapNotepad.Helpers.Converters">
     <!--  System  -->
     <Color x:Key="White">#FEFEFD</Color>
     <Color x:Key="LightGray">#D7DDE8</Color>
@@ -22,6 +22,7 @@
     <Color x:Key="HoveredFocused">#273BC6</Color>
     <Color x:Key="Pressed">#192680</Color>
     <Color x:Key="Variant">#F1F3FD</Color>
+    
 
     <!--  Base Style  -->
     <Style x:Key="BaseButton" TargetType="Button">
@@ -54,6 +55,11 @@
         <Setter Property="BorderColor" Value="{DynamicResource Primary}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
         <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+    </Style>
+    <Style x:Key="ErrorMessage" TargetType="Label">
+        <Setter Property="TextColor" Value="{DynamicResource Error}" />
+        <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+        <Setter Property="FontSize" Value="13" />
     </Style>
     <Style TargetType="Label">
         <Setter Property="TextColor" Value="{DynamicResource DarkGray}" />
@@ -92,6 +98,9 @@
         <Setter Property="BorderColor" Value="{DynamicResource LightGray}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
     </Style>
+    
+    <!--converters-->
+    <converters:MultiTriggerConverter x:Key="dataHasBeenEntered" />
 
 
 </ResourceDictionary>

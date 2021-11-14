@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapNotepad.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,9 @@ namespace MapNotepad.Services.Authentification
 {
   public  interface IAuthentificationService
     {
-        Task<bool> RegistrationAsync(string email, string password, string username);
+        ValidationResults Register (string username, string email, string password);
+        ValidationResults Validate(string username, string email);
+        ValidationResults Validate(string password);
 
     }
 }

@@ -38,10 +38,7 @@ namespace MapNotepad
             containerRegistry.RegisterForNavigation<AddPinPage, AddPinViewModel>();
             containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>();
             containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>();
-
-
-            //test
-            containerRegistry.RegisterForNavigation<TestPage>();
+            containerRegistry.RegisterForNavigation<RegisterAndPassword, RegisterAndPasswordViewModel>();
         }
 
         protected override void OnInitialized()
@@ -50,7 +47,7 @@ namespace MapNotepad
 
             Current.Resources.MergedDictionaries.Add(new BaseStyles());
             
-            NavigationService.NavigateAsync($"/{nameof(MainPage)}");
+            NavigationService.NavigateAsync($"/{nameof(LoginAndRegisterPage)}");
         }
 
         protected override void OnStart()

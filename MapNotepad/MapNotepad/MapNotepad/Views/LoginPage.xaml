@@ -7,7 +7,7 @@
     xmlns:d="clr-namespace:MapNotepad.Views;assembly=MapNotepad">
     <d:BaseContentPage.Content>
         <StackLayout>
-            <controls:CustomToolbar Title="Log In"  />
+            <controls:CustomToolbar Title="Log In" LeftButtonCommand="{Binding LeftButtonTap}" />
 
             <StackLayout Padding="20,5,30,5">
                 <Label Margin="20,1,0,2" Text="Email" />

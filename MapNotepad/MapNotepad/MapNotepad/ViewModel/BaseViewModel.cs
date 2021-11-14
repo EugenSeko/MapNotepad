@@ -4,6 +4,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MapNotepad.ViewModel
 {
@@ -16,9 +17,9 @@ namespace MapNotepad.ViewModel
             _navigationService = navigationService;
         }
         #region --- Navigation ---
-        public async void GoBackAsync()
+        public Task GoBackAsync()
         {
-            await _navigationService.GoBackAsync();
+            return Task.FromResult(_navigationService.GoBackAsync());
         }
 
         public async void GoToMainPage()
@@ -39,11 +40,11 @@ namespace MapNotepad.ViewModel
         }
         public async void GoToRegisterPage()
         {
-            await _navigationService.NavigateAsync("/" + nameof(RegisterPage));
+            await _navigationService.NavigateAsync(nameof(RegisterPage));
         }
-        public async void GoToRegisterAndPasswordPage()
+        public Task GoToRegisterAndPasswordPage()
         {
-            await _navigationService.NavigateAsync(nameof(RegisterAndPassword));
+            return Task.FromResult(_navigationService.NavigateAsync(nameof(RegisterAndPassword)));
         }
         public async void GoToLoginAndRegisterPage()
         {

@@ -8,12 +8,13 @@ using Xamarin.Forms;
 
 namespace MapNotepad.ViewModel
 {
-    class LoginPageViewModel : BaseViewModel
+    class RegisterAndPasswordViewModel:BaseViewModel
     {
-        public LoginPageViewModel(INavigationService navigationService) : base(navigationService)
+        public RegisterAndPasswordViewModel(INavigationService navigationService):base(navigationService)
         {
             LeftButtonTap = SingleExecutionCommand.FromFunc(GoBackAsync);
         }
+
 
         #region --- Public Properties ---
         public ICommand LeftButtonTap { get; set; }

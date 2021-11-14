@@ -11,9 +11,13 @@
                 <Label Style="{DynamicResource TextBrend}" />
             </StackLayout>
             <StackLayout Padding="18,0,18,18" VerticalOptions="EndAndExpand">
-                <Button Style="{DynamicResource BlueButton}" Text="Log in" />
+                <Button
+                    Command="{Binding LoginButtonTap}"
+                    Style="{DynamicResource BlueButton}"
+                    Text="Log in" />
                 <Button
                     Margin="0,14,0,0"
+                    Command="{Binding RegisterButtonTap}"
                     Style="{DynamicResource WhiteButton}"
                     Text="Create account" />
             </StackLayout>
