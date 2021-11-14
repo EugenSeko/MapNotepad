@@ -22,9 +22,9 @@ namespace MapNotepad.ViewModel
             return Task.FromResult(_navigationService.GoBackAsync());
         }
 
-        public async void GoToMainPage()
+        public Task GoToMainPage()
         {
-            await _navigationService.NavigateAsync("/" + nameof(MainPage));
+            return _navigationService.NavigateAsync("/" + nameof(MainPage));
         }
         public async void GoToMainPageListPage()
         {

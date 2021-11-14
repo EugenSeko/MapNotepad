@@ -12,5 +12,10 @@ namespace MapNotepad.Services.Settings
             get => Preferences.Get(nameof(UserId), null);
             set => Preferences.Set(nameof(UserId), value); 
         }
+        public string UserName
+        {
+            get => Preferences.Get(nameof(UserName), null);
+            set => Preferences.Set(nameof(UserName), value);
+        }
     }
 }

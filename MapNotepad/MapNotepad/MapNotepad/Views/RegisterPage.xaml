@@ -10,9 +10,10 @@
             <controls:CustomToolbar Title="Create an account" LeftButtonCommand="{Binding LeftButtonTap}" />
             <StackLayout Padding="20,5,30,5">
                 <Label Margin="20,1,0,2" Text="Name" />
-                <controls:CustomEntry Placeholder="Enter your name" 
-                                      Text="{Binding Name}" 
-                                      x:Name="nameEntry" >
+                <controls:CustomEntry
+                    x:Name="nameEntry"
+                    Placeholder="Enter your name"
+                    Text="{Binding Name}">
                     <controls:CustomEntry.Triggers>
                         <DataTrigger
                             Binding="{Binding IsNameErrorMessageVisible}"
@@ -29,9 +30,10 @@
                     Text="{Binding NameErrorMessage}" />
 
                 <Label Margin="20,25,0,2" Text="Email" />
-                <controls:CustomEntry Placeholder="Enter email" 
-                                      Text="{Binding Email}" 
-                                      x:Name="emailEntry" >
+                <controls:CustomEntry
+                    x:Name="emailEntry"
+                    Placeholder="Enter email"
+                    Text="{Binding Email}">
                     <controls:CustomEntry.Triggers>
                         <DataTrigger
                             Binding="{Binding IsEmailErrorMessageVisible}"
@@ -48,22 +50,16 @@
                     Text="{Binding EmailErrorMessage}" />
 
                 <Button
-                    Margin="0,44,0,0" 
-                    IsEnabled="False"
+                    Margin="0,44,0,0"
                     Command="{Binding NextButtonTap}"
+                    IsEnabled="False"
                     Style="{DynamicResource BlueButton}"
                     Text="Next">
                     <Button.Triggers>
                         <MultiTrigger TargetType="Button">
                             <MultiTrigger.Conditions>
-                                <BindingCondition Binding="{Binding Source={x:Reference nameEntry},
-                              Path=Text.Length,
-                              Converter={StaticResource dataHasBeenEntered}}"
-                          Value="true" />
-                                <BindingCondition Binding="{Binding Source={x:Reference emailEntry},
-                              Path=Text.Length,
-                              Converter={StaticResource dataHasBeenEntered}}"
-                          Value="true" />
+                                <BindingCondition Binding="{Binding Source={x:Reference nameEntry}, Path=Text.Length, Converter={StaticResource dataHasBeenEntered}}" Value="true" />
+                                <BindingCondition Binding="{Binding Source={x:Reference emailEntry}, Path=Text.Length, Converter={StaticResource dataHasBeenEntered}}" Value="true" />
                             </MultiTrigger.Conditions>
                             <Setter Property="IsEnabled" Value="True" />
                         </MultiTrigger>

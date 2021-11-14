@@ -1,5 +1,6 @@
 ﻿using MapNotepad.Services.Authentification;
 using Prism.Navigation;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TikBid.Helpers;
@@ -14,41 +15,25 @@ namespace MapNotepad.ViewModel
         {
             _authentificationService = authentificationService;
             LeftButtonTap = SingleExecutionCommand.FromFunc(GoBackAsync);
-            NextButtonTap = SingleExecutionCommand.FromFunc(OnNextButtonTapAsync); // ()=>false
+            NextButtonTap = SingleExecutionCommand.FromFunc(OnNextButtonTapAsync, () => true); 
         }
 
         #region --- Public Properties ---
         public ICommand LeftButtonTap { get; set; }
         public ICommand NextButtonTap { get; set; }
 
-        private bool _isNameErrorMessageVisible;
-        public bool IsNameErrorMessageVisible 
-        {
-            get => _isNameErrorMessageVisible;
-            set => SetProperty(ref _isNameErrorMessageVisible, value);
-        }
 
-        private bool _isEmailErrorMessageVisible;
-        public bool IsEmailErrorMessageVisible
-        {
-            get => _isEmailErrorMessageVisible;
-            set => SetProperty(ref _isEmailErrorMessageVisible, value);
-        }
-
+        public bool IsEmailErrorMessageVisible => EmailErrorMessage != null && EmailErrorMessage != "";
         private string _emailErrorMessage;
         public string EmailErrorMessage
         {
             get => _emailErrorMessage;
-            set => SetProperty(ref _emailErrorMessage, value);
+            set 
+            { 
+                SetProperty(ref _emailErrorMessage, value);
+                RaisePropertyChanged(nameof(IsEmailErrorMessageVisible));
+            }
         }
-
-        private string _nameErrorMessage;
-        public string NameErrorMessage
-        {
-            get => _nameErrorMessage;
-            set => SetProperty(ref _nameErrorMessage, value);
-        }
-
         private string _email;
         public string Email
         {
@@ -56,6 +41,18 @@ namespace MapNotepad.ViewModel
             set => SetProperty(ref _email, value);
         }
 
+
+        public bool IsNameErrorMessageVisible => NameErrorMessage != null && NameErrorMessage != "";
+        private string _nameErrorMessage;
+        public string NameErrorMessage
+        {
+            get => _nameErrorMessage;
+            set
+            { 
+                SetProperty(ref _nameErrorMessage, value);
+                RaisePropertyChanged(nameof(IsNameErrorMessageVisible));
+            }
+        }
         private string _name;
         public string Name
         {
@@ -64,28 +61,54 @@ namespace MapNotepad.ViewModel
         }
         #endregion
         #region --- Overrides ---
+        protected override void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            base.OnPropertyChanged(args);
+            switch (args.PropertyName)
+            {
+                case nameof(Name):
+                    {
+                        if(Name != null && Name != "")
+                        {
+                            NameErrorMessage = null;
+                        }
+                        break;
+                    }
+                case nameof(Email):
+                    {
+                        if (Email != null || Email != "")
+                        {
+                            EmailErrorMessage = null;
+                        }
+                        break;
+                    }
+
+            }
+        }
         #endregion
         #region --- Private Helpers ---
-        private Task OnNextButtonTapAsync()
+        private async Task OnNextButtonTapAsync()
         {
-            switch (_authentificationService.Validate(Name, Email))
+            var authRes = await _authentificationService.ValidateAsync(Name, Email);
+            switch (authRes)
             {
+                case Enums.ValidationResults.BusyEmail:
+                    {
+                        EmailErrorMessage = "login already exists";
+                        break;
+                    }
                 case Enums.ValidationResults.EmptyName: 
                     {
-                        IsNameErrorMessageVisible = true;
                         NameErrorMessage = "Empty field";
                         break;
                     }       
                 case Enums.ValidationResults.EmptyEmail: 
                     {
-                        IsEmailErrorMessageVisible = true;
                         EmailErrorMessage = "Empty field";
                         break;
                     }
                 case Enums.ValidationResults.EmptyAll: 
                     {
-                        IsEmailErrorMessageVisible = true;
-                        IsNameErrorMessageVisible = true;
                         NameErrorMessage = "Empty field";
                         EmailErrorMessage = "Empty field";
                         break;
@@ -93,18 +116,18 @@ namespace MapNotepad.ViewModel
                     }
                 case Enums.ValidationResults.IncorrectEmail: 
                     {
-                        IsEmailErrorMessageVisible = true;
                         EmailErrorMessage = "Incorrect email";
                         break;
 
                     }
                 case Enums.ValidationResults.Correct:
                     {
-                        GoToRegisterAndPasswordPage();
+                        _authentificationService.Register(Name, Email);
+                       await GoToRegisterAndPasswordPage();
                         break;
+
                     }
             }
-            return Task.CompletedTask;
         }
         #endregion
     }

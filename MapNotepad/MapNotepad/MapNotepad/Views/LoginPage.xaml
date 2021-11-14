@@ -11,13 +11,45 @@
 
             <StackLayout Padding="20,5,30,5">
                 <Label Margin="20,1,0,2" Text="Email" />
-                <controls:CustomEntry Placeholder="Enter email" />
+                <controls:CustomEntry Placeholder="Enter email" Text="{Binding Email}">
+                    <controls:CustomEntry.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsEmailErrorMessageVisible}"
+                            TargetType="controls:CustomEntry"
+                            Value="True">
+                            <Setter Property="BorderColor" Value="{DynamicResource Error}" />
+                        </DataTrigger>
+                    </controls:CustomEntry.Triggers>
+                </controls:CustomEntry>
+                <Label
+                    Margin="21,0,0,0"
+                    IsVisible="{Binding IsEmailErrorMessageVisible}"
+                    Style="{DynamicResource ErrorMessage}"
+                    Text="{Binding EmailErrorMessage}" />
 
                 <Label Margin="20,25,0,2" Text="Password" />
-                <controls:CustomEntry IsPassword="True" Placeholder="Enter password" />
+                <controls:CustomEntry
+                    IsPassword="True"
+                    Placeholder="Enter password"
+                    Text="{Binding Password}">
+                    <controls:CustomEntry.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsPasswordErrorMessageVisible}"
+                            TargetType="controls:CustomEntry"
+                            Value="True">
+                            <Setter Property="BorderColor" Value="{DynamicResource Error}" />
+                        </DataTrigger>
+                    </controls:CustomEntry.Triggers>
+                </controls:CustomEntry>
+                <Label
+                    Margin="21,0,0,0"
+                    IsVisible="{Binding IsPasswordErrorMessageVisible}"
+                    Style="{DynamicResource ErrorMessage}"
+                    Text="{Binding PasswordErrorMessage}" />
 
                 <Button
                     Margin="0,44,0,0"
+                    Command="{Binding BlueButtonTap}"
                     Style="{DynamicResource BlueButton}"
                     Text="Log in" />
 

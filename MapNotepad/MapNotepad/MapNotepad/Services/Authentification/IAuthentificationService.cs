@@ -8,9 +8,12 @@ namespace MapNotepad.Services.Authentification
 {
   public  interface IAuthentificationService
     {
-        ValidationResults Register (string username, string email, string password);
-        ValidationResults Validate(string username, string email);
+        void Register(string username, string email);
+        void RegisterAsync(string password);
+        Task<ValidationResults> ValidateAsync(string username, string email);
         ValidationResults Validate(string password);
+        Task<bool> VerificationAsync(string email, string password);
+
 
     }
 }

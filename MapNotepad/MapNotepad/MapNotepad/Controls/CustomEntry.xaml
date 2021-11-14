@@ -23,7 +23,6 @@
             </local:NoUnderlineEntry.Behaviors>
         </local:NoUnderlineEntry>
         <ImageButton
-            Aspect="Fill"
             BackgroundColor="Transparent"
             Command="{Binding ButtonCommand, Source={x:Reference customEntry}}"
             HeightRequest="24"

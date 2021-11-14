@@ -9,9 +9,13 @@ namespace MapNotepad.Enums
         EmptyName,
         EmptyEmail,
         EmptyPassword,
-        EmptyConfirmPassword,
         EmptyAll,
         IncorrectEmail,
+        IncorrectPassword,
+        TooShortPassword,
+        NoNumberPassword,
+        NoUpperCasePassword,
+        BusyEmail,
         Correct
     }
     
