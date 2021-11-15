@@ -94,7 +94,7 @@ namespace MapNotepad.ViewModel
             {
                 case Enums.ValidationResults.BusyEmail:
                     {
-                        EmailErrorMessage = "login already exists";
+                        EmailErrorMessage = "Email already exists";
                         break;
                     }
                 case Enums.ValidationResults.EmptyName: 

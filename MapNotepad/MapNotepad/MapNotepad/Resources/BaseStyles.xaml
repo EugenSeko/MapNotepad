@@ -23,8 +23,10 @@
     <Color x:Key="Pressed">#192680</Color>
     <Color x:Key="Variant">#F1F3FD</Color>
     
+    
 
     <!--  Base Style  -->
+    
     <Style x:Key="BaseButton" TargetType="Button">
         <Setter Property="FontSize" Value="18" />
         <Setter Property="FontFamily" Value="Montserrat-Medium" />

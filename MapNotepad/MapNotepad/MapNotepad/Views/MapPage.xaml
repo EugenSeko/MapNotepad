@@ -3,9 +3,9 @@
     x:Class="MapNotepad.Views.MapPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:context="clr-namespace:ContextMenu.Views;assembly=ContextMenu"
     xmlns:controls="clr-namespace:MapNotepad.Controls"
     xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
-    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
     Title="Maps">
     <ContentPage.Content>
 
@@ -32,14 +32,16 @@
                             <ViewCell>
                                 <ViewCell.View>
                                     <StackLayout>
-                                        <Label BackgroundColor="White" Text="{Binding Label}" />
+                                        <Label
+                                            Style="{DynamicResource Label}"
+                                            Text="{Binding Label}"
+                                            TextColor="Black" />
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
                 <StackLayout
                     Grid.Row="2"
                     BackgroundColor="White"

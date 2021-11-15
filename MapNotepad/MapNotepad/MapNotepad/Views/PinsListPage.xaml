@@ -3,30 +3,47 @@
     x:Class="MapNotepad.Views.PinsListPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:context="clr-namespace:ContextMenu.Views;assembly=ContextMenu"
     xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
     Title="Pins">
     <ContentPage.Content>
-        <Grid>
+        <Grid BackgroundColor="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <Grid RowDefinitions="0.07*,0.93*">
                 <local:SearchBar Grid.Row="0" />
-                <ListView
-                    Grid.Row="1"
-                    HasUnevenRows="True"
-                    ItemsSource="{Binding PinList}">
-                    <ListView.ItemTemplate>
+                <CollectionView Grid.Row="1" ItemsSource="{Binding PinList}">
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <ViewCell.View>
-                                    <Label Text="{Binding Label}" />
-                                </ViewCell.View>
-                            </ViewCell>
+                            <context:SideContextMenuView IsAutoCloseEnabled="true">
+                                <context:SideContextMenuView.View>
+                                    <Frame>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Frame>
+                                                <ImageButton Source="ic_like_blue" Scale="1.2" BackgroundColor="Transparent"/>
+                                            </Frame>
+                                            <StackLayout Orientation="Vertical">
+                                                <Label Style="{DynamicResource Label}" Text="{Binding Label}" />
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label Style="{DynamicResource Label}" Text="{Binding Latitude}" />
+                                                    <Label Style="{DynamicResource Label}" Text="{Binding Longitude}" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Frame>
+                                    
+                                </context:SideContextMenuView.View>
+                                <context:SideContextMenuView.ContextTemplate>
+                                    <DataTemplate>
+                                        <Label Text="AAA" />
+                                    </DataTemplate>
+                                </context:SideContextMenuView.ContextTemplate>
+                            </context:SideContextMenuView>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </Grid>
 
 

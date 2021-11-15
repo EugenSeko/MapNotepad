@@ -15,7 +15,6 @@ Regions-------------------------------------------------------------------------
         #region --- Private Helpers ---
         #endregion
     }
----------------------------------------------------------------------------------------------------------------------------------------
 
 Property--------------------------------------------------------------------------------------------------------------------------------
  
@@ -25,7 +24,6 @@ Property------------------------------------------------------------------------
             get => _propName;
             set => SetProperty(ref _propName, value);
         }
----------------------------------------------------------------------------------------------------------------------------------------
 
 OnPropertyChanged---------------------------------------------------------------------------------------------------------------------------------
         
@@ -42,7 +40,6 @@ OnPropertyChanged---------------------------------------------------------------
                     
             }
         }
-----------------------------------------------------------------------------------------------------------------------------------------
 
 RaisePropertyChanged-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -58,7 +55,6 @@ private <Type> _propName;
                 RaisePropertyChanged(nameof(TargetPropName));
             }
         }
---------------------------------------------------------------------------------------------------------------------------
 
 
 Styles--------------------------------------------------------------------------------------------------------------------
@@ -68,3 +64,58 @@ Styles--------------------------------------------------------------------------
     </Style>
 --------------------------------------------------------------------------------------------------------------------------
 
+<ListView xaml ------------------------------------------------------------------------------------------------------------
+                    
+                    Grid.Row="0"
+                    BackgroundColor="Transparent"
+                    IsVisible="{Binding ShowCurrentPinList}"
+                    ItemsSource="{Binding ObserPinList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout>
+                                        <Label BackgroundColor="White" Text="{Binding Label}" />
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+side menu xaml -----------------------------------------------------------------------------------------------------------------
+
+     <CollectionView x:Name="CollectionView">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <context:SideContextMenuView>
+                    <context:SideContextMenuView.View>
+                        <Label Text="Content"/>
+                    </context:SideContextMenuView.View>
+                    <context:SideContextMenuView.ContextTemplate>
+                        <DataTemplate>
+                            <Label Text="Context" />
+                        </DataTemplate>
+                    </context:SideContextMenuView.ContextTemplate>
+                </context:SideContextMenuView>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+
+-----------------------------------------------------------------------------------
+                      
+
+                <ListView
+                    Grid.Row="1"
+                    HasUnevenRows="True"
+                    ItemsSource="{Binding PinList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Label Text="{Binding Label}" />
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>

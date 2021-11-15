@@ -43,10 +43,7 @@ namespace MapNotepad.Services.Authentification
             ValidationResults resultValue = new ValidationResults();
             var users = await _repository.GetAllAsync<UserModel>();
 
-            if (users?.Count(x => x.Email == email) > 0)
-            {
-                resultValue = ValidationResults.BusyEmail;
-            }
+            
             if ((username == null || username == "" ) && (email == null || email == ""))
             {
                 resultValue = ValidationResults.EmptyAll;
@@ -59,9 +56,12 @@ namespace MapNotepad.Services.Authentification
             {
                 resultValue = ValidationResults.EmptyEmail;
             }
+            
             else
             {
                 var subs = email.Split("@");
+
+                
                 if (subs.Length != 2)
                 {
                     resultValue = ValidationResults.IncorrectEmail;
@@ -69,6 +69,10 @@ namespace MapNotepad.Services.Authentification
                 else if( subs[0].Length > 64 || subs[1].Length > 64 || subs[1].Length < 3 )
                 {
                     resultValue = ValidationResults.IncorrectEmail;
+                }
+                else if (users?.Count(x => x.Email == email) > 0)
+                {
+                    resultValue = ValidationResults.BusyEmail;
                 }
                 else
                 {
@@ -107,17 +111,32 @@ namespace MapNotepad.Services.Authentification
             return validationResult;
         }
 
-        public async Task<bool> VerificationAsync(string email, string password)
+        public async Task<VerficationResult> VerificateAsync(string email, string password)
         {
-          bool result=false;
+          VerficationResult result = new VerficationResult();
+
           var users =  await _repository.GetAllAsync<UserModel>();
-           foreach(var user in users)
+
+            if(users?.Count(x => x.Email == email) == 0)
             {
-                if(user.Email == email && user.Password == password)
-                {
-                    result = true;
-                } 
+                result = VerficationResult.NoSuchEmail;
             }
+            else
+            {
+                foreach (var user in users)
+                {
+                    if (user.Email == email && user.Password == password)
+                    {
+                        result = VerficationResult.Correct;
+                        _settingsManager.UserId = email;
+                    }
+                    else
+                    {
+                        result = VerficationResult.WrongPassword;
+                    }
+                }
+            }
+           
             return result;
         }
     }
