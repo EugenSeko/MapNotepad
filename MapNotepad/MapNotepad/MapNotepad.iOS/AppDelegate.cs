@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Foundation;
 using UIKit;
 
@@ -23,7 +22,11 @@ namespace MapNotepad.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            Xamarin.FormsGoogleMaps.Init("AIzaSyBD3oU095Fv1bm9hw6KjH4lZiNkhGLv_A0");
+
+            Xamarin.FormsGoogleMaps.Init("ApiApi");
+
+            ContextMenu.iOS.ContextMenuViewRenderer.Preserve(); //lib ContextCellView
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

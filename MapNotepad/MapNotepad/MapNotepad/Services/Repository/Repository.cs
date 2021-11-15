@@ -20,6 +20,7 @@ namespace MapNotepad.Services.Repository
                                          .SpecialFolder.LocalApplicationData), "contacts.bd");
                 var database = new SQLiteAsyncConnection(path);
                 database.CreateTableAsync<UserModel>().Wait();
+                database.CreateTableAsync<PinModel>().Wait();
                 return database;
             });
         }

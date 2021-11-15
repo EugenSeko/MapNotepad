@@ -1,31 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Grid xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
-             x:Class="MapNotepad.Controls.SearchBar"
-             BackgroundColor="White" 
-      ColumnDefinitions="0.2*,0.6*,0.2*" RowDefinitions="0.03*,0.97*">
+<Grid
+    x:Class="MapNotepad.Controls.SearchBar"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
+    BackgroundColor="White"
+    ColumnDefinitions="0.2*,0.6*,0.2*"
+    RowDefinitions="0.03*,0.97*">
 
-    <Label Grid.Row="0" Grid.ColumnSpan="3" BackgroundColor="Transparent" Background="transparent"/>
+    <Label
+        Grid.Row="0"
+        Grid.ColumnSpan="3"
+        Background="transparent"
+        BackgroundColor="Transparent" />
 
-    <ImageButton Grid.Column="0" 
-                 Grid.Row="1" 
-                 Scale="0.7"
-        BackgroundColor="White" 
+    <ImageButton
+        Grid.Row="1"
+        Grid.Column="0"
+        BackgroundColor="White"
         BorderColor="White"
-        Source="settings_icon.png"/>
+        Scale="0.7"
+        Source="ic_settings.png" />
 
-    <local:MyEntry Grid.Column="1" 
-                   Grid.Row="1"
-                   
-        BackgroundColor= "#F1F3FD" 
+    <local:NoUnderlineEntry
+        Grid.Row="1"
+        Grid.Column="1"
+        BackgroundColor="#F1F3FD"
         HasUnderline="False"
-        Placeholder="Search"/>
+        Placeholder="Search"
+        Text="{Binding SearchEntry, Mode=TwoWay}" />
 
-    <ImageButton Grid.Column="2" 
-                 Grid.Row="1" 
-                 Scale="0.7"
-        BackgroundColor="White" BorderColor="White" BorderWidth="0"
-        Source="exit_icon.png"/>
+    <ImageButton
+        Grid.Row="1"
+        Grid.Column="2"
+        BackgroundColor="White"
+        BorderColor="White"
+        BorderWidth="0"
+        Scale="0.7"
+        Source="ic_exid.png" />
 
 </Grid>

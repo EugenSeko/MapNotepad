@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MapNotepad.Views.MapPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MapNotepad.Controls"
+    xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    Title="Maps">
+    <ContentPage.Content>
+
+        <Grid
+            HorizontalOptions="Fill"
+            RowDefinitions="0.07*,0.93*"
+            VerticalOptions="Fill">
+            <local:SearchBar Grid.Row="0" />
+
+            <Grid Grid.Row="1">
+                <controls:CustomMap
+                    Grid.Row="0"
+                    Grid.RowSpan="3"
+                    MapClickedCommand="{Binding ClearClickCommand}"
+                    PinClickedCommand="{Binding PinClickCommand}"
+                    PinSource="{Binding PinList}" />
+                <ListView
+                    Grid.Row="0"
+                    BackgroundColor="Transparent"
+                    IsVisible="{Binding ShowCurrentPinList}"
+                    ItemsSource="{Binding ObserPinList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout>
+                                        <Label BackgroundColor="White" Text="{Binding Label}" />
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <StackLayout
+                    Grid.Row="2"
+                    BackgroundColor="White"
+                    IsVisible="{Binding ShowCurrentPinDescription}"
+                    Spacing="0">
+                    <Label
+                        Margin="20,16,0,0"
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        Text="{Binding CurrentPin.Label}" />
+                    <StackLayout
+                        Margin="20,6,0,16"
+                        Orientation="Horizontal"
+                        Spacing="6">
+                        <Label FontSize="Medium" Text="{Binding CurrentPin.Latitude}" />
+                        <Label FontSize="Medium" Text="{Binding CurrentPin.Longitude}" />
+                    </StackLayout>
+
+                    <BoxView
+                        Margin="16,8"
+                        BackgroundColor="Black"
+                        HeightRequest="1" />
+                    <Label
+                        FontSize="Medium"
+                        LineBreakMode="WordWrap"
+                        MaxLines="3"
+                        Text="{Binding CurrentPin.Description}" />
+
+                </StackLayout>
+            </Grid>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

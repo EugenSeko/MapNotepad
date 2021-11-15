@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<d:BaseContentPage
+    x:Class="MapNotepad.Views.RegisterPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MapNotepad.Controls"
+    xmlns:d="clr-namespace:MapNotepad.Views;assembly=MapNotepad">
+    <d:BaseContentPage.Content>
+        <StackLayout>
+            <controls:CustomToolbar Title="Create an account" LeftButtonCommand="{Binding LeftButtonTap}" />
+            <StackLayout Padding="20,5,30,5">
+                <Label Margin="20,1,0,2" Text="Name" />
+                <controls:CustomEntry
+                    x:Name="nameEntry"
+                    Placeholder="Enter your name"
+                    Text="{Binding Name}">
+                    <controls:CustomEntry.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsNameErrorMessageVisible}"
+                            TargetType="controls:CustomEntry"
+                            Value="True">
+                            <Setter Property="BorderColor" Value="{DynamicResource Error}" />
+                        </DataTrigger>
+                    </controls:CustomEntry.Triggers>
+                </controls:CustomEntry>
+                <Label
+                    Margin="21,0,0,0"
+                    IsVisible="{Binding IsNameErrorMessageVisible}"
+                    Style="{DynamicResource ErrorMessage}"
+                    Text="{Binding NameErrorMessage}" />
+
+                <Label Margin="20,25,0,2" Text="Email" />
+                <controls:CustomEntry
+                    x:Name="emailEntry"
+                    Placeholder="Enter email"
+                    Text="{Binding Email}">
+                    <controls:CustomEntry.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsEmailErrorMessageVisible}"
+                            TargetType="controls:CustomEntry"
+                            Value="True">
+                            <Setter Property="BorderColor" Value="{DynamicResource Error}" />
+                        </DataTrigger>
+                    </controls:CustomEntry.Triggers>
+                </controls:CustomEntry>
+                <Label
+                    Margin="21,0,0,0"
+                    IsVisible="{Binding IsEmailErrorMessageVisible}"
+                    Style="{DynamicResource ErrorMessage}"
+                    Text="{Binding EmailErrorMessage}" />
+
+                <Button
+                    Margin="0,44,0,0"
+                    Command="{Binding NextButtonTap}"
+                    IsEnabled="False"
+                    Style="{DynamicResource BlueButton}"
+                    Text="Next">
+                    <Button.Triggers>
+                        <MultiTrigger TargetType="Button">
+                            <MultiTrigger.Conditions>
+                                <BindingCondition Binding="{Binding Source={x:Reference nameEntry}, Path=Text.Length, Converter={StaticResource dataHasBeenEntered}}" Value="true" />
+                                <BindingCondition Binding="{Binding Source={x:Reference emailEntry}, Path=Text.Length, Converter={StaticResource dataHasBeenEntered}}" Value="true" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True" />
+                        </MultiTrigger>
+                    </Button.Triggers>
+                </Button>
+                <controls:CustomOrLine Text="or" />
+                <ImageButton Style="{DynamicResource GoogleButton}" />
+            </StackLayout>
+        </StackLayout>
+    </d:BaseContentPage.Content>
+</d:BaseContentPage>
+
