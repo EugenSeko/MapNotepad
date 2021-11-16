@@ -4,8 +4,19 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:context="clr-namespace:ContextMenu.Views;assembly=ContextMenu"
+    xmlns:conv="clr-namespace:MapNotepad.Converters"
     xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
     Title="Pins">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:MenuFitWidthConverter x:Key="MenuFitWidthConverter" />
+            <conv:IsMutedToTextConverter x:Key="IsMutedToTextConverter" />
+            <conv:IsMutedToOpacityConverter x:Key="IsMutedToOpacityConverter" />
+            <conv:IsMutedToBackgroundColorConverter x:Key="IsMutedToBackgroundColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <Grid BackgroundColor="White">
             <Grid.RowDefinitions>
@@ -14,15 +25,23 @@
 
             <Grid RowDefinitions="0.07*,0.93*">
                 <local:SearchBar Grid.Row="0" />
-                <CollectionView Grid.Row="1" ItemsSource="{Binding PinList}">
+                <CollectionView
+                    x:Name="CollectionView"
+                    Grid.Row="1"
+                    ItemsSource="{Binding PinList}"
+                    SelectedItem="{Binding SelectedItem}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <context:SideContextMenuView IsAutoCloseEnabled="true">
                                 <context:SideContextMenuView.View>
-                                    <Frame>
-                                        <StackLayout Orientation="Horizontal">
+                                    <Frame HeightRequest="75" 
+                                           WidthRequest="{Binding Source={x:Reference CollectionView}, Path=Width, Converter={StaticResource MenuFitWidthConverter}, ConverterParameter='40'}">
+                                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
                                             <Frame>
-                                                <ImageButton Source="ic_like_blue" Scale="1.2" BackgroundColor="Transparent"/>
+                                                <ImageButton
+                                                    BackgroundColor="Transparent"
+                                                    Scale="1.2"
+                                                    Source="ic_like_blue" />
                                             </Frame>
                                             <StackLayout Orientation="Vertical">
                                                 <Label Style="{DynamicResource Label}" Text="{Binding Label}" />
@@ -33,11 +52,29 @@
                                             </StackLayout>
                                         </StackLayout>
                                     </Frame>
-                                    
                                 </context:SideContextMenuView.View>
                                 <context:SideContextMenuView.ContextTemplate>
                                     <DataTemplate>
-                                        <Label Text="AAA" />
+                                        <StackLayout Orientation="Horizontal" Spacing="0">
+                                            <Frame
+                                                BackgroundColor="{DynamicResource Error}"
+                                                HeightRequest="75"
+                                                WidthRequest="56">
+                                                <ImageButton
+                                                    Command="{Binding DeleteCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Style="{DynamicResource DeleteButton}" />
+                                            </Frame>
+                                            <Frame
+                                                BackgroundColor="{DynamicResource Primary}"
+                                                HeightRequest="75"
+                                                WidthRequest="56">
+                                                <ImageButton
+                                                    Command="{Binding EditCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Style="{DynamicResource EditButton}" />
+                                            </Frame>
+                                        </StackLayout>
                                     </DataTemplate>
                                 </context:SideContextMenuView.ContextTemplate>
                             </context:SideContextMenuView>
@@ -45,9 +82,6 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </Grid>
-
-
-
             <Frame
                 Margin="20"
                 BackgroundColor="#596EFB"
@@ -60,7 +94,7 @@
                     BackgroundColor="#596EFB"
                     BorderColor="#596EFB"
                     BorderWidth="6"
-                    Command="{Binding OnAddButtonTap}"
+                    Command="{Binding AddButtonTapCommand}"
                     CornerRadius="90"
                     HorizontalOptions="Center"
                     Scale="2.6"

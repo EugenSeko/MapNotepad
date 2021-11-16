@@ -119,3 +119,16 @@ side menu xaml -----------------------------------------------------------------
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+
+                 <Style x:Key="DeleteButtom" TargetType="ImageButton">
+        <Setter Property="Source" Value="ic_delete" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Error}" />
+        <Setter Property="WidthRequest" Value="56" />
+        <Setter Property="HeightRequest" Value="75" />
+    </Style>
+    <Style x:Key="EditButtom" TargetType="ImageButton">
+        <Setter Property="Source" Value="ic_edit.png" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+        <Setter Property="WidthRequest" Value="56" />
+        <Setter Property="HeightRequest" Value="75" />
+    </Style>

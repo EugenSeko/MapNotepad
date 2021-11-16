@@ -26,6 +26,18 @@
     
 
     <!--  Base Style  -->
+    <Style x:Key="DeleteButton" TargetType="ImageButton">
+        <Setter Property="Source" Value="ic_delete.png" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="WidthRequest" Value="24" />
+        <Setter Property="HeightRequest" Value="24" />
+    </Style>
+    <Style x:Key="EditButton" TargetType="ImageButton">
+        <Setter Property="Source" Value="ic_edit.png" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="WidthRequest" Value="24" />
+        <Setter Property="HeightRequest" Value="24" />
+    </Style>
     
     <Style x:Key="BaseButton" TargetType="Button">
         <Setter Property="FontSize" Value="18" />

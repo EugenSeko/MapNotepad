@@ -1,8 +1,11 @@
-﻿using MapNotepad.Model;
+﻿using MapNotepad.Extensions;
+using MapNotepad.Model;
 using MapNotepad.Services.Repository;
 using MapNotepad.Services.Settings;
+using MapNotepad.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,10 +34,11 @@ namespace MapNotepad.Services.PinService
             };
            return _repository.InsertAsync(pm);
         }
-        public async Task<List<PinModel>> GetPins()
+        public async Task<List<PinModel>> GetPinsAsync()
         {
             var pinlist = await _repository.GetAllAsync<PinModel>();
             return pinlist;
         }
+        
     }
 }

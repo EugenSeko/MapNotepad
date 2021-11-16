@@ -1,4 +1,5 @@
-﻿using MapNotepad.Model;
+﻿using MapNotepad.Extensions;
+using MapNotepad.Model;
 using MapNotepad.Services.PinService;
 using Prism.Navigation;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TikBid.Helpers;
 using Xamarin.Forms;
 
 namespace MapNotepad.ViewModel
@@ -22,14 +24,20 @@ namespace MapNotepad.ViewModel
         {
             _pinservice = pinService;
             InitAsync();
-
         }
-        #region ---Command---
-        public ICommand OnAddButtonTap => new Command(GoToAddPinPage);
-        #endregion
+        
         #region ---Public Properties---
-        private ObservableCollection<PinModel> _pinList;
-        public ObservableCollection<PinModel> PinList
+        public ICommand AddButtonTapCommand { get; set; }
+
+        private PinViewModel _selectedItem;
+        public PinViewModel SelectedItem
+        {
+            get => _selectedItem;
+            set => SetProperty(ref _selectedItem, value);
+        }
+       
+        private ObservableCollection<PinViewModel> _pinList;
+        public ObservableCollection<PinViewModel> PinList
         {
             get => _pinList;
             set => SetProperty(ref _pinList, value);
@@ -38,14 +46,30 @@ namespace MapNotepad.ViewModel
         #region ---Privat Helpers---
         private async void InitAsync()
         {
-            var pl = new ObservableCollection<PinModel>();
-            var l = await _pinservice.GetPins();
+            AddButtonTapCommand = new Command(GoToAddPinPage);
+
+            var pl = new ObservableCollection<PinViewModel>();
+            var l = await _pinservice.GetPinsAsync();
             foreach (var v in l)
             {
-                pl.Add(v);
+                var pvm = PinExtension.ToPinViewModel(v);
+                pvm.DeleteCommand = SingleExecutionCommand.FromFunc(OnDeleteButtonCommand);
+                pvm.EditCommand = SingleExecutionCommand.FromFunc(OnEditButtonCommand);
+                pl.Add(pvm);
             }
               PinList = pl;
         }
+
+        private async Task OnDeleteButtonCommand(object obj)
+        {
+
+            PinList.Remove(obj as PinViewModel);
+        }
+        private async Task OnEditButtonCommand()
+        {
+
+        }
+
         #endregion
     }
 }

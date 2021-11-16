@@ -30,27 +30,10 @@ namespace MapNotepad.ViewModel
             InitAsync();
         }
 
-        private void OnClearClick(object obj)
-        {
-            CurrentPin = null;
-        }
-
-        public void OnPinClick(PinModel pinModel)
-        {
-            if (pinModel != null)
-            {
-                CurrentPin = pinModel;
-            } 
-            
-        }
-
-
-        #region ---Command---
+        #region ---Public Properties---
         public ICommand PinClickCommand { get; set; }
         public ICommand ClearClickCommand { get; set; }
-        #endregion
 
-        #region ---Public Properties---
         private ObservableCollection<PinModel> _obserPinList;
         public ObservableCollection<PinModel> ObserPinList
         {
@@ -123,8 +106,21 @@ namespace MapNotepad.ViewModel
         private List<PinModel> _constPinList;
         private async void InitAsync()
         {
-            PinList = await _pinService.GetPins();
+            PinList = await _pinService.GetPinsAsync();
             _constPinList = PinList;
+        }
+        private void OnClearClick(object obj)
+        {
+            CurrentPin = null;
+        }
+
+        private void OnPinClick(PinModel pinModel)
+        {
+            if (pinModel != null)
+            {
+                CurrentPin = pinModel;
+            }
+
         }
 
         #endregion
