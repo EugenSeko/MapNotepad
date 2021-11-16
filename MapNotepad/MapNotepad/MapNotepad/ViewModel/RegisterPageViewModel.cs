@@ -1,9 +1,9 @@
-﻿using MapNotepad.Services.Authentification;
+﻿using MapNotepad.Helpers;
+using MapNotepad.Services.Authentification;
 using Prism.Navigation;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using TikBid.Helpers;
 using Xamarin.Forms;
 
 namespace MapNotepad.ViewModel
@@ -123,7 +123,7 @@ namespace MapNotepad.ViewModel
                 case Enums.ValidationResults.Correct:
                     {
                         _authentificationService.Register(Name, Email);
-                       await GoToRegisterAndPasswordPage();
+                       await GoToRegisterAndPasswordPageAsync();
                         break;
 
                     }

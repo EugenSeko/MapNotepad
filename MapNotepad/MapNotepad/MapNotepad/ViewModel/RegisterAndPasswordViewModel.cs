@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using TikBid.Helpers;
+using MapNotepad.Helpers;
 
 namespace MapNotepad.ViewModel
 {
@@ -104,7 +104,7 @@ namespace MapNotepad.ViewModel
                             else
                             {
                             _authentificationService.RegisterAsync(Password);
-                                GoToLoginPage();
+                                GoToLoginPageAsync();
                                 break;
                             }
                        

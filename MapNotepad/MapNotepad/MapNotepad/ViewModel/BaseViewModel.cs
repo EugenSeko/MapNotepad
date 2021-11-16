@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace MapNotepad.ViewModel
 {
-
      class BaseViewModel : BindableBase
     {
         private readonly INavigationService _navigationService;
@@ -16,48 +15,46 @@ namespace MapNotepad.ViewModel
         {
             _navigationService = navigationService;
         }
-        #region --- Navigation ---
+        public static object NavigationParameter { get; set; }
         public Task GoBackAsync()
         {
             return Task.FromResult(_navigationService.GoBackAsync());
         }
-
-        public Task GoToMainPage()
+        public async Task GoToMainPageAsync()
         {
-            return _navigationService.NavigateAsync("/" + nameof(MainPage));
+            await _navigationService.NavigateAsync("/" + nameof(MainPage));
         }
-        public async void GoToMainPageListPage()
+        public async Task GoToMainPageListPageAsync()
         {
             await _navigationService.NavigateAsync("/MainPage?selectedTab=PinsListPage");
         }
-        public async void GoBackToRootAsync()
+        public async Task GoBackToRootAsync()
         {
             await _navigationService.GoBackToRootAsync();
         }
-        public async void GoToLoginPage()
+        public async Task GoToLoginPageAsync()
         {
             await _navigationService.NavigateAsync(nameof(LoginPage));
         }
-        public async void GoToRegisterPage()
+        public async Task GoToRegisterPageAsync()
         {
             await _navigationService.NavigateAsync(nameof(RegisterPage));
         }
-        public Task GoToRegisterAndPasswordPage()
+        public async Task GoToRegisterAndPasswordPageAsync()
         {
-            return Task.FromResult(_navigationService.NavigateAsync(nameof(RegisterAndPassword)));
+           await _navigationService.NavigateAsync(nameof(RegisterAndPassword));
         }
-        public async void GoToLoginAndRegisterPage()
+        public async Task GoToLoginAndRegisterPageAsync()
         {
             await _navigationService.NavigateAsync(nameof(LoginAndRegisterPage));
         }
-        public async void GoToAddPinPage()
+        public async Task GoToAddPinPageAsync()
         {
             await _navigationService.NavigateAsync(nameof(AddPinPage));
         }
-        public async void GoToPinsListPage()
+        public async Task GoToPinsListPageAsync()
         {
             await _navigationService.NavigateAsync(nameof(PinsListPage));
         }
-        #endregion
     }
 }

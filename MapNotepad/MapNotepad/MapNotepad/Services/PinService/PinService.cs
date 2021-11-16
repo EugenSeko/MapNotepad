@@ -21,19 +21,22 @@ namespace MapNotepad.Services.PinService
             _settingsManager = settingsManager;
         }
 
-        public Task AddPin(string label, string description, double longitude, double latitude,bool isfavorite)
+        public async Task AddPinAsync(PinModel pin)
         {
-            PinModel pm = new PinModel()
-            {
-                Label = label,
-                Description = description,
-                UserId = _settingsManager.UserId,
-                IsFavorite = isfavorite,
-                Latitude=latitude,
-                Longitude=longitude
-            };
-           return _repository.InsertAsync(pm);
+           await _repository.InsertAsync(pin);
         }
+
+        public async Task UpdatePinAsync(PinModel pin)
+        {
+            await _repository.UpdateAsync(pin);
+        } 
+
+        public async Task<bool> DeletePinAsync(PinModel pin)
+        {
+           await _repository.DeleteAsync(pin);
+            return true;
+        }
+
         public async Task<List<PinModel>> GetPinsAsync()
         {
             var pinlist = await _repository.GetAllAsync<PinModel>();

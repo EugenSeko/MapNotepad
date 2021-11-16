@@ -3,9 +3,9 @@
     x:Class="MapNotepad.Views.AddPinPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MapNotepad.Controls"
     xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
-    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
-    xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
 
 
     <ContentPage.Content>
@@ -66,7 +66,11 @@
                     Text="{Binding Latitude, Mode=TwoWay}" />
             </Grid>
 
-            <ContentView Grid.Row="1" Content="{Binding Map, Mode=TwoWay}" />
+            <local:CustomMap 
+                PositionFocus="{Binding Focus}"
+                Grid.Row="1" 
+                MapLongClickedCommand="{Binding MapLongClickedCommand}"
+                Pin="{Binding Pin}" />
 
         </Grid>
     </ContentPage.Content>

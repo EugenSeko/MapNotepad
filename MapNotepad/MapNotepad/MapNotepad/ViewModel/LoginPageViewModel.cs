@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using TikBid.Helpers;
+using MapNotepad.Helpers;
 using Xamarin.Forms;
 
 namespace MapNotepad.ViewModel
@@ -112,7 +112,7 @@ namespace MapNotepad.ViewModel
                                 }
                             case Enums.VerficationResult.Correct:
                                 {
-                                    await GoToMainPage();
+                                    await GoToMainPageAsync();
                                     break;
                                 }
                         }

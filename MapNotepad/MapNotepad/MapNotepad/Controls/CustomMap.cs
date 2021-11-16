@@ -14,23 +14,87 @@ namespace MapNotepad.Controls
     {
         public CustomMap()
         {
+            
             UiSettings.MyLocationButtonEnabled = true;
             MyLocationEnabled = true;
             UiSettings.ZoomControlsEnabled = false;
             PinClicked += CustomMap_PinClicked;
             MapClicked += CustomMapClicked;
+            MapLongClicked += CustomMap_LongClicked;
         }
 
+        private void CustomMap_LongClicked(object sender, MapLongClickedEventArgs e)
+        { 
+            if(PinSource == null)
+            {
+                if(Pin == null)
+                {
+                    Pin = new PinModel()
+                    {
+                        Label = "",
+                        Latitude = e.Point.Latitude,
+                        Longitude = e.Point.Longitude
+                    };
+
+                    Pins.Add(new Pin()
+                    {
+                        Label = "",
+                        Position = e.Point
+                    });
+                }
+                else
+                {
+                    Pin = new PinModel()
+                    {
+                        Label = "",
+                        Latitude = e.Point.Latitude,
+                        Longitude = e.Point.Longitude
+                    };
+                    Pins.Clear();
+                    Pins.Add(new Pin()
+                    {
+                        Label = "",
+                        Position = e.Point
+                    });
+                }
+               
+            }
+            
+            MapLongClickedCommand?.Execute(Pin);
+        }
         private void CustomMapClicked(object sender, MapClickedEventArgs e)
         {
             MapClickedCommand?.Execute(null);
         }
-
         private void CustomMap_PinClicked(object sender, PinClickedEventArgs e)
         {
             var model = PinSource?.FirstOrDefault(item => item.Label == e.Pin.Label);
             if(model != null)   
                 PinClickedCommand?.Execute(model);
+        }
+
+        public static readonly BindableProperty PinProperty = BindableProperty.Create(
+            propertyName: nameof(Pin),
+            returnType: typeof(PinModel),
+            declaringType: typeof(CustomMap),
+            defaultValue: null,
+            defaultBindingMode: BindingMode.TwoWay);
+        public PinModel Pin
+        {
+            get { return (PinModel)GetValue(PinProperty); }
+            set { SetValue(PinProperty, value); }
+        }
+
+        public static readonly BindableProperty PositionFocusProperty = BindableProperty.Create(
+            propertyName: nameof(PositionFocus),
+            returnType: typeof(Pin),
+            declaringType: typeof(CustomMap),
+            defaultValue: null,
+            defaultBindingMode: BindingMode.TwoWay);
+        public Pin PositionFocus
+        {
+            get { return (Pin)GetValue(PositionFocusProperty); }
+            set { SetValue(PositionFocusProperty, value);}
         }
 
         public static readonly BindableProperty MapClickedCommandProperty =
@@ -39,6 +103,14 @@ namespace MapNotepad.Controls
         {
             get { return (ICommand)GetValue(MapClickedCommandProperty); }
             set { SetValue(MapClickedCommandProperty, value); }
+        }
+
+        public static readonly BindableProperty MapLongClickedCommandProperty =
+          BindableProperty.Create(nameof(MapLongClickedCommand), typeof(ICommand), typeof(CustomMap), null, BindingMode.TwoWay);
+        public ICommand MapLongClickedCommand
+        {
+            get { return (ICommand)GetValue(MapLongClickedCommandProperty); }
+            set { SetValue(MapLongClickedCommandProperty, value); }
         }
 
         public static readonly BindableProperty PinClickedCommandProperty =
@@ -69,15 +141,6 @@ namespace MapNotepad.Controls
             set { SetValue(PinSourceProperty, value);  }
         }
 
-        public PinClickedEventArgs PinClickArg //my
-        {
-            get { return (PinClickedEventArgs)GetValue(PinClickArgProperty); }
-            set { SetValue(PinClickArgProperty, value); }
-        }
-
-        public static readonly BindableProperty PinClickArgProperty =
-            BindableProperty.Create(nameof(PinClickArg), typeof(PinClickedEventArgs), typeof(CustomMap), null, BindingMode.TwoWay);
-
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
@@ -101,6 +164,20 @@ namespace MapNotepad.Controls
                     }
                 }
             }
+            if(propertyName == nameof(PositionFocus))
+            {
+                if (PinSource == null)
+                {
+                        Pins.Clear();
+                        Pins.Add(new Pin()
+                        {
+                            Label = "",
+                            Position = new Position(Pin.Latitude, Pin.Longitude)
+                        });
+                        MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(5000)));
+                }
+            }
+
         }
     }
 }
