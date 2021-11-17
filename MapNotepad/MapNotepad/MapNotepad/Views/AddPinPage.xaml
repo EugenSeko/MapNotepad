@@ -67,11 +67,11 @@
             </Grid>
 
             <local:CustomMap
-                PinSource="{Binding PinList}" 
                 Grid.Row="1"
                 IsInputVMPositionFocus="{Binding IsFocus}"
                 MapLongClickedCommand="{Binding MapLongClickedCommand}"
-                Pin="{Binding Pin}" />
+                Pin="{Binding Pin, Mode=TwoWay}"
+                PinSource="{Binding PinList}" />
 
         </Grid>
     </ContentPage.Content>

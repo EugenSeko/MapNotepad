@@ -78,21 +78,22 @@ namespace MapNotepad.ViewModel
             set => SetProperty(ref _latitude, value);
         }
         #endregion
-
         #region ---Overrides ---
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
             if((args.PropertyName == nameof(Latitude) && Longitude != 0 && !isPositionChangeMuted) || (args.PropertyName == nameof(Longitude) && Latitude != 0 && !isPositionChangeMuted))
             {
-                Pin ??= new PinModel();
-                this.Pin.Latitude = Latitude;
-                this.Pin.Longitude = Longitude;
+                if(Pin == null)
+                {
+                    Pin = new PinModel();
+                }
+                Pin.Latitude = Latitude;
+                Pin.Longitude = Longitude;
                 IsFocus = IsFocus == false;
             }
         }
         #endregion
-
         #region ---Private Helpers---
         private void Init()
         {
@@ -135,10 +136,13 @@ namespace MapNotepad.ViewModel
             {
                 Pin.Label = Label;
                 Pin.Description = Description;
+                isPositionChangeMuted = true;
                 Pin.Longitude = Longitude;
                 Pin.Latitude = Latitude;
+                isPositionChangeMuted = false;
 
                 await _pinservice.AddPinAsync(Pin);
+                Pin = null;
             }
         }
         private void OnMapLongClick(PinModel pin)

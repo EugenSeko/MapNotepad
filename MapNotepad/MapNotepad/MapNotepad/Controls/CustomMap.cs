@@ -125,11 +125,12 @@ namespace MapNotepad.Controls
             }
             if(propertyName == nameof(IsInputVMPositionFocus))
             {
-                if (PinSource == null)
+                if (PinSource == null && Pin !=null)
                 {
                     IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(new Position(Pin.Latitude, Pin.Longitude));
                     string address = possibleAddresses.FirstOrDefault();
 
+                    Pin.Address = address;
                     Pins.Clear();
                     Pins.Add(new Pin()
                     {
