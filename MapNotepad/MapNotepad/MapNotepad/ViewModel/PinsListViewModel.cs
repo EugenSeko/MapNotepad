@@ -55,6 +55,7 @@ namespace MapNotepad.ViewModel
                 var pvm = PinExtension.ToPinViewModel(v);
                 pvm.DeleteCommand = SingleExecutionCommand.FromFunc(OnDeleteButtonCommand);
                 pvm.EditCommand = SingleExecutionCommand.FromFunc(OnEditButtonCommand);
+
                 pl.Add(pvm);
             }
             PinList = pl;

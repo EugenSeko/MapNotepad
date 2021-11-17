@@ -18,61 +18,15 @@ namespace MapNotepad.Controls
             UiSettings.MyLocationButtonEnabled = true;
             MyLocationEnabled = true;
             UiSettings.ZoomControlsEnabled = false;
+            geoCoder = new Geocoder();
             PinClicked += CustomMap_PinClicked;
             MapClicked += CustomMapClicked;
-            MapLongClicked += CustomMap_LongClicked;
+            MapLongClicked += CustomMap_LongClickedAsync;
         }
 
-        private void CustomMap_LongClicked(object sender, MapLongClickedEventArgs e)
-        { 
-            if(PinSource == null)
-            {
-                if(Pin == null)
-                {
-                    Pin = new PinModel()
-                    {
-                        Label = "",
-                        Latitude = e.Point.Latitude,
-                        Longitude = e.Point.Longitude
-                    };
+        private Geocoder geoCoder;
 
-                    Pins.Add(new Pin()
-                    {
-                        Label = "",
-                        Position = e.Point
-                    });
-                }
-                else
-                {
-                    Pin = new PinModel()
-                    {
-                        Label = "",
-                        Latitude = e.Point.Latitude,
-                        Longitude = e.Point.Longitude
-                    };
-                    Pins.Clear();
-                    Pins.Add(new Pin()
-                    {
-                        Label = "",
-                        Position = e.Point
-                    });
-                }
-               
-            }
-            
-            MapLongClickedCommand?.Execute(Pin);
-        }
-        private void CustomMapClicked(object sender, MapClickedEventArgs e)
-        {
-            MapClickedCommand?.Execute(null);
-        }
-        private void CustomMap_PinClicked(object sender, PinClickedEventArgs e)
-        {
-            var model = PinSource?.FirstOrDefault(item => item.Label == e.Pin.Label);
-            if(model != null)   
-                PinClickedCommand?.Execute(model);
-        }
-
+        #region --- Public Properties ---
         public static readonly BindableProperty PinProperty = BindableProperty.Create(
             propertyName: nameof(Pin),
             returnType: typeof(PinModel),
@@ -85,16 +39,16 @@ namespace MapNotepad.Controls
             set { SetValue(PinProperty, value); }
         }
 
-        public static readonly BindableProperty PositionFocusProperty = BindableProperty.Create(
-            propertyName: nameof(PositionFocus),
-            returnType: typeof(Pin),
+        public static readonly BindableProperty IsInputVMPositionFocusProperty = BindableProperty.Create(
+            propertyName: nameof(IsInputVMPositionFocus),
+            returnType: typeof(bool),
             declaringType: typeof(CustomMap),
             defaultValue: null,
             defaultBindingMode: BindingMode.TwoWay);
-        public Pin PositionFocus
+        public bool IsInputVMPositionFocus
         {
-            get { return (Pin)GetValue(PositionFocusProperty); }
-            set { SetValue(PositionFocusProperty, value);}
+            get { return (bool)GetValue(IsInputVMPositionFocusProperty); }
+            set { SetValue(IsInputVMPositionFocusProperty, value);}
         }
 
         public static readonly BindableProperty MapClickedCommandProperty =
@@ -140,8 +94,9 @@ namespace MapNotepad.Controls
             get { return (List<PinModel>)GetValue(PinSourceProperty); }
             set { SetValue(PinSourceProperty, value);  }
         }
-
-        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        #endregion
+        #region --- Overrides ---
+        protected override async void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
 
@@ -156,28 +111,75 @@ namespace MapNotepad.Controls
 
                         var pin = new Pin()
                         {
+                            Type = PinType.Place,
                             Label = item.Label,
                             Position = new Position(item.Latitude, item.Longitude),
+                            Address = item.Address
                         };
 
                         this.Pins.Add(pin);
                     }
+                    MoveToRegion(MapSpan.FromCenterAndRadius(new Position(PinSource[0].Latitude, PinSource[0].Longitude), Distance.FromMeters(5000)));
+
                 }
             }
-            if(propertyName == nameof(PositionFocus))
+            if(propertyName == nameof(IsInputVMPositionFocus))
             {
                 if (PinSource == null)
                 {
-                        Pins.Clear();
-                        Pins.Add(new Pin()
-                        {
-                            Label = "",
-                            Position = new Position(Pin.Latitude, Pin.Longitude)
-                        });
-                        MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(5000)));
+                    IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(new Position(Pin.Latitude, Pin.Longitude));
+                    string address = possibleAddresses.FirstOrDefault();
+
+                    Pins.Clear();
+                    Pins.Add(new Pin()
+                    {
+                        Type = PinType.Place,
+                        Label = "",
+                        Position = new Position(Pin.Latitude, Pin.Longitude),
+                        Address = address
+                    });
+                    MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(5000)));
                 }
             }
 
         }
+        #endregion
+        #region --- Private Helpers ---
+        private async void CustomMap_LongClickedAsync(object sender, MapLongClickedEventArgs e)
+        {
+            IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(e.Point);
+            string address = possibleAddresses.FirstOrDefault();
+            if (PinSource == null || PinSource.Count<2)
+            {
+                Pin = new PinModel()
+                {
+                    Label = "",
+                    Latitude = e.Point.Latitude,
+                    Longitude = e.Point.Longitude,
+                    Address = address
+                };
+                Pins.Clear();
+                Pins.Add(new Pin()
+                {
+                    Type = PinType.Place,
+                    Label = "",
+                    Position = e.Point,
+                    Address = address
+                });
+                MapLongClickedCommand?.Execute(Pin);
+            }
+            
+        }
+        private void CustomMapClicked(object sender, MapClickedEventArgs e)
+        {
+            MapClickedCommand?.Execute(null);
+        }
+        private void CustomMap_PinClicked(object sender, PinClickedEventArgs e)
+        {
+            var model = PinSource?.FirstOrDefault(item => item.Label == e.Pin.Label);
+            if (model != null)
+                PinClickedCommand?.Execute(model);
+        }
+        #endregion
     }
 }

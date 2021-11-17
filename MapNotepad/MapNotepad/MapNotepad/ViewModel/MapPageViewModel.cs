@@ -85,18 +85,23 @@ namespace MapNotepad.ViewModel
                 // Пользователь должен получить уведомление если по его запросу ничего не найдено.
                CurrentPin = null;
 
-               PinList = _searchService.Search(SearchEntry,_constPinList);
-
-               var oc = new ObservableCollection<PinModel>();
-
-                foreach (PinModel pm in PinList)
+               var serchRes = _searchService.Search(SearchEntry,_constPinList);
+                if (serchRes.Count > 0)
                 {
-                    oc.Add(pm);
+                    PinList = serchRes;
+                    var oc = new ObservableCollection<PinModel>();
+
+                    foreach (PinModel pm in PinList)
+                    {
+                        oc.Add(pm);
+                    }
+                    ObserPinList = oc;
                 }
 
-                ObserPinList = oc;
-
-                if (!ShowCurrentPinList) PinList = _constPinList;
+                if (!ShowCurrentPinList) 
+                {
+                    PinList = _constPinList;
+                } 
             }
         }
 

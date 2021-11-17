@@ -66,9 +66,10 @@
                     Text="{Binding Latitude, Mode=TwoWay}" />
             </Grid>
 
-            <local:CustomMap 
-                PositionFocus="{Binding Focus}"
-                Grid.Row="1" 
+            <local:CustomMap
+                PinSource="{Binding PinList}" 
+                Grid.Row="1"
+                IsInputVMPositionFocus="{Binding IsFocus}"
                 MapLongClickedCommand="{Binding MapLongClickedCommand}"
                 Pin="{Binding Pin}" />
 

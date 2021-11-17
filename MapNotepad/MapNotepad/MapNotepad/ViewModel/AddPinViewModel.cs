@@ -8,6 +8,7 @@ using System.Windows.Input;
 using MapNotepad.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
+using System.Collections.Generic;
 
 namespace MapNotepad.ViewModel
 {
@@ -18,26 +19,32 @@ namespace MapNotepad.ViewModel
         {
             _pinservice = pinService;
             Init();
-            MapLongClickedCommand = new Command<PinModel>(OnMapLongClick);
         }
 
-       
+        private bool isPositionChangeMuted = false;
+        private bool isEdit;
 
         #region ---Public Properties---
         public ICommand OnButtonLeftCommand => SingleExecutionCommand.FromFunc(GoToMainPageListPageAsync);
         public ICommand OnButtonSaveCommand => SingleExecutionCommand.FromFunc(SavePin);
-        public ICommand MapLongClickedCommand { get; set; }
+        public ICommand MapLongClickedCommand => new Command<PinModel>(OnMapLongClick);
+        private List<PinModel> _pinList;
+        public List<PinModel> PinList
+        {
+            get => _pinList;
+            set => SetProperty(ref _pinList, value);
+        }
         private PinModel _pin;
         public PinModel Pin 
         {
             get => _pin;
             set => SetProperty(ref _pin, value);
         }
-        private Pin _focus;
-        public Pin Focus
+        private bool _isFocus;
+        public bool IsFocus
         {
-            get => _focus;
-            set => SetProperty(ref _focus, value);
+            get => _isFocus;
+            set => SetProperty(ref _isFocus, value);
         }
 
         private String _headerText="Add Pin";
@@ -76,40 +83,41 @@ namespace MapNotepad.ViewModel
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
-            if((args.PropertyName == nameof(Latitude) && Longitude != 0 && !isMapLongClicked) || (args.PropertyName == nameof(Longitude) && Latitude != 0 && !isMapLongClicked))
+            if((args.PropertyName == nameof(Latitude) && Longitude != 0 && !isPositionChangeMuted) || (args.PropertyName == nameof(Longitude) && Latitude != 0 && !isPositionChangeMuted))
             {
+                Pin ??= new PinModel();
                 this.Pin.Latitude = Latitude;
                 this.Pin.Longitude = Longitude;
-                Focus = null;
-                Focus = new Pin() 
-                { 
-                    Label = "" 
-                };
-                
+                IsFocus = IsFocus == false;
             }
         }
         #endregion
 
         #region ---Private Helpers---
-        private bool isMapLongClicked = false;
         private void Init()
         {
             if (NavigationParameter != null)
             {
-                HeaderText = "Edit Pin";
-                var pinViewModel = NavigationParameter as PinViewModel;
+                isEdit = true;
+                HeaderText = "Edit Pin"; 
+                PinViewModel pinViewModel = NavigationParameter as PinViewModel;
                 Label = pinViewModel.Label;
                 Description = pinViewModel.Description;
+
+                isPositionChangeMuted = true;
                 Longitude = pinViewModel.Longitude;
                 Latitude = pinViewModel.Latitude;
+                isPositionChangeMuted = false;
+
+                PinList = new List<PinModel>() {Extensions.PinExtension.ToPinModel(pinViewModel)};
+                NavigationParameter = null;
             }
         }
         private async Task SavePin()
         {
-            if (NavigationParameter != null)
+            if (isEdit)
             {
-                var pinViewModel = NavigationParameter as PinViewModel;
-                NavigationParameter = null;
+                var pinViewModel = Extensions.PinExtension.ToPinViewModel(PinList[0]);
 
                 await _pinservice.UpdatePinAsync(new PinModel()
                 {
@@ -127,18 +135,20 @@ namespace MapNotepad.ViewModel
             {
                 Pin.Label = Label;
                 Pin.Description = Description;
+                Pin.Longitude = Longitude;
+                Pin.Latitude = Latitude;
 
                 await _pinservice.AddPinAsync(Pin);
             }
         }
         private void OnMapLongClick(PinModel pin)
         {
-            isMapLongClicked = true;
+            isPositionChangeMuted = true;
 
             Longitude = pin.Longitude;
             Latitude = pin.Latitude;
 
-            isMapLongClicked = false;
+            isPositionChangeMuted = false;
         }
         #endregion
     }
