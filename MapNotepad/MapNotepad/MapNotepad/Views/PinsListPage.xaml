@@ -34,8 +34,7 @@
                         <DataTemplate>
                             <context:SideContextMenuView IsAutoCloseEnabled="true">
                                 <context:SideContextMenuView.View>
-                                    <Frame HeightRequest="75" 
-                                           WidthRequest="{Binding Source={x:Reference CollectionView}, Path=Width, Converter={StaticResource MenuFitWidthConverter}, ConverterParameter='40'}">
+                                    <Frame HeightRequest="75" WidthRequest="{Binding Source={x:Reference CollectionView}, Path=Width, Converter={StaticResource MenuFitWidthConverter}, ConverterParameter='40'}">
                                         <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
                                             <Frame>
                                                 <ImageButton
@@ -82,26 +81,18 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </Grid>
-            <Frame
-                Margin="20"
-                BackgroundColor="#596EFB"
+            <ImageButton
+                Margin="0,0,18,18"
+                Padding="12"
+                BackgroundColor="{DynamicResource Primary}"
+                BorderWidth="6"
+                Command="{Binding AddButtonTapCommand}"
                 CornerRadius="90"
-                HasShadow="True"
+                HeightRequest="55"
                 HorizontalOptions="End"
-                Scale="1"
-                VerticalOptions="End">
-                <ImageButton
-                    BackgroundColor="#596EFB"
-                    BorderColor="#596EFB"
-                    BorderWidth="6"
-                    Command="{Binding AddButtonTapCommand}"
-                    CornerRadius="90"
-                    HorizontalOptions="Center"
-                    Scale="2.6"
-                    Source="ic_plus.png"
-                    VerticalOptions="Center" />
-            </Frame>
-
+                Source="ic_plus.png"
+                VerticalOptions="End"
+                WidthRequest="55" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

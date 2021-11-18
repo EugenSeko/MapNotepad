@@ -84,6 +84,7 @@ namespace MapNotepad.ViewModel
                 // название, координаты, ключевые слова в описании)
                 // Пользователь должен получить уведомление если по его запросу ничего не найдено.
                CurrentPin = null;
+               ObserPinList = null;
 
                var serchRes = _searchService.Search(SearchEntry,_constPinList);
                 if (serchRes.Count > 0)

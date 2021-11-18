@@ -1,9 +1,11 @@
-﻿using MapNotepad.Model;
+﻿using MapNotepad.Helpers;
+using MapNotepad.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -74,6 +76,16 @@ namespace MapNotepad.Controls
         {
             get { return (ICommand)GetValue(PinClickedCommandProperty); }
             set { SetValue(PinClickedCommandProperty, value); }
+        }
+
+
+       
+        private ICommand _goToMyLocationCommand;
+        public ICommand GoToMyLocationCommand => _goToMyLocationCommand ??= SingleExecutionCommand.FromFunc(OnGoToMyLocationCommand);
+
+        private async Task OnGoToMyLocationCommand()
+        {
+            throw new NotImplementedException();
         }
 
         public static readonly BindableProperty PinClickedCommandParameterProperty =
