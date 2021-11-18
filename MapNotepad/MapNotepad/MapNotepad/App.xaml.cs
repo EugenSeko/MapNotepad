@@ -49,7 +49,9 @@ namespace MapNotepad
 
             var settingsManager = Container.Resolve<ISettingsManager>();
 
-           // NavigationService.NavigateAsync($"/{nameof(LoginAndRegisterPage)}");
+           
+
+            // NavigationService.NavigateAsync($"/{nameof(LoginAndRegisterPage)}");
 
             if (settingsManager.UserId == null)
             {

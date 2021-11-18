@@ -101,15 +101,12 @@
                 Margin="0,0,18,18"
                 Padding="10"
                 BackgroundColor="{DynamicResource White}"
-                Command="{Binding GoToMyCurrentLocationCommand}"
+                Command="{Binding GoToMyLocationCommand,Source={x:Reference map}}"
                 CornerRadius="90"
                 HorizontalOptions="End"
                 Scale="1.3"
                 Source="ic_location.png"
                 VerticalOptions="End">
-                <ImageButton.Behaviors>
-                    <Behaviors:EventToCommandBehavior Command="{Binding GoToMyLocationCommand, Source={x:Reference map}}" />
-                </ImageButton.Behaviors>
             </ImageButton>
         </Grid>
     </ContentPage.Content>

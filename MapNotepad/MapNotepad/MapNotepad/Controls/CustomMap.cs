@@ -1,10 +1,10 @@
 ﻿using MapNotepad.Helpers;
 using MapNotepad.Model;
+using Plugin.Geolocator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -14,10 +14,10 @@ namespace MapNotepad.Controls
 {
     public class CustomMap : Map
     {
+        private Geocoder geoCoder;
         public CustomMap()
         {
-            
-            UiSettings.MyLocationButtonEnabled = true;
+            UiSettings.MyLocationButtonEnabled = false;
             MyLocationEnabled = true;
             UiSettings.ZoomControlsEnabled = false;
             geoCoder = new Geocoder();
@@ -26,9 +26,12 @@ namespace MapNotepad.Controls
             MapLongClicked += CustomMap_LongClickedAsync;
         }
 
-        private Geocoder geoCoder;
-
         #region --- Public Properties ---
+
+        private ICommand _goToMyLocationCommand;
+        public ICommand GoToMyLocationCommand => _goToMyLocationCommand ??= SingleExecutionCommand.FromFunc(OnGoToMyLocationCommand);
+
+
         public static readonly BindableProperty PinProperty = BindableProperty.Create(
             propertyName: nameof(Pin),
             returnType: typeof(PinModel),
@@ -71,21 +74,10 @@ namespace MapNotepad.Controls
 
         public static readonly BindableProperty PinClickedCommandProperty =
           BindableProperty.Create(nameof(PinClickedCommand), typeof(ICommand), typeof(CustomMap), null, BindingMode.TwoWay);
-
         public ICommand PinClickedCommand
         {
             get { return (ICommand)GetValue(PinClickedCommandProperty); }
             set { SetValue(PinClickedCommandProperty, value); }
-        }
-
-
-       
-        private ICommand _goToMyLocationCommand;
-        public ICommand GoToMyLocationCommand => _goToMyLocationCommand ??= SingleExecutionCommand.FromFunc(OnGoToMyLocationCommand);
-
-        private async Task OnGoToMyLocationCommand()
-        {
-            throw new NotImplementedException();
         }
 
         public static readonly BindableProperty PinClickedCommandParameterProperty =
@@ -158,6 +150,20 @@ namespace MapNotepad.Controls
         }
         #endregion
         #region --- Private Helpers ---
+        private async Task OnGoToMyLocationCommand()
+        {
+            var locator = CrossGeolocator.Current;
+            try
+            {
+                var position = await locator.GetPositionAsync();
+                MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude),
+                                                         Distance.FromMiles(1)));
+            }
+            catch
+            {
+                Console.WriteLine("Geolocation is not available"); // TODO: тут будет юзер диалог
+            }
+        }
         private async void CustomMap_LongClickedAsync(object sender, MapLongClickedEventArgs e)
         {
             IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(e.Point);

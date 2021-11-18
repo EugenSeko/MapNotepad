@@ -7,6 +7,7 @@ using Xamarin.Forms.GoogleMaps.Android;
 using AndroidX.Core.Content;
 using AndroidX.Core.App;
 using Android;
+using Plugin.CurrentActivity;
 
 namespace MapNotepad.Droid
 {
@@ -23,6 +24,7 @@ namespace MapNotepad.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
+            CrossCurrentActivity.Current.Init(this, savedInstanceState); // geolocator plugin
             ContextMenu.Droid.ContextMenuViewRenderer.Preserve(); //lib ContextCellView
 
             LoadApplication(new App());
