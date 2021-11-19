@@ -106,10 +106,9 @@ namespace MapNotepad.Controls
 
             if (propertyName == nameof(PinSource))
             {
-                if (PinSource != null)
+                if (PinSource?.Count >0)
                 {
                     Pins.Clear();
-
                     foreach (PinModel item in PinSource)
                     {
 
@@ -124,7 +123,6 @@ namespace MapNotepad.Controls
                         this.Pins.Add(pin);
                     }
                     MoveToRegion(MapSpan.FromCenterAndRadius(new Position(PinSource[0].Latitude, PinSource[0].Longitude), Distance.FromMeters(5000)));
-
                 }
             }
             if(propertyName == nameof(IsInputVMPositionFocus))

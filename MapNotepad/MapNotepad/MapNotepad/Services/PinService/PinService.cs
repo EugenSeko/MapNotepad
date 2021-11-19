@@ -6,6 +6,7 @@ using MapNotepad.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,7 +24,20 @@ namespace MapNotepad.Services.PinService
 
         public async Task AddPinAsync(PinModel pin)
         {
-           await _repository.InsertAsync(pin);
+            //PinModel pinModel = new PinModel
+            //{
+            //    Address = pin.Address,
+            //    Description = pin.Description,
+            //    Id = pin.Id,
+            //    IsFavorite = pin.IsFavorite,
+            //    Label = pin.Label,
+            //    Latitude = pin.Latitude,
+            //    Longitude = pin.Longitude,
+            //    UserId = _settingsManager.UserId
+            //};
+            var Pin = pin;
+            Pin.UserId = _settingsManager.UserId;
+            await _repository.InsertAsync(Pin);
         }
 
         public async Task UpdatePinAsync(PinModel pin)
@@ -39,8 +53,16 @@ namespace MapNotepad.Services.PinService
 
         public async Task<List<PinModel>> GetPinsAsync()
         {
-            var pinlist = await _repository.GetAllAsync<PinModel>();
-            return pinlist;
+           var pinlist = await _repository.GetAllAsync<PinModel>();
+            List<PinModel> outRes = new List<PinModel>();
+            foreach(var p in pinlist)
+            {
+                if (p.UserId == _settingsManager.UserId)
+                {
+                    outRes.Add(p);
+                }
+            }
+           return outRes ;
         }
         
     }

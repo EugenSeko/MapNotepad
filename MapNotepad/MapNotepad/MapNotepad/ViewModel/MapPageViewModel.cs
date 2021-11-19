@@ -1,4 +1,6 @@
-﻿using MapNotepad.Model;
+﻿using MapNotepad.Helpers;
+using MapNotepad.Model;
+using MapNotepad.Services.Authentification;
 using MapNotepad.Services.PinService;
 using MapNotepad.Services.SearchService;
 using Prism.Navigation;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -17,22 +20,25 @@ namespace MapNotepad.ViewModel
     {
         private readonly IPinService _pinService;
         private readonly ISearchServise _searchService;
+        private readonly IAuthentificationService _authentifService;
+
         public MapPageViewModel(INavigationService navigationService, 
                                 PinService pinService, 
-                                ISearchServise searchServise):base(navigationService)
+                                ISearchServise searchServise, 
+                                IAuthentificationService authentificationService):base(navigationService)
         {
+            _authentifService = authentificationService;
             _pinService = pinService;
             _searchService = searchServise;
-
-            PinClickCommand = new Command<PinModel>(OnPinClick);
-            ClearClickCommand = new Command(OnClearClick);
-
             InitAsync();
         }
 
         #region ---Public Properties---
         public ICommand PinClickCommand { get; set; }
         public ICommand ClearClickCommand { get; set; }
+        public ICommand LogoutCommand { get; set; }
+        public ICommand GoToSettingsPageCommand { get; set; }
+
 
         private ObservableCollection<PinModel> _obserPinList;
         public ObservableCollection<PinModel> ObserPinList
@@ -112,6 +118,10 @@ namespace MapNotepad.ViewModel
         private List<PinModel> _constPinList;
         private async void InitAsync()
         {
+            PinClickCommand = new Command<PinModel>(OnPinClick);
+            ClearClickCommand = new Command(OnClearClick);
+            GoToSettingsPageCommand = SingleExecutionCommand.FromFunc(GoToAddPinPageAsync);
+            LogoutCommand = SingleExecutionCommand.FromFunc(OnLogoutCommand);
             PinList = await _pinService.GetPinsAsync();
             _constPinList = PinList;
         }
@@ -128,7 +138,11 @@ namespace MapNotepad.ViewModel
             }
 
         }
-
+        private Task OnLogoutCommand()
+        {
+            _authentifService.Logout();
+            return Task.CompletedTask;
+        }
         #endregion
     }
 }

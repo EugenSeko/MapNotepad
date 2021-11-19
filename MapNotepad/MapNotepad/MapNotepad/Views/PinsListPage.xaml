@@ -24,7 +24,10 @@
             </Grid.RowDefinitions>
 
             <Grid RowDefinitions="0.07*,0.93*">
-                <local:SearchBar Grid.Row="0" />
+                <local:SearchBar
+                    Grid.Row="0"
+                    LeftButtonCommand="{Binding GoToSettingsPageCommand}"
+                    RightButtonCommand="{Binding LogoutCommand}" />
                 <CollectionView
                     x:Name="CollectionView"
                     Grid.Row="1"

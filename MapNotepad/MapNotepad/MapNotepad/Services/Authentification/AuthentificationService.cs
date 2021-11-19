@@ -2,6 +2,7 @@
 using MapNotepad.Model;
 using MapNotepad.Services.Repository;
 using MapNotepad.Services.Settings;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,14 @@ namespace MapNotepad.Services.Authentification
   public  class AuthentificationService : IAuthentificationService
     {
         // NOTE: переписать методы используя регулярные выражения, если будет время
+        private readonly INavigationService _navigationService;
         private readonly IRepository _repository;
         private readonly ISettingsManager _settingsManager;
-        public AuthentificationService(IRepository repository, ISettingsManager settingsManager)
+        public AuthentificationService(IRepository repository, ISettingsManager settingsManager, INavigationService navigationService)
         {
             _repository = repository;
             _settingsManager = settingsManager;
+            _navigationService = navigationService;
         }
 
         public void Register(string username, string email)
@@ -129,6 +132,7 @@ namespace MapNotepad.Services.Authentification
                     {
                         result = VerficationResult.Correct;
                         _settingsManager.UserId = email;
+                        break;
                     }
                     else
                     {
@@ -138,6 +142,13 @@ namespace MapNotepad.Services.Authentification
             }
            
             return result;
+        }
+
+        public async Task Logout()
+        {
+            _settingsManager.UserId = null;
+            _settingsManager.UserName = null;
+           await _navigationService.NavigateAsync("/LoginAndRegisterPage");
         }
     }
 }

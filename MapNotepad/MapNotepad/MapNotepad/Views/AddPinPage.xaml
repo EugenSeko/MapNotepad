@@ -9,80 +9,63 @@
 
 
     <ContentPage.Content>
-        <Grid BackgroundColor="White" VerticalOptions="Fill">
+        <StackLayout BackgroundColor="White" VerticalOptions="Fill">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
 
-            <Grid
-                Grid.Row="0"
-                ColumnDefinitions="0.5*,0.5*"
-                RowDefinitions="0.14*,0.14*,0.14*,0.14*,0.14*,0.14*,0.14*">
-                <local:Header
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2" />
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Text="Label"
-                    VerticalOptions="End" />
-                <local:NoUnderlineEntry
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    BackgroundColor="#F1F3FD"
+
+            <StackLayout Spacing="0">
+                <local:Header HeightRequest="48" />
+                <BoxView HeightRequest="1" Color="#F1F3FD" />
+                <Label Padding="28,8.5,0,6" Text="Label" />
+                <local:CustomEntry
+                    Margin="16,1,16,1"
+                    HeightRequest="40"
+                    Placeholder="Label"
                     Text="{Binding Label}" />
-                <Label
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Text="Description"
-                    VerticalOptions="End" />
-                <local:NoUnderlineEntry
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    BackgroundColor="#F1F3FD"
+                <Label Padding="28,21,0,6" Text="Description" />
+                <local:CustomEntry
+                    Margin="16,1,16,1"
+                    HeightRequest="40"
+                    Placeholder="Description"
                     Text="{Binding Description}" />
-                <Label
-                    Grid.Row="5"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Text="Coordinates"
+                <Label Padding="28,20.5,0,6" Text="Coordinates" />
+                <StackLayout Orientation="Horizontal" Spacing="0">
+                    <local:CustomEntry
+                        Margin="16,1,6,1"
+                        HeightRequest="40"
+                        HorizontalOptions="FillAndExpand"
+                        Text="{Binding Longitude, Mode=TwoWay}" />
+                    <local:CustomEntry
+                        Margin="6,1,16,1"
+                        HeightRequest="40"
+                        HorizontalOptions="FillAndExpand"
+                        Text="{Binding Latitude, Mode=TwoWay}" />
+                </StackLayout>
+            </StackLayout>
+            <Grid
+                Padding="0,20,0,0"
+                RowDefinitions="*"
+                VerticalOptions="FillAndExpand">
+                <local:CustomMap
+                    x:Name="map"
+                    Grid.Row="0"
+                    IsInputVMPositionFocus="{Binding IsFocus}"
+                    MapLongClickedCommand="{Binding MapLongClickedCommand}"
+                    Pin="{Binding Pin, Mode=TwoWay}"
+                    PinSource="{Binding PinList}" />
+
+                <ImageButton
+                    Grid.Row="0"
+                    Margin="0,0,18,18"
+                    Padding="10"
+                    BackgroundColor="{DynamicResource White}"
+                    Command="{Binding GoToMyLocationCommand, Source={x:Reference map}}"
+                    CornerRadius="90"
+                    HorizontalOptions="End"
+                    Scale="1.3"
+                    Source="ic_location.png"
                     VerticalOptions="End" />
-                <local:NoUnderlineEntry
-                    Grid.Row="6"
-                    Grid.Column="0"
-                    BackgroundColor="#F1F3FD"
-                    Text="{Binding Longitude, Mode=TwoWay}" />
-                <local:NoUnderlineEntry
-                    Grid.Row="6"
-                    Grid.Column="1"
-                    BackgroundColor="#F1F3FD"
-                    Text="{Binding Latitude, Mode=TwoWay}" />
             </Grid>
-
-            <local:CustomMap
-                Grid.Row="1"
-                IsInputVMPositionFocus="{Binding IsFocus}"
-                MapLongClickedCommand="{Binding MapLongClickedCommand}"
-                Pin="{Binding Pin, Mode=TwoWay}"
-                PinSource="{Binding PinList}" />
-
-        </Grid>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
-<!--<maps:Map x:Name="map"
-                      Grid.Row="1"
-                      VerticalOptions="FillAndExpand"
-                      >
-    <maps:Map.Behaviors>
-        <xct:EventToCommandBehavior
-                        EventName="MapLongClicked"
-                        Command="{Binding OnMapLongClickedCommand}"/>
-    </maps:Map.Behaviors>
-</maps:Map>-->

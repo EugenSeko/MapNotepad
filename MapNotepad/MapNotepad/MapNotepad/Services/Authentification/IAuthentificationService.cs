@@ -13,6 +13,7 @@ namespace MapNotepad.Services.Authentification
         Task<ValidationResults> ValidateAsync(string username, string email);
         ValidationResults Validate(string password);
         Task<VerficationResult> VerificateAsync(string email, string password);
+        Task Logout();
 
 
     }
