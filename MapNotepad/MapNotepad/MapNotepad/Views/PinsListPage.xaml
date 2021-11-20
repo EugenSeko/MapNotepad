@@ -40,12 +40,33 @@
                                     <Frame HeightRequest="75" WidthRequest="{Binding Source={x:Reference CollectionView}, Path=Width, Converter={StaticResource MenuFitWidthConverter}, ConverterParameter='40'}">
                                         <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
                                             <Frame>
-                                                <ImageButton
+                                                <local:LikeButton
+                                                    x:Name="favButton"
                                                     BackgroundColor="Transparent"
-                                                    Scale="1.2"
-                                                    Source="ic_like_blue" />
+                                                    Command="{Binding FavoritChangeCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    IsFavorite="{Binding IsFavorite}"
+                                                    Scale="1.2">
+                                                    <ImageButton.Triggers>
+                                                        <DataTrigger
+                                                            Binding="{Binding Source={x:Reference favButton}, Path=IsFavorite}"
+                                                            TargetType="ImageButton"
+                                                            Value="True">
+                                                            <Setter Property="Source" Value="ic_like_blue" />
+                                                        </DataTrigger>
+                                                        <DataTrigger
+                                                            Binding="{Binding Source={x:Reference favButton}, Path=IsFavorite}"
+                                                            TargetType="ImageButton"
+                                                            Value="False">
+                                                            <Setter Property="Source" Value="ic_like_gray" />
+                                                        </DataTrigger>
+                                                    </ImageButton.Triggers>
+                                                </local:LikeButton>
                                             </Frame>
                                             <StackLayout Orientation="Vertical">
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding MoveToPinLocationCommand}" CommandParameter="{Binding .}" />
+                                                </StackLayout.GestureRecognizers>
                                                 <Label Style="{DynamicResource Label}" Text="{Binding Label}" />
                                                 <StackLayout Orientation="Horizontal">
                                                     <Label Style="{DynamicResource Label}" Text="{Binding Latitude}" />

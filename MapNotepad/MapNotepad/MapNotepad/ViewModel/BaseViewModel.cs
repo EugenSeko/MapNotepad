@@ -15,7 +15,7 @@ namespace MapNotepad.ViewModel
         {
             _navigationService = navigationService;
         }
-        public static object NavigationParameter { get; set; }
+        protected static object NavigationParameter { get; set; }
         public Task GoBackAsync()
         {
             return Task.FromResult(_navigationService.GoBackAsync());
@@ -27,6 +27,10 @@ namespace MapNotepad.ViewModel
         public async Task GoToMainPageListPageAsync()
         {
             await _navigationService.NavigateAsync("/MainPage?selectedTab=PinsListPage");
+        }
+        public async Task GoToMainPagePageAsync()
+        {
+            await _navigationService.NavigateAsync("/MainPage?selectedTab=MapPage");
         }
         public async Task GoBackToRootAsync()
         {

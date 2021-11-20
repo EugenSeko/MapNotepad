@@ -11,6 +11,12 @@ namespace MapNotepad.ViewModel
     {
 
         #region --- Public Properties ---
+        private ICommand _moveToPinLocationCommand;
+        public ICommand MoveToPinLocationCommand
+        {
+            get => _moveToPinLocationCommand;
+            set => SetProperty(ref _moveToPinLocationCommand, value);
+        }
         private ICommand _deleteCommand;
         public ICommand DeleteCommand
         {
@@ -22,6 +28,12 @@ namespace MapNotepad.ViewModel
         {
             get => _editCommand;
             set => SetProperty(ref _editCommand, value);
+        }
+        private ICommand _favoritChangeCommand;
+        public ICommand FavoritChangeCommand
+        {
+            get => _favoritChangeCommand;
+            set => SetProperty(ref _favoritChangeCommand, value);
         }
         private int _id;
         public int Id 

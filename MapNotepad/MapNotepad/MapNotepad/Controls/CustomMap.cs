@@ -122,12 +122,16 @@ namespace MapNotepad.Controls
 
                         this.Pins.Add(pin);
                     }
-                    MoveToRegion(MapSpan.FromCenterAndRadius(new Position(PinSource[0].Latitude, PinSource[0].Longitude), Distance.FromMeters(5000)));
+                 //   MoveToRegion(MapSpan.FromCenterAndRadius(new Position(PinSource[0].Latitude, PinSource[0].Longitude), Distance.FromMeters(5000)));
+                }
+                else
+                {
+                    Pins.Clear();
                 }
             }
             if(propertyName == nameof(IsInputVMPositionFocus))
             {
-                if (PinSource == null && Pin !=null)
+                if (Pin !=null && PinSource == null)
                 {
                     IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(new Position(Pin.Latitude, Pin.Longitude));
                     string address = possibleAddresses.FirstOrDefault();
@@ -140,6 +144,20 @@ namespace MapNotepad.Controls
                         Label = "",
                         Position = new Position(Pin.Latitude, Pin.Longitude),
                         Address = address
+                    });
+                    MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(5000)));
+                }
+                else if(PinSource != null)
+                {
+                    IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(new Position(Pin.Latitude, Pin.Longitude));
+                    string address = possibleAddresses.FirstOrDefault();
+                    Pins.Clear();
+                    Pins.Add(new Pin()
+                    {
+                        Type = PinType.Place,
+                        Label = Pin.Label ?? "no label", 
+                        Position = new Position(Pin.Latitude, Pin.Longitude),
+                        Address = Pin.Address ?? address
                     });
                     MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(5000)));
                 }

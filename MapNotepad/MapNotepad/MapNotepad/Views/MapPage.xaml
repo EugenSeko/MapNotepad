@@ -3,10 +3,10 @@
     x:Class="MapNotepad.Views.MapPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:Behaviors="http://prismlibrary.com"
     xmlns:controls="clr-namespace:MapNotepad.Controls"
     xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
     Title="Maps">
+
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -27,7 +27,9 @@
                         x:Name="map"
                         Grid.Row="0"
                         Grid.RowSpan="3"
+                        IsInputVMPositionFocus="{Binding IsFocus}"
                         MapClickedCommand="{Binding ClearClickCommand}"
+                        Pin="{Binding Pin}"
                         PinClickedCommand="{Binding PinClickCommand}"
                         PinSource="{Binding PinList}" />
                     <ListView
@@ -44,7 +46,8 @@
                                             <ImageButton
                                                 Margin="10,10,0,10"
                                                 BackgroundColor="Transparent"
-                                                Command="{Binding PinLocationButtonCommand}"
+                                                Command="{Binding MoveToPinLocationCommand}"
+                                                CommandParameter="{Binding .}"
                                                 Scale="1"
                                                 Source="ic_pin_gray.png" />
                                             <StackLayout Margin="6" Spacing="0">

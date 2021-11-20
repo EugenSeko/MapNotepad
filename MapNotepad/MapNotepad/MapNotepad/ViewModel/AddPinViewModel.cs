@@ -134,12 +134,11 @@ namespace MapNotepad.ViewModel
             }
             else
             {
-                Pin.Label = Label;
+                Pin.Label = Label; 
+                Pin.IsFavorite = true;
                 Pin.Description = Description;
-                isPositionChangeMuted = true;
                 Pin.Longitude = Longitude;
                 Pin.Latitude = Latitude;
-                isPositionChangeMuted = false;
 
                 await _pinservice.AddPinAsync(Pin);
                 Pin = null;
