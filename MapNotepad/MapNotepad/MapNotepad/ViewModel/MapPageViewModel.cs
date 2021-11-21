@@ -18,15 +18,15 @@ using Xamarin.Forms.GoogleMaps;
 
 namespace MapNotepad.ViewModel
 {
-    class MapPageViewModel:BaseViewModel, IActiveAware
+    class MapPageViewModel : BaseViewModel, IActiveAware
     {
         private readonly IPinService _pinService;
         private readonly ISearchServise _searchService;
         private readonly IAuthentificationService _authentifService;
-        public MapPageViewModel(INavigationService navigationService, 
-                                PinService pinService, 
-                                ISearchServise searchServise, 
-                                IAuthentificationService authentificationService):base(navigationService)
+        public MapPageViewModel(INavigationService navigationService,
+                                PinService pinService,
+                                ISearchServise searchServise,
+                                IAuthentificationService authentificationService) : base(navigationService)
         {
             _authentifService = authentificationService;
             _pinService = pinService;
@@ -40,7 +40,6 @@ namespace MapNotepad.ViewModel
         public ICommand GoToSettingsPageCommand { get; set; }
 
         public event EventHandler IsActiveChanged;
-
         private bool _isActive;
         public bool IsActive
         {
@@ -64,8 +63,8 @@ namespace MapNotepad.ViewModel
         public PinModel CurrentPin
         {
             get => _currentPin;
-            set 
-            { 
+            set
+            {
                 SetProperty(ref _currentPin, value);
                 RaisePropertyChanged(nameof(ShowCurrentPinDescription));
             }
@@ -91,13 +90,13 @@ namespace MapNotepad.ViewModel
             set => SetProperty(ref _pinList, value);
         }
 
-        public bool ShowCurrentPinList => SearchEntry != null && SearchEntry !="" && ObserPinList !=null;
+        public bool ShowCurrentPinList => SearchEntry != null && SearchEntry != "" && ObserPinList != null;
 
         private string _searchEntry;
         public string SearchEntry
         {
             get => _searchEntry;
-            set 
+            set
             {
                 SetProperty(ref _searchEntry, value);
                 RaisePropertyChanged(nameof(ShowCurrentPinList));
@@ -109,15 +108,14 @@ namespace MapNotepad.ViewModel
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
-            if(args.PropertyName == nameof(SearchEntry))
+            if (args.PropertyName == nameof(SearchEntry))
             {
-                // TODO: передать значение поиска в поисковой сервис.. Поиск осуществляется через поля –
-                // название, координаты, ключевые слова в описании)
+                // TODO: 
                 // Пользователь должен получить уведомление если по его запросу ничего не найдено.
-               CurrentPin = null;
-               ObserPinList = null;
+                CurrentPin = null;
+                ObserPinList = null;
 
-               var serchRes = _searchService.Search(SearchEntry,_constPinList);
+                var serchRes = _searchService.Search(SearchEntry, _constPinList);
                 if (serchRes.Count > 0)
                 {
                     PinList = serchRes;
@@ -127,20 +125,24 @@ namespace MapNotepad.ViewModel
                     {
                         var pvm = Extensions.PinExtension.ToPinViewModel(pm);
                         pvm.MoveToPinLocationCommand = SingleExecutionCommand.FromFunc(GoToPinLocation);
-                        oc.Add(pvm); 
+                        oc.Add(pvm);
                     }
                     ObserPinList = oc;
                 }
-                if (!ShowCurrentPinList) 
+                if (!ShowCurrentPinList)
                 {
                     PinList = _constPinList;
-                } 
+                }
             }
-            if(args.PropertyName == nameof(IsActive))
+            if (args.PropertyName == nameof(IsActive))
             {
-                if (IsActive && NavigationParameter == null )
+                if (IsActive && NavigationParameter == null)
                 {
                     InitAsync();
+                }
+                if (!IsActive)
+                {
+                    NavigationParameter = -1;
                 }
             }
         }
@@ -158,7 +160,7 @@ namespace MapNotepad.ViewModel
             var pinList = new List<PinModel>();
             var allPinList = await _pinService.GetPinsAsync();
             var favor_list = allPinList.Where(x => x.IsFavorite == true);
-            foreach(var p in favor_list)
+            foreach (var p in favor_list)
             {
                 pinList.Add(p);
             }
@@ -167,17 +169,17 @@ namespace MapNotepad.ViewModel
 
             if (NavigationParameter?.GetType() == typeof(PinModel))
             {
-              await  GoToPinLocation(NavigationParameter);
+                await GoToPinLocation(NavigationParameter);
             }
         }
 
         private Task GoToPinLocation(object obj)
-        { 
-            if(obj.GetType() == typeof(PinModel))
+        {
+            if (obj.GetType() == typeof(PinModel))
             {
                 Pin = obj as PinModel;
             }
-            else if(obj.GetType() == typeof(PinViewModel))
+            else if (obj.GetType() == typeof(PinViewModel))
             {
                 Pin = Extensions.PinExtension.ToPinModel(obj as PinViewModel);
             }

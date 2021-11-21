@@ -111,7 +111,6 @@ namespace MapNotepad.Controls
                     Pins.Clear();
                     foreach (PinModel item in PinSource)
                     {
-
                         var pin = new Pin()
                         {
                             Type = PinType.Place,
@@ -119,10 +118,8 @@ namespace MapNotepad.Controls
                             Position = new Position(item.Latitude, item.Longitude),
                             Address = item.Address
                         };
-
                         this.Pins.Add(pin);
                     }
-                 //   MoveToRegion(MapSpan.FromCenterAndRadius(new Position(PinSource[0].Latitude, PinSource[0].Longitude), Distance.FromMeters(5000)));
                 }
                 else
                 {
@@ -141,7 +138,7 @@ namespace MapNotepad.Controls
                     Pins.Add(new Pin()
                     {
                         Type = PinType.Place,
-                        Label = "",
+                        Label = Pin.Label ?? "no label",
                         Position = new Position(Pin.Latitude, Pin.Longitude),
                         Address = address
                     });
@@ -162,7 +159,22 @@ namespace MapNotepad.Controls
                     MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(5000)));
                 }
             }
+            if (propertyName == nameof(Pin) && PinSource == null && Pin != null)
+            {
+                IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(new Position(Pin.Latitude, Pin.Longitude));
+                string address = possibleAddresses.FirstOrDefault();
 
+                Pin.Address = address;
+                Pins.Clear();
+                Pins.Add(new Pin()
+                {
+                    Type = PinType.Place,
+                    Label = Pin.Label ?? "no label",
+                    Position = new Position(Pin.Latitude, Pin.Longitude),
+                    Address = address
+                });
+                MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(5000)));
+            }
         }
         #endregion
         #region --- Private Helpers ---
@@ -186,22 +198,31 @@ namespace MapNotepad.Controls
             string address = possibleAddresses.FirstOrDefault();
             if (PinSource == null || PinSource.Count<2)
             {
-                Pin = new PinModel()
+                if(Pin == null)
                 {
-                    Label = "",
-                    Latitude = e.Point.Latitude,
-                    Longitude = e.Point.Longitude,
-                    Address = address
-                };
+                    Pin = new PinModel()
+                    {
+                        Label = "no label",
+                        Latitude = e.Point.Latitude,
+                        Longitude = e.Point.Longitude,
+                        Address = address
+                    };
+                }
+                else
+                {
+                    Pin.Latitude = e.Point.Latitude;
+                    Pin.Longitude = e.Point.Longitude;
+                    Pin.Address = address;
+                }
                 Pins.Clear();
                 Pins.Add(new Pin()
                 {
                     Type = PinType.Place,
-                    Label = "",
+                    Label = Pin.Label ?? "no label",
                     Position = e.Point,
                     Address = address
                 });
-                MapLongClickedCommand?.Execute(Pin);
+              //  MapLongClickedCommand?.Execute(Pin);
             }
             
         }

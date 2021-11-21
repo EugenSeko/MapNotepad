@@ -3,9 +3,8 @@
     x:Class="MapNotepad.Views.AddPinPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:controls="clr-namespace:MapNotepad.Controls"
-    xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
-    xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
+    xmlns:Behaviors="http://prismlibrary.com"
+    xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad">
 
 
     <ContentPage.Content>
@@ -21,25 +20,30 @@
                     Margin="16,1,16,1"
                     HeightRequest="40"
                     Placeholder="Label"
-                    Text="{Binding Label}" />
+                    Text="{Binding Pin.Label}" />
                 <Label Padding="28,21,0,6" Text="Description" />
                 <local:CustomEntry
                     Margin="16,1,16,1"
                     HeightRequest="40"
                     Placeholder="Description"
-                    Text="{Binding Description}" />
+                    Text="{Binding Pin.Description}" />
                 <Label Padding="28,20.5,0,6" Text="Coordinates" />
                 <StackLayout Orientation="Horizontal" Spacing="0">
                     <local:CustomEntry
+                        x:Name="loEntry"
                         Margin="16,1,6,1"
                         HeightRequest="40"
                         HorizontalOptions="FillAndExpand"
-                        Text="{Binding Longitude, Mode=TwoWay}" />
+                        MaxLength="12"
+                        Placeholder="Longitude"
+                        Text="{Binding Pin.Longitude, Mode=TwoWay}" />
                     <local:CustomEntry
                         Margin="6,1,16,1"
                         HeightRequest="40"
                         HorizontalOptions="FillAndExpand"
-                        Text="{Binding Latitude, Mode=TwoWay}" />
+                        MaxLength="12"
+                        Placeholder="Latitude "
+                        Text="{Binding Pin.Latitude, Mode=TwoWay}" />
                 </StackLayout>
             </StackLayout>
             <Grid
@@ -51,8 +55,7 @@
                     Grid.Row="0"
                     IsInputVMPositionFocus="{Binding IsFocus}"
                     MapLongClickedCommand="{Binding MapLongClickedCommand}"
-                    Pin="{Binding Pin, Mode=TwoWay}"
-                    PinSource="{Binding PinList}" />
+                    Pin="{Binding Pin}" />
 
                 <ImageButton
                     Grid.Row="0"

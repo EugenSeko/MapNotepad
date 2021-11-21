@@ -67,10 +67,11 @@ namespace MapNotepad.ViewModel
             base.OnPropertyChanged(args);
             if (args.PropertyName == nameof(IsActive))
             {
-                if (IsActive )
+                if (IsActive && NavigationParameter == null)
                 {
                     InitAsync();
                 }
+                NavigationParameter = null;
             }
         }
         #endregion
@@ -100,11 +101,11 @@ namespace MapNotepad.ViewModel
             var pinModel = PinExtension.ToPinModel(obj as PinViewModel);
             pinModel.IsFavorite = pinModel.IsFavorite == false;
             await _pinservice.UpdatePinAsync(pinModel);
-            InitAsync(); // how faster??
-            //var pinVM = obj as PinViewModel;
-            //PinList.Remove(pinVM);
-            //pinVM.IsFavorite = pinModel.IsFavorite;
-            //PinList.Add(pinVM);
+            var pinvm = obj as PinViewModel;
+            var index = PinList.IndexOf(pinvm);
+            PinList.Remove(pinvm);
+            pinvm.IsFavorite = pinModel.IsFavorite;
+            PinList.Insert(index, pinvm);
         }
 
         private Task OnLogoutCommand()
