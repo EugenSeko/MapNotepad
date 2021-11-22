@@ -13,6 +13,7 @@ using Xamarin.Forms;
 using MapNotepad.Services.Authentification;
 using Prism;
 using System.ComponentModel;
+using MapNotepad.Services.SearchService;
 
 namespace MapNotepad.ViewModel
 {
@@ -22,10 +23,15 @@ namespace MapNotepad.ViewModel
         // описание и локацию.По тапу на пин пользователь переходит на карту с фокусировкой на выбранном пине.
         private readonly IAuthentificationService _authentifService;
         private readonly IPinService _pinservice;
-        public PinsListViewModel(INavigationService navigationService, IPinService pinService, 
-            IAuthentificationService authentificationService) :base(navigationService)
+        private readonly ISearchServise _searchService;
+
+        public PinsListViewModel(INavigationService navigationService, 
+            IPinService pinService, 
+            IAuthentificationService authentificationService, 
+            ISearchServise searchServise) :base(navigationService)
         {
             _pinservice = pinService;
+            _searchService = searchServise;
             _authentifService = authentificationService;
             InitAsync();
         }
@@ -60,11 +66,47 @@ namespace MapNotepad.ViewModel
             get => _pinList;
             set => SetProperty(ref _pinList, value);
         }
+        public bool ShowCurrentPinList;
+
+        private string _searchEntry;
+        public string SearchEntry
+        {
+            get => _searchEntry;
+            set
+            {
+                SetProperty(ref _searchEntry, value);
+                RaisePropertyChanged(nameof(ShowCurrentPinList));
+            }
+        }
         #endregion
         #region --- Overrides ---
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
         {
             base.OnPropertyChanged(args);
+            if (args.PropertyName == nameof(SearchEntry))
+            {
+                // TODO: 
+                // Пользователь должен получить уведомление если по его запросу ничего не найдено.
+
+                //var serchRes = _searchService.Search(SearchEntry, _constPinList);
+                //if (serchRes.Count > 0)
+                //{
+                //    PinList = serchRes;
+                //    var oc = new ObservableCollection<PinViewModel>();
+
+                //    foreach (PinModel pm in PinList)
+                //    {
+                //        var pvm = Extensions.PinExtension.ToPinViewModel(pm);
+                //        pvm.MoveToPinLocationCommand = SingleExecutionCommand.FromFunc(GoToPinLocation);
+                //        oc.Add(pvm);
+                //    }
+                //    ObserPinList = oc;
+                //}
+                //if (!ShowCurrentPinList)
+                //{
+                //    PinList = _constPinList;
+                //}
+            }
             if (args.PropertyName == nameof(IsActive))
             {
                 if (IsActive && NavigationParameter == null)
@@ -76,6 +118,7 @@ namespace MapNotepad.ViewModel
         }
         #endregion
         #region ---Privat Helpers---
+        private List<PinModel> _constPinList;
         private async void InitAsync()
         {
             AddButtonTapCommand = SingleExecutionCommand.FromFunc(GoToAddPinPageAsync);

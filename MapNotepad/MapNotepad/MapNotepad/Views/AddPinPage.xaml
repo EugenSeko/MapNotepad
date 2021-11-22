@@ -9,9 +9,6 @@
 
     <ContentPage.Content>
         <StackLayout BackgroundColor="White" VerticalOptions="Fill">
-
-
-
             <StackLayout Spacing="0">
                 <local:Header HeightRequest="48" />
                 <BoxView HeightRequest="1" Color="#F1F3FD" />
@@ -20,13 +17,13 @@
                     Margin="16,1,16,1"
                     HeightRequest="40"
                     Placeholder="Label"
-                    Text="{Binding Pin.Label}" />
+                    Text="{Binding Label}" />
                 <Label Padding="28,21,0,6" Text="Description" />
                 <local:CustomEntry
                     Margin="16,1,16,1"
                     HeightRequest="40"
                     Placeholder="Description"
-                    Text="{Binding Pin.Description}" />
+                    Text="{Binding Description}" />
                 <Label Padding="28,20.5,0,6" Text="Coordinates" />
                 <StackLayout Orientation="Horizontal" Spacing="0">
                     <local:CustomEntry
@@ -35,15 +32,17 @@
                         HeightRequest="40"
                         HorizontalOptions="FillAndExpand"
                         MaxLength="12"
+                        OnUnFocusedEventCommand="{Binding UnFocusedCommand}"
                         Placeholder="Longitude"
-                        Text="{Binding Pin.Longitude, Mode=TwoWay}" />
+                        Text="{Binding Longitude}" />
                     <local:CustomEntry
                         Margin="6,1,16,1"
                         HeightRequest="40"
                         HorizontalOptions="FillAndExpand"
                         MaxLength="12"
+                        OnUnFocusedEventCommand="{Binding UnFocusedCommand}"
                         Placeholder="Latitude "
-                        Text="{Binding Pin.Latitude, Mode=TwoWay}" />
+                        Text="{Binding Latitude}" />
                 </StackLayout>
             </StackLayout>
             <Grid
@@ -58,16 +57,17 @@
                     Pin="{Binding Pin}" />
 
                 <ImageButton
-                    Grid.Row="0"
                     Margin="0,0,18,18"
-                    Padding="10"
+                    Padding="12"
                     BackgroundColor="{DynamicResource White}"
+                    BorderWidth="6"
                     Command="{Binding GoToMyLocationCommand, Source={x:Reference map}}"
                     CornerRadius="90"
+                    HeightRequest="55"
                     HorizontalOptions="End"
-                    Scale="1.3"
                     Source="ic_location.png"
-                    VerticalOptions="End" />
+                    VerticalOptions="End"
+                    WidthRequest="55" />
             </Grid>
         </StackLayout>
     </ContentPage.Content>

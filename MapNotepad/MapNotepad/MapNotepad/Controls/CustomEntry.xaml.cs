@@ -19,6 +19,20 @@ namespace MapNotepad.Controls
 
 
         #region -- Public properties --
+        public static readonly BindableProperty OnFocusedEventCommandProperty =
+          BindableProperty.Create(nameof(OnFocusedEventCommand), typeof(ICommand), typeof(CustomEntry), null, BindingMode.TwoWay);
+        public ICommand OnFocusedEventCommand
+        {
+            get { return (ICommand)GetValue(OnFocusedEventCommandProperty); }
+            set { SetValue(OnFocusedEventCommandProperty, value); }
+        }
+        public static readonly BindableProperty OnUnFocusedEventCommandProperty =
+          BindableProperty.Create(nameof(OnUnFocusedEventCommand), typeof(ICommand), typeof(CustomEntry), null, BindingMode.TwoWay);
+        public ICommand OnUnFocusedEventCommand
+        {
+            get { return (ICommand)GetValue(OnUnFocusedEventCommandProperty); }
+            set { SetValue(OnUnFocusedEventCommandProperty, value); }
+        }
 
         public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(
             propertyName: nameof(MaxLength),

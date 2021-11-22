@@ -159,7 +159,7 @@ namespace MapNotepad.Controls
                     MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(5000)));
                 }
             }
-            if (propertyName == nameof(Pin) && PinSource == null && Pin != null)
+            if (propertyName == nameof(Pin) && PinSource == null && Pin !=null && Pin.Longitude !=0 && Pin.Latitude !=0)
             {
                 IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(new Position(Pin.Latitude, Pin.Longitude));
                 string address = possibleAddresses.FirstOrDefault();
@@ -194,37 +194,26 @@ namespace MapNotepad.Controls
         }
         private async void CustomMap_LongClickedAsync(object sender, MapLongClickedEventArgs e)
         {
-            IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(e.Point);
-            string address = possibleAddresses.FirstOrDefault();
-            if (PinSource == null || PinSource.Count<2)
+            
+            if (PinSource == null)
             {
-                if(Pin == null)
-                {
-                    Pin = new PinModel()
-                    {
-                        Label = "no label",
-                        Latitude = e.Point.Latitude,
-                        Longitude = e.Point.Longitude,
-                        Address = address
-                    };
-                }
-                else
-                {
-                    Pin.Latitude = e.Point.Latitude;
-                    Pin.Longitude = e.Point.Longitude;
-                    Pin.Address = address;
-                }
+                IEnumerable<string> possibleAddresses = await geoCoder.GetAddressesForPositionAsync(e.Point);
+                string address = possibleAddresses.FirstOrDefault();
+                var pin = new PinModel();
+                pin.Label = "";
+                pin.Latitude = e.Point.Latitude;
+                pin.Longitude = e.Point.Longitude;
+                pin.Address = address;
                 Pins.Clear();
                 Pins.Add(new Pin()
                 {
                     Type = PinType.Place,
-                    Label = Pin.Label ?? "no label",
+                    Label = Pin?.Label ?? "",
                     Position = e.Point,
                     Address = address
                 });
-              //  MapLongClickedCommand?.Execute(Pin);
+                MapLongClickedCommand?.Execute(pin);
             }
-            
         }
         private void CustomMapClicked(object sender, MapClickedEventArgs e)
         {

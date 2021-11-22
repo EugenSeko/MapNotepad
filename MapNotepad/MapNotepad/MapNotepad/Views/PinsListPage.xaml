@@ -84,6 +84,8 @@
                                             </StackLayout>
                                             <ImageButton
                                                 BackgroundColor="Transparent"
+                                                Command="{Binding MoveToPinLocationCommand}"
+                                                CommandParameter="{Binding .}"
                                                 HorizontalOptions="EndAndExpand"
                                                 Source="ic_left_gray" />
                                         </StackLayout>

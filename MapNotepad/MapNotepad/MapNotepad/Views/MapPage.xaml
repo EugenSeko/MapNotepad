@@ -73,6 +73,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
                     <StackLayout
+                        x:Name="popup"
                         Grid.Row="2"
                         BackgroundColor="White"
                         IsVisible="{Binding ShowCurrentPinDescription}"
@@ -104,14 +105,25 @@
             </Grid>
             <ImageButton
                 Margin="0,0,18,18"
-                Padding="10"
+                Padding="12"
                 BackgroundColor="{DynamicResource White}"
+                BorderWidth="6"
                 Command="{Binding GoToMyLocationCommand, Source={x:Reference map}}"
                 CornerRadius="90"
+                HeightRequest="55"
                 HorizontalOptions="End"
-                Scale="1.3"
                 Source="ic_location.png"
-                VerticalOptions="End" />
+                VerticalOptions="End"
+                WidthRequest="55">
+                <ImageButton.Triggers>
+                    <DataTrigger
+                        Binding="{Binding Source={x:Reference popup}, Path=IsVisible}"
+                        TargetType="ImageButton"
+                        Value="true">
+                        <Setter Property="IsVisible" Value="false" />
+                    </DataTrigger>
+                </ImageButton.Triggers>
+            </ImageButton>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

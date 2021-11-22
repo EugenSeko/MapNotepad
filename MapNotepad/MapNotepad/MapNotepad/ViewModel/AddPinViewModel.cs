@@ -7,6 +7,7 @@ using System.Windows.Input;
 using MapNotepad.Model;
 using Xamarin.Forms;
 using System.ComponentModel;
+using MapNotepad.Services.Settings;
 
 namespace MapNotepad.ViewModel
 {
@@ -19,16 +20,12 @@ namespace MapNotepad.ViewModel
             _pinservice = pinService;
             Init();
         }
-
-
         #region ---Public Properties---
         public ICommand OnButtonLeftCommand => SingleExecutionCommand.FromFunc(GoToMainPageListPageCommAsync);
         public ICommand OnButtonSaveCommand => SingleExecutionCommand.FromFunc(SavePin);
         public ICommand MapLongClickedCommand => new Command<PinModel>(OnMapLongClick);
         public ICommand UnFocusedCommand => new Command(OnGoToPinLocation);
         public ICommand FocusedCommand => new Command(OnGoToPinLocation);
-
-
 
         private PinModel _pin;
         public PinModel Pin 
@@ -49,6 +46,30 @@ namespace MapNotepad.ViewModel
             get => _headerText;
             set => SetProperty(ref _headerText, value);
         }
+        private double _longitude;
+        public double Longitude
+        {
+            get => _longitude;
+            set => SetProperty(ref _longitude, value);
+        }
+        private double _latitude;
+        public double Latitude
+        {
+            get => _latitude;
+            set => SetProperty(ref _latitude, value);
+        }
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
+        private string _label;
+        public string Label
+        {
+            get => _label;
+            set => SetProperty(ref _label, value);
+        }
         #endregion
         #region ---Overrides ---
         protected override void OnPropertyChanged(PropertyChangedEventArgs args)
@@ -64,11 +85,15 @@ namespace MapNotepad.ViewModel
                 isEdit = true;
                 HeaderText = "Edit Pin"; 
                 Pin = Extensions.PinExtension.ToPinModel(NavigationParameter as PinViewModel);
+                Latitude = Pin.Latitude;
+                Longitude = Pin.Longitude;
+                Label = Pin.Label;
+                Description = Pin.Description;
                 NavigationParameter = null;
             }
             else
             {
-               // Pin = new PinModel();
+                Pin = new PinModel();
             }
         }
         private async Task SavePin()
@@ -77,10 +102,10 @@ namespace MapNotepad.ViewModel
             {
                 await _pinservice.UpdatePinAsync(new PinModel()
                 {
-                    Label = Pin.Label,
-                    Description = Pin.Description,
-                    Longitude = Pin.Longitude,
-                    Latitude = Pin.Latitude,
+                    Label = Label??"", //TODO userdialog
+                    Description = Description,
+                    Longitude = Longitude,
+                    Latitude = Latitude,
                     Id = Pin.Id,
                     IsFavorite = Pin.IsFavorite,
                     UserId = Pin.UserId,
@@ -90,22 +115,33 @@ namespace MapNotepad.ViewModel
             else
             {
                 Pin.IsFavorite = true;
-                await _pinservice.AddPinAsync(Pin);
+                await _pinservice.AddPinAsync(new PinModel()
+                {
+                    Label = Label??"", //TODO userdialog
+                    Description = Description,
+                    Longitude = Longitude,
+                    Latitude = Latitude,
+                    IsFavorite = true,
+                    Address = Pin.Address
+                });
             }
         }
         private void OnMapLongClick(PinModel pin)
         {
+            Longitude = pin.Longitude;
+            Latitude = pin.Latitude;
             Pin.Longitude = pin.Longitude;
             Pin.Latitude = pin.Latitude;
+            Pin.Address = pin.Address;
+
+            IsFocus = IsFocus == false;
         }
         private void OnGoToPinLocation()
         {
-            if(Pin == null && !isEdit)
+            if (Latitude != 0 && Longitude != 0)
             {
-                Pin = new PinModel();
-            }
-            if (Pin?.Latitude != 0 && Pin?.Longitude != 0)
-            {
+                Pin.Longitude = Longitude;
+                Pin.Latitude = Latitude;
                 IsFocus = IsFocus == false;
             }
         }
