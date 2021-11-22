@@ -5,7 +5,8 @@ using Xamarin.Forms;
 
 namespace MapNotepad.Controls
 {
-   public class CustomTabbedPage : TabbedPage
+    public partial class CustomTabbedPage : TabbedPage
     {
+        
     }
 }

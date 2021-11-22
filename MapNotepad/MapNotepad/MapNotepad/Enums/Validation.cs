@@ -18,5 +18,13 @@ namespace MapNotepad.Enums
         BusyEmail,
         Correct
     }
+
+    public enum VerficationResult
+    {
+        WrongPassword,
+        WrongEmail,
+        NoSuchEmail,
+        Correct
+    }
     
 }

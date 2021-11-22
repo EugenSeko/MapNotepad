@@ -46,8 +46,21 @@ namespace MapNotepad
             InitializeComponent();
 
             Current.Resources.MergedDictionaries.Add(new BaseStyles());
-            
-            NavigationService.NavigateAsync($"/{nameof(LoginAndRegisterPage)}");
+
+            var settingsManager = Container.Resolve<ISettingsManager>();
+
+           
+
+            // NavigationService.NavigateAsync($"/{nameof(LoginAndRegisterPage)}");
+
+            if (settingsManager.UserId == null)
+            {
+                NavigationService.NavigateAsync("/" + nameof(LoginAndRegisterPage));
+            }
+            else
+            {
+                NavigationService.NavigateAsync("/" + nameof(MainPage));
+            }
         }
 
         protected override void OnStart()

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using TikBid.Helpers;
+using MapNotepad.Helpers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,6 +19,18 @@ namespace MapNotepad.Controls
 
 
         #region -- Public properties --
+
+        public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(
+            propertyName: nameof(MaxLength),
+            returnType: typeof(int),
+            declaringType: typeof(CustomEntry),
+            defaultValue: 200,
+            defaultBindingMode: BindingMode.TwoWay);
+        public int MaxLength
+        {
+            set => SetValue(MaxLengthProperty, value);
+            get => (int)GetValue(MaxLengthProperty);
+        }
 
         public static readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),

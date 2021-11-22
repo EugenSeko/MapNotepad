@@ -3,54 +3,128 @@
     x:Class="MapNotepad.Views.PinsListPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:context="clr-namespace:ContextMenu.Views;assembly=ContextMenu"
+    xmlns:conv="clr-namespace:MapNotepad.Converters"
     xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
     Title="Pins">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:MenuFitWidthConverter x:Key="MenuFitWidthConverter" />
+            <conv:IsMutedToTextConverter x:Key="IsMutedToTextConverter" />
+            <conv:IsMutedToOpacityConverter x:Key="IsMutedToOpacityConverter" />
+            <conv:IsMutedToBackgroundColorConverter x:Key="IsMutedToBackgroundColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
-        <Grid>
+        <Grid BackgroundColor="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <Grid RowDefinitions="0.07*,0.93*">
-                <local:SearchBar Grid.Row="0" />
-                <ListView
+                <local:SearchBar
+                    Grid.Row="0"
+                    LeftButtonCommand="{Binding GoToSettingsPageCommand}"
+                    RightButtonCommand="{Binding LogoutCommand}" />
+                <CollectionView
+                    x:Name="CollectionView"
                     Grid.Row="1"
-                    HasUnevenRows="True"
-                    ItemsSource="{Binding PinList}">
-                    <ListView.ItemTemplate>
+                    ItemsSource="{Binding PinList}"
+                    SelectedItem="{Binding SelectedItem}">
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <ViewCell.View>
-                                    <Label Text="{Binding Label}" />
-                                </ViewCell.View>
-                            </ViewCell>
+                            <context:SideContextMenuView IsAutoCloseEnabled="true">
+                                <context:SideContextMenuView.View>
+                                    <Frame HeightRequest="49" WidthRequest="{Binding Source={x:Reference CollectionView}, Path=Width, Converter={StaticResource MenuFitWidthConverter}, ConverterParameter='40'}">
+                                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                            <Frame BackgroundColor="{DynamicResource Variant}" CornerRadius="8">
+                                                <local:LikeButton
+                                                    x:Name="favButton"
+                                                    BackgroundColor="Transparent"
+                                                    Command="{Binding FavoritChangeCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    IsFavorite="{Binding IsFavorite}"
+                                                    Scale="3">
+                                                    <ImageButton.Triggers>
+                                                        <DataTrigger
+                                                            Binding="{Binding Source={x:Reference favButton}, Path=IsFavorite}"
+                                                            TargetType="ImageButton"
+                                                            Value="True">
+                                                            <Setter Property="Source" Value="ic_like_blue" />
+                                                        </DataTrigger>
+                                                        <DataTrigger
+                                                            Binding="{Binding Source={x:Reference favButton}, Path=IsFavorite}"
+                                                            TargetType="ImageButton"
+                                                            Value="False">
+                                                            <Setter Property="Source" Value="ic_like_gray" />
+                                                        </DataTrigger>
+                                                    </ImageButton.Triggers>
+                                                </local:LikeButton>
+                                            </Frame>
+                                            <StackLayout Orientation="Vertical">
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding MoveToPinLocationCommand}" CommandParameter="{Binding .}" />
+                                                </StackLayout.GestureRecognizers>
+                                                <Label
+                                                    Margin="12,0,0,0"
+                                                    Style="{DynamicResource Label}"
+                                                    Text="{Binding Label}" />
+                                                <StackLayout Orientation="Horizontal">
+                                                    <Label
+                                                        Margin="12,0,0,0"
+                                                        Style="{DynamicResource Label}"
+                                                        Text="{Binding Latitude}" />
+                                                    <Label
+                                                        Margin="12,0,0,0"
+                                                        Style="{DynamicResource Label}"
+                                                        Text="{Binding Longitude}" />
+                                                </StackLayout>
+                                            </StackLayout>
+                                            <ImageButton
+                                                BackgroundColor="Transparent"
+                                                HorizontalOptions="EndAndExpand"
+                                                Source="ic_left_gray" />
+                                        </StackLayout>
+                                    </Frame>
+
+                                </context:SideContextMenuView.View>
+                                <context:SideContextMenuView.ContextTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Orientation="Horizontal" Spacing="0">
+                                            <Frame BackgroundColor="{DynamicResource Error}">
+                                                <ImageButton
+                                                    Command="{Binding DeleteCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Style="{DynamicResource DeleteButton}" />
+                                            </Frame>
+                                            <Frame BackgroundColor="{DynamicResource Primary}">
+                                                <ImageButton
+                                                    Command="{Binding EditCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    Style="{DynamicResource EditButton}" />
+                                            </Frame>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </context:SideContextMenuView.ContextTemplate>
+                            </context:SideContextMenuView>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </Grid>
-
-
-
-            <Frame
-                Margin="20"
-                BackgroundColor="#596EFB"
+            <ImageButton
+                Margin="0,0,18,18"
+                Padding="12"
+                BackgroundColor="{DynamicResource Primary}"
+                BorderWidth="6"
+                Command="{Binding AddButtonTapCommand}"
                 CornerRadius="90"
-                HasShadow="True"
+                HeightRequest="55"
                 HorizontalOptions="End"
-                Scale="1"
-                VerticalOptions="End">
-                <ImageButton
-                    BackgroundColor="#596EFB"
-                    BorderColor="#596EFB"
-                    BorderWidth="6"
-                    Command="{Binding OnAddButtonTap}"
-                    CornerRadius="90"
-                    HorizontalOptions="Center"
-                    Scale="2.6"
-                    Source="ic_plus.png"
-                    VerticalOptions="Center" />
-            </Frame>
-
+                Source="ic_plus.png"
+                VerticalOptions="End"
+                WidthRequest="55" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

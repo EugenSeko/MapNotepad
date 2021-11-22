@@ -1,42 +1,121 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Grid
+<StackLayout
     x:Class="MapNotepad.Controls.SearchBar"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
-    BackgroundColor="White"
-    ColumnDefinitions="0.2*,0.6*,0.2*"
-    RowDefinitions="0.03*,0.97*">
+    x:Name="searchBar"
+    Spacing="0">
+    
 
-    <Label
-        Grid.Row="0"
-        Grid.ColumnSpan="3"
-        Background="transparent"
-        BackgroundColor="Transparent" />
+    <StackLayout
+        Margin="11"
+        Padding="5,0,5,0"
+        Orientation="Horizontal"
+        Spacing="0">
 
-    <ImageButton
-        Grid.Row="1"
-        Grid.Column="0"
-        BackgroundColor="White"
-        BorderColor="White"
-        Scale="0.7"
-        Source="ic_settings.png" />
+        <ImageButton
+            BackgroundColor="Transparent"
+            Command="{Binding LeftButtonCommand, Source={x:Reference searchBar}}"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            Source="{Binding LeftImageSource, Source={x:Reference searchBar}}"
+            WidthRequest="30">
+            <ImageButton.Triggers>
+                <DataTrigger
+                    Binding="{Binding Source={x:Reference entry}, Path=IsFocused}"
+                    TargetType="ImageButton"
+                    Value="True">
+                    <Setter Property="IsVisible" Value="False" />
+                </DataTrigger>
+            </ImageButton.Triggers>
+        </ImageButton>
 
-    <local:NoUnderlineEntry
-        Grid.Row="1"
-        Grid.Column="1"
-        BackgroundColor="#F1F3FD"
-        HasUnderline="False"
-        Placeholder="Search"
-        Text="{Binding SearchEntry, Mode=TwoWay}" />
+        <ImageButton
+            x:Name="goBackButton"
+            BackgroundColor="Transparent"
+            Command="{Binding GoBackButtonCommand, Source={x:Reference searchBar}}"
+            HeightRequest="30"
+            HorizontalOptions="Start"
+            IsVisible="false"
+            Source="{Binding GoBackImageSource, Source={x:Reference searchBar}}"
+            WidthRequest="30">
+            <ImageButton.Triggers>
+                <DataTrigger
+                    Binding="{Binding Source={x:Reference entry}, Path=IsFocused}"
+                    TargetType="ImageButton"
+                    Value="True">
+                    <Setter Property="IsVisible" Value="True" />
+                </DataTrigger>
+            </ImageButton.Triggers>
+        </ImageButton>
 
-    <ImageButton
-        Grid.Row="1"
-        Grid.Column="2"
-        BackgroundColor="White"
-        BorderColor="White"
-        BorderWidth="0"
-        Scale="0.7"
-        Source="ic_exid.png" />
+        <StackLayout
+            Margin="12,0,12,0"
+            Padding="11,0,11,0"
+            BackgroundColor="{Binding EntryBackgroundColor, Source={x:Reference searchBar}}"
+            HorizontalOptions="FillAndExpand"
+            Orientation="Horizontal">
+            <local:NoUnderlineEntry
+                x:Name="entry"
+                BackgroundColor="{Binding EntryBackgroundColor, Source={x:Reference searchBar}}"
+                FontFamily="{Binding FontFamily, Source={x:Reference searchBar}}"
+                FontSize="12"
+                HorizontalOptions="FillAndExpand"
+                Placeholder="{Binding Placeholder, Source={x:Reference searchBar}}"
+                PlaceholderColor="{Binding PlaceholderColor, Source={x:Reference searchBar}}"
+                Text="{Binding Text, Source={x:Reference searchBar}}"
+                TextColor="{Binding TextColor, Source={x:Reference searchBar}}" />
 
-</Grid>
+            <ImageButton
+                BackgroundColor="Transparent"
+                Command="{Binding ClearButtonCommand, Source={x:Reference searchBar}}"
+                HeightRequest="20"
+                HorizontalOptions="End"
+                IsVisible="false"
+                Source="{Binding ClearImageSource, Source={x:Reference searchBar}}"
+                WidthRequest="20">
+                <ImageButton.Triggers>
+                    <DataTrigger
+                        Binding="{Binding Source={x:Reference entry}, Path=IsFocused}"
+                        TargetType="ImageButton"
+                        Value="True">
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                </ImageButton.Triggers>
+            </ImageButton>
+        </StackLayout>
+
+        <ImageButton
+            BackgroundColor="Transparent"
+            Command="{Binding RightButtonCommand, Source={x:Reference searchBar}}"
+            HeightRequest="30"
+            HorizontalOptions="End"
+            IsVisible="true"
+            Source="{Binding RightImageSource, Source={x:Reference searchBar}}"
+            WidthRequest="30">
+            <ImageButton.Triggers>
+                <DataTrigger
+                    Binding="{Binding Source={x:Reference entry}, Path=IsFocused}"
+                    TargetType="ImageButton"
+                    Value="True">
+                    <Setter Property="IsVisible" Value="False" />
+                </DataTrigger>
+            </ImageButton.Triggers>
+        </ImageButton>
+    </StackLayout>
+    <BoxView
+        BackgroundColor="{Binding LineColor, Source={x:Reference searchBar}}"
+        HeightRequest="1"
+        IsVisible="false">
+        <BoxView.Triggers>
+            <DataTrigger
+                Binding="{Binding Source={x:Reference entry}, Path=IsFocused}"
+                TargetType="BoxView"
+                Value="True">
+                <Setter Property="IsVisible" Value="True" />
+            </DataTrigger>
+        </BoxView.Triggers>
+    </BoxView>
+
+</StackLayout>

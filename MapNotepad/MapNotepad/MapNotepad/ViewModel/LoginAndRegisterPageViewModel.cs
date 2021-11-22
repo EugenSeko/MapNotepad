@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using MapNotepad.Helpers;
 using Xamarin.Forms;
 
 namespace MapNotepad.ViewModel
@@ -11,8 +12,8 @@ namespace MapNotepad.ViewModel
     {
         public LoginAndRegisterPageViewModel(INavigationService navigationService):base(navigationService)
         {
-            LoginButtonTap = new Command(GoToLoginPage);
-            RegisterButtonTap = new Command(GoToRegisterPage);
+            LoginButtonTap = SingleExecutionCommand.FromFunc(GoToLoginPageAsync);
+            RegisterButtonTap = SingleExecutionCommand.FromFunc(GoToRegisterPageAsync);  
         }
 
         #region --- Public Properties ---

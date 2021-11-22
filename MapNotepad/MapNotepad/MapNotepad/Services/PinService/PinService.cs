@@ -1,8 +1,12 @@
-﻿using MapNotepad.Model;
+﻿using MapNotepad.Extensions;
+using MapNotepad.Model;
 using MapNotepad.Services.Repository;
 using MapNotepad.Services.Settings;
+using MapNotepad.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,23 +22,37 @@ namespace MapNotepad.Services.PinService
             _settingsManager = settingsManager;
         }
 
-        public Task AddPin(string label, string description, double longitude, double latitude,bool isfavorite)
+        public async Task AddPinAsync(PinModel pin)
         {
-            PinModel pm = new PinModel()
+            var Pin = pin;
+            Pin.UserId = _settingsManager.UserId;
+            await _repository.InsertAsync(Pin);
+        }
+
+        public async Task UpdatePinAsync(PinModel pin)
+        {
+            await _repository.UpdateAsync(pin);
+        } 
+
+        public async Task<bool> DeletePinAsync(PinModel pin)
+        {
+           await _repository.DeleteAsync(pin);
+            return true;
+        }
+
+        public async Task<List<PinModel>> GetPinsAsync()
+        {
+           var pinlist = await _repository.GetAllAsync<PinModel>();
+            List<PinModel> outRes = new List<PinModel>();
+            foreach(var p in pinlist)
             {
-                Label = label,
-                Description = description,
-                UserId = _settingsManager.UserId,
-                IsFavorite = isfavorite,
-                Latitude=latitude,
-                Longitude=longitude
-            };
-           return _repository.InsertAsync(pm);
+                if (p.UserId == _settingsManager.UserId)
+                {
+                    outRes.Add(p);
+                }
+            }
+           return outRes ;
         }
-        public async Task<List<PinModel>> GetPins()
-        {
-            var pinlist = await _repository.GetAllAsync<PinModel>();
-            return pinlist;
-        }
+        
     }
 }

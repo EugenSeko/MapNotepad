@@ -12,13 +12,15 @@
             FontFamily="{Binding FontFamily, Source={x:Reference customEntry}}"
             HorizontalOptions="FillAndExpand"
             IsPassword="{Binding IsPasswordHide, Source={x:Reference customEntry}}"
-            MaxLength="200"
+            MaxLength="{Binding MaxLength, Source={x:Reference customEntry}}"
             Placeholder="{Binding Placeholder, Source={x:Reference customEntry}}"
             PlaceholderColor="{Binding PlaceholderColor, Source={x:Reference customEntry}}"
             Text="{Binding Text, Source={x:Reference customEntry}}"
             TextColor="{Binding TextColor, Source={x:Reference customEntry}}">
             <local:NoUnderlineEntry.Behaviors>
                 <Behaviors:EventToCommandBehavior Command="{Binding FocusedCommand, Source={x:Reference customEntry}}" EventName="Focused" />
+                <Behaviors:EventToCommandBehavior Command="{Binding FocusedCommand}" EventName="Focused" />
+                <Behaviors:EventToCommandBehavior Command="{Binding UnFocusedCommand}" EventName="Unfocused" />
                 <Behaviors:EventToCommandBehavior Command="{Binding UnFocusedCommand, Source={x:Reference customEntry}}" EventName="Unfocused" />
             </local:NoUnderlineEntry.Behaviors>
         </local:NoUnderlineEntry>

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using TikBid.Helpers;
+using MapNotepad.Helpers;
 using Xamarin.Forms;
 
 namespace MapNotepad.ViewModel
@@ -71,24 +71,14 @@ namespace MapNotepad.ViewModel
             EmailErrorMessage = null;
 
             var authRes = await _authentificationService.ValidateAsync(Password, Email);
+            var verifRes = await _authentificationService.VerificateAsync(Email, Password);
+
             switch (authRes)
             {
-                case Enums.ValidationResults.BusyEmail:
-                    {
-                        EmailErrorMessage = "login already exists";
-                        break;
-                    }
-
                 case Enums.ValidationResults.EmptyEmail:
                     {
                         EmailErrorMessage = "Empty field";
                         break;
-                    }
-                case Enums.ValidationResults.IncorrectEmail:
-                    {
-                        EmailErrorMessage = "Incorrect email";
-                        break;
-
                     }
                 case Enums.ValidationResults.EmptyName:
                     {
@@ -101,15 +91,30 @@ namespace MapNotepad.ViewModel
                         EmailErrorMessage = "Empty field";
                         break;
                     }
-                case Enums.ValidationResults.Correct:
+                case Enums.ValidationResults.IncorrectEmail:
                     {
-                       if(await _authentificationService.VerificationAsync(Email, Password))
+                        EmailErrorMessage = "Incorrect email format";
+                        break;
+                    }
+                default:
+                    {
+                        switch (verifRes)
                         {
-                            await GoToMainPage(); //NOTE: подобавлять окончания Async
-                        }
-                        else
-                        {
-                            PasswordErrorMessage = "Incorrect password";
+                            case Enums.VerficationResult.NoSuchEmail:
+                                {
+                                    EmailErrorMessage = "No such email exist";
+                                    break;
+                                }
+                            case Enums.VerficationResult.WrongPassword:
+                                {
+                                    PasswordErrorMessage = "Wrong password";
+                                    break;
+                                }
+                            case Enums.VerficationResult.Correct:
+                                {
+                                    await GoToMainPageAsync();
+                                    break;
+                                }
                         }
                         break;
 

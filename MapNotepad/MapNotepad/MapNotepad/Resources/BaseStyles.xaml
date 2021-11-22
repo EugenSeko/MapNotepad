@@ -23,8 +23,24 @@
     <Color x:Key="Pressed">#192680</Color>
     <Color x:Key="Variant">#F1F3FD</Color>
     
+    
+    
+    
 
     <!--  Base Style  -->
+    <Style x:Key="DeleteButton" TargetType="ImageButton">
+        <Setter Property="Source" Value="ic_delete.png" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="WidthRequest" Value="24" />
+        <Setter Property="HeightRequest" Value="24" />
+    </Style>
+    <Style x:Key="EditButton" TargetType="ImageButton">
+        <Setter Property="Source" Value="ic_edit.png" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="WidthRequest" Value="24" />
+        <Setter Property="HeightRequest" Value="24" />
+    </Style>
+    
     <Style x:Key="BaseButton" TargetType="Button">
         <Setter Property="FontSize" Value="18" />
         <Setter Property="FontFamily" Value="Montserrat-Medium" />
@@ -98,7 +114,18 @@
         <Setter Property="BorderColor" Value="{DynamicResource LightGray}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource White}" />
     </Style>
-    
+    <Style TargetType="controls:SearchBar">
+        <Setter Property="GoBackImageSource" Value="ic_left_blue.png" />
+        <Setter Property="LeftImageSource" Value="ic_settings.png" />
+        <Setter Property="EntryBackgroundColor" Value="{DynamicResource Variant}" />
+        <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+        <Setter Property="PlaceholderColor" Value="{DynamicResource Gray}" />
+        <Setter Property="Placeholder" Value="Search" />
+        <Setter Property="TextColor" Value="{DynamicResource Black}" />
+        <Setter Property="ClearImageSource" Value="ic_clear.png" />
+        <Setter Property="RightImageSource" Value="ic_exid.png" />
+        <Setter Property="LineColor" Value="{DynamicResource Gray}" />
+    </Style>
     <!--converters-->
     <converters:MultiTriggerConverter x:Key="dataHasBeenEntered" />
 

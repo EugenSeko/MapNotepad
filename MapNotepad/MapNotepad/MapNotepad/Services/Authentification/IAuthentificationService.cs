@@ -12,7 +12,8 @@ namespace MapNotepad.Services.Authentification
         void RegisterAsync(string password);
         Task<ValidationResults> ValidateAsync(string username, string email);
         ValidationResults Validate(string password);
-        Task<bool> VerificationAsync(string email, string password);
+        Task<VerficationResult> VerificateAsync(string email, string password);
+        Task Logout();
 
 
     }
