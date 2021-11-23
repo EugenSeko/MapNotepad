@@ -66,8 +66,7 @@ namespace MapNotepad.ViewModel
             get => _pinList;
             set => SetProperty(ref _pinList, value);
         }
-        public bool ShowCurrentPinList;
-
+        public bool ShowCurrentPinList => SearchEntry != null && SearchEntry != "" && PinList != null;
         private string _searchEntry;
         public string SearchEntry
         {
@@ -88,24 +87,15 @@ namespace MapNotepad.ViewModel
                 // TODO: 
                 // Пользователь должен получить уведомление если по его запросу ничего не найдено.
 
-                //var serchRes = _searchService.Search(SearchEntry, _constPinList);
-                //if (serchRes.Count > 0)
-                //{
-                //    PinList = serchRes;
-                //    var oc = new ObservableCollection<PinViewModel>();
-
-                //    foreach (PinModel pm in PinList)
-                //    {
-                //        var pvm = Extensions.PinExtension.ToPinViewModel(pm);
-                //        pvm.MoveToPinLocationCommand = SingleExecutionCommand.FromFunc(GoToPinLocation);
-                //        oc.Add(pvm);
-                //    }
-                //    ObserPinList = oc;
-                //}
-                //if (!ShowCurrentPinList)
-                //{
-                //    PinList = _constPinList;
-                //}
+                var serchRes = _searchService.Search(SearchEntry, PinList);
+                if (serchRes.Count > 0)
+                {
+                    PinList = serchRes;
+                }
+                if (!ShowCurrentPinList)
+                {
+                    InitAsync();
+                }
             }
             if (args.PropertyName == nameof(IsActive))
             {

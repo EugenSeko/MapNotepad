@@ -28,7 +28,8 @@
                 <local:SearchBar
                     Grid.Row="0"
                     LeftButtonCommand="{Binding GoToSettingsPageCommand}"
-                    RightButtonCommand="{Binding LogoutCommand}" />
+                    RightButtonCommand="{Binding LogoutCommand}"
+                    Text="{Binding SearchEntry}" />
                 <CollectionView
                     x:Name="CollectionView"
                     Grid.Row="1"

@@ -1,7 +1,9 @@
 ﻿using MapNotepad.Model;
 using MapNotepad.Services.PinService;
+using MapNotepad.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +17,29 @@ namespace MapNotepad.Services.SearchService
         public SearchService(IPinService pinService)
         {
             _pinservice = pinService;
+        }
+
+        public ObservableCollection<PinViewModel> Search(string search_query, ObservableCollection<PinViewModel> list)
+        {
+            List<PinModel> pmList = new List<PinModel>();
+            foreach (PinViewModel pvm in list)
+            {
+                pmList.Add(Extensions.PinExtension.ToPinModel(pvm));
+            }
+            pmList = Search(search_query, pmList);
+            ObservableCollection<PinViewModel> outRes = new ObservableCollection<PinViewModel>();
+            foreach (var pvm in list)
+            {
+                foreach (var pm in pmList)
+                {
+                    if (pm.Id == pvm.Id)
+                    {
+                        outRes.Add(pvm);
+                        break;
+                    }
+                }
+            }
+            return outRes;
         }
         public List<PinModel> Search(string search_query, IEnumerable<PinModel> list)
         {
