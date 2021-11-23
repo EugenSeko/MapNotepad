@@ -15,10 +15,8 @@ namespace MapNotepad.ViewModel
         {
             _authentificationService = authentificationService;
             LeftButtonTap = SingleExecutionCommand.FromFunc(GoBackAsync);
-            BlueButtonTap = SingleExecutionCommand.FromFunc(OnBlueButtonTap, ()=>true);
+            BlueButtonTap = SingleExecutionCommand.FromFunc(OnBlueButtonTap, () => true);
         }
-
-
         #region --- Public Properties ---
         public ICommand LeftButtonTap { get; set; }
         public ICommand BlueButtonTap { get; set; }
@@ -59,59 +57,55 @@ namespace MapNotepad.ViewModel
             set => SetProperty(ref _confirmPassword, value);
         }
         #endregion
-        #region --- Overrides ---
-        #endregion
         #region --- Private Helpers ---
-        private Task OnBlueButtonTap()
+        private async Task OnBlueButtonTap()
         {
             PasswordErrorMessage = null;
             ConfirmPasswordErrorMessage = null;
-            
-                switch (_authentificationService.Validate(Password))
-                {
-                    case Enums.ValidationResults.EmptyPassword:
+
+            switch (_authentificationService.Validate(Password))
+            {
+                case Enums.ValidationResults.EmptyPassword:
+                    {
+                        PasswordErrorMessage = "Empty field";
+                        break;
+                    }
+                case Enums.ValidationResults.TooShortPassword:
+                    {
+                        PasswordErrorMessage = "To short password";
+                        break;
+                    }
+                case Enums.ValidationResults.NoNumberPassword:
+                    {
+                        PasswordErrorMessage = "Password must contain at least one number";
+                        break;
+                    }
+                case Enums.ValidationResults.NoUpperCasePassword:
+                    {
+                        PasswordErrorMessage = "Password must contain at least one uppercase character";
+                        break;
+                    }
+                case Enums.ValidationResults.IncorrectPassword:
+                    {
+                        PasswordErrorMessage = "Incorrect password";
+                        break;
+                    }
+                case Enums.ValidationResults.Correct:
+                    {
+                        if (Password != ConfirmPassword && Password != null && Password != "")
                         {
-                            PasswordErrorMessage = "Empty field";
+                            ConfirmPasswordErrorMessage = "Incorrect confirm";
                             break;
                         }
-                    case Enums.ValidationResults.TooShortPassword:
+                        else
                         {
-                            PasswordErrorMessage = "To short password";
-                            break;
-                        }
-                    case Enums.ValidationResults.NoNumberPassword:
-                        {
-                            PasswordErrorMessage = "Password must contain at least one number";
-                            break;
-                        }
-                    case Enums.ValidationResults.NoUpperCasePassword:
-                        {
-                            PasswordErrorMessage = "Password must contain at least one uppercase character";
-                            break;
-                        }
-                    case Enums.ValidationResults.IncorrectPassword:
-                        {
-                            PasswordErrorMessage = "Incorrect password";
-                            break;
-                        }
-                    case Enums.ValidationResults.Correct:
-                        {
-                            if (Password != ConfirmPassword && Password != null && Password != "")
-                            {
-                                ConfirmPasswordErrorMessage = "Incorrect confirm";
-                                break;
-                            }
-                            else
-                            {
                             _authentificationService.RegisterAsync(Password);
-                                GoToLoginPageAsync();
-                                break;
-                            }
-                       
+                           await GoToLoginPageAsync();
+                            break;
                         }
-                }
-            
-            return Task.CompletedTask;
+
+                    }
+            }
         }
         #endregion
     }

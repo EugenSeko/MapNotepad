@@ -117,9 +117,11 @@
                 </CollectionView>
             </Grid>
             <ImageButton
+                Padding="24"
                 BackgroundColor="Transparent"
                 Command="{Binding AddButtonTapCommand}"
                 HorizontalOptions="End"
+                Scale="1.5"
                 Source="icon_myadd.png"
                 VerticalOptions="End" />
         </Grid>

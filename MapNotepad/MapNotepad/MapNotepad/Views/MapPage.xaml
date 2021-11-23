@@ -105,9 +105,12 @@
                 </Grid>
             </Grid>
             <ImageButton
+                Padding="24"
+                BackgroundColor="Transparent"
                 Command="{Binding GoToMyLocationCommand, Source={x:Reference map}}"
                 HorizontalOptions="End"
-                Source="icon_myloc"
+                Scale="1.5"
+                Source="icon_myloc.png"
                 VerticalOptions="End">
                 <ImageButton.Triggers>
                     <DataTrigger
