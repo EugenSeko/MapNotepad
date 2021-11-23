@@ -29,17 +29,17 @@
                 <Label Padding="28,20.5,0,6" Text="Coordinates" />
                 <StackLayout Orientation="Horizontal" Spacing="0">
                     <local:CustomEntry
-                        Margin="6,1,16,1"
+                        Margin="16,1,6,1"
                         HeightRequest="40"
                         HorizontalOptions="FillAndExpand"
                         MaxLength="12"
                         OnUnFocusedEventCommand="{Binding UnFocusedCommand}"
-                        Placeholder="Latitude "
+                        Placeholder="Latitude   "
                         Text="{Binding Latitude}"
                         TextColor="{DynamicResource Black}" />
                     <local:CustomEntry
                         x:Name="loEntry"
-                        Margin="16,1,6,1"
+                        Margin="6,1,16,1"
                         HeightRequest="40"
                         HorizontalOptions="FillAndExpand"
                         MaxLength="12"

@@ -46,14 +46,14 @@ namespace MapNotepad.ViewModel
             get => _headerText;
             set => SetProperty(ref _headerText, value);
         }
-        private double _longitude;
-        public double Longitude
+        private string _longitude;
+        public string Longitude
         {
             get => _longitude;
             set => SetProperty(ref _longitude, value);
         }
-        private double _latitude;
-        public double Latitude
+        private string _latitude;
+        public string Latitude
         {
             get => _latitude;
             set => SetProperty(ref _latitude, value);
@@ -85,8 +85,8 @@ namespace MapNotepad.ViewModel
                 isEdit = true;
                 HeaderText = "Edit Pin"; 
                 Pin = Extensions.PinExtension.ToPinModel(NavigationParameter as PinViewModel);
-                Latitude = Pin.Latitude;
-                Longitude = Pin.Longitude;
+                Latitude = Pin.Latitude.ToString();
+                Longitude = Pin.Longitude.ToString();
                 Label = Pin.Label;
                 Description = Pin.Description;
                 NavigationParameter = null;
@@ -104,8 +104,8 @@ namespace MapNotepad.ViewModel
                 {
                     Label = Label??"", //TODO userdialog
                     Description = Description,
-                    Longitude = Longitude,
-                    Latitude = Latitude,
+                    Longitude = StringToDouble(Longitude),
+                    Latitude = StringToDouble(Latitude),
                     Id = Pin.Id,
                     IsFavorite = Pin.IsFavorite,
                     UserId = Pin.UserId,
@@ -119,8 +119,8 @@ namespace MapNotepad.ViewModel
                 {
                     Label = Label??"", //TODO userdialog
                     Description = Description,
-                    Longitude = Longitude,
-                    Latitude = Latitude,
+                    Longitude = StringToDouble(Longitude),
+                    Latitude = StringToDouble(Latitude),
                     IsFavorite = true,
                     Address = Pin.Address
                 });
@@ -128,8 +128,8 @@ namespace MapNotepad.ViewModel
         }
         private void OnMapLongClick(PinModel pin)
         {
-            Longitude = pin.Longitude;
-            Latitude = pin.Latitude;
+            Longitude = pin.Longitude.ToString();
+            Latitude = pin.Latitude.ToString();
             Pin.Longitude = pin.Longitude;
             Pin.Latitude = pin.Latitude;
             Pin.Address = pin.Address;
@@ -138,10 +138,10 @@ namespace MapNotepad.ViewModel
         }
         private void OnGoToPinLocation()
         {
-            if (Latitude != 0 && Longitude != 0)
+            if (StringToDouble(Latitude) != 0 && StringToDouble(Longitude) != 0)
             {
-                Pin.Longitude = Longitude;
-                Pin.Latitude = Latitude;
+                Pin.Longitude = StringToDouble(Longitude);
+                Pin.Latitude = StringToDouble( Latitude);
                 IsFocus = IsFocus == false;
             }
         }
@@ -150,6 +150,18 @@ namespace MapNotepad.ViewModel
             NavigationParameter = null;
             Pin = null;
             await GoToMainPageListPageAsync();
+        }
+        private double StringToDouble(string s)
+        {
+           if( double.TryParse(s, out double res))
+            {
+                return res;
+            }
+            else
+            {
+              return 0;
+            }
+            
         }
         #endregion
     }
