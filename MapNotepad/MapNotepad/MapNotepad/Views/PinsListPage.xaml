@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<d:BaseContentPage
     x:Class="MapNotepad.Views.PinsListPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:context="clr-namespace:ContextMenu.Views;assembly=ContextMenu"
     xmlns:conv="clr-namespace:MapNotepad.Converters"
+    xmlns:d="clr-namespace:MapNotepad.Views;assembly=MapNotepad"
     xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
     Title="Pins">
 
@@ -116,17 +117,11 @@
                 </CollectionView>
             </Grid>
             <ImageButton
-                Margin="0,0,18,18"
-                Padding="12"
-                BackgroundColor="{DynamicResource Primary}"
-                BorderWidth="6"
+                BackgroundColor="Transparent"
                 Command="{Binding AddButtonTapCommand}"
-                CornerRadius="90"
-                HeightRequest="55"
                 HorizontalOptions="End"
-                Source="ic_plus.png"
-                VerticalOptions="End"
-                WidthRequest="55" />
+                Source="icon_myadd.png"
+                VerticalOptions="End" />
         </Grid>
     </ContentPage.Content>
-</ContentPage>
+</d:BaseContentPage>

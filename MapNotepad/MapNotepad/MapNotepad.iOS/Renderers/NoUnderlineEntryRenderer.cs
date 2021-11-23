@@ -19,7 +19,8 @@ namespace MapNotepad.iOS
             base.OnElementChanged(e);
             if (Control != null)
             {
-                Control.BorderStyle = UITextBorderStyle.Line;
+               // Control.BorderStyle = UITextBorderStyle.Line;
+                Control.BorderStyle = UITextBorderStyle.None;
             }
         }
     }

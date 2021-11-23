@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<d:BaseContentPage
     x:Class="MapNotepad.Views.AddPinPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:Behaviors="http://prismlibrary.com"
+    xmlns:d="clr-namespace:MapNotepad.Views;assembly=MapNotepad"
     xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad">
 
 
@@ -17,13 +17,15 @@
                     Margin="16,1,16,1"
                     HeightRequest="40"
                     Placeholder="Label"
-                    Text="{Binding Label}" />
+                    Text="{Binding Label}"
+                    TextColor="{DynamicResource Black}" />
                 <Label Padding="28,21,0,6" Text="Description" />
                 <local:CustomEntry
                     Margin="16,1,16,1"
                     HeightRequest="40"
                     Placeholder="Description"
-                    Text="{Binding Description}" />
+                    Text="{Binding Description}"
+                    TextColor="{DynamicResource Black}" />
                 <Label Padding="28,20.5,0,6" Text="Coordinates" />
                 <StackLayout Orientation="Horizontal" Spacing="0">
                     <local:CustomEntry
@@ -34,7 +36,8 @@
                         MaxLength="12"
                         OnUnFocusedEventCommand="{Binding UnFocusedCommand}"
                         Placeholder="Longitude"
-                        Text="{Binding Longitude}" />
+                        Text="{Binding Longitude}"
+                        TextColor="{DynamicResource Black}" />
                     <local:CustomEntry
                         Margin="6,1,16,1"
                         HeightRequest="40"
@@ -42,7 +45,8 @@
                         MaxLength="12"
                         OnUnFocusedEventCommand="{Binding UnFocusedCommand}"
                         Placeholder="Latitude "
-                        Text="{Binding Latitude}" />
+                        Text="{Binding Latitude}"
+                        TextColor="{DynamicResource Black}" />
                 </StackLayout>
             </StackLayout>
             <Grid
@@ -57,18 +61,12 @@
                     Pin="{Binding Pin}" />
 
                 <ImageButton
-                    Margin="0,0,18,18"
-                    Padding="12"
-                    BackgroundColor="{DynamicResource White}"
-                    BorderWidth="6"
-                    Command="{Binding GoToMyLocationCommand, Source={x:Reference map}}"
-                    CornerRadius="90"
-                    HeightRequest="55"
+                    BackgroundColor="Transparent"
+                    Command="{Binding AddButtonTapCommand}"
                     HorizontalOptions="End"
-                    Source="ic_location.png"
-                    VerticalOptions="End"
-                    WidthRequest="55" />
+                    Source="icon_myadd.png"
+                    VerticalOptions="End" />
             </Grid>
         </StackLayout>
     </ContentPage.Content>
-</ContentPage>
+</d:BaseContentPage>

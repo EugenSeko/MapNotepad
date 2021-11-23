@@ -136,7 +136,7 @@ namespace MapNotepad.ViewModel
             }
             if (args.PropertyName == nameof(IsActive))
             {
-                if (IsActive && NavigationParameter == null)
+                if (IsActive && NavigationParameter == null && Global.NavigationParameter == null)
                 {
                     InitAsync();
                 }
@@ -167,12 +167,15 @@ namespace MapNotepad.ViewModel
             PinList = pinList;
             _constPinList = PinList;
 
-            if (NavigationParameter?.GetType() == typeof(PinModel))
+            //if (NavigationParameter?.GetType() == typeof(PinModel))
+            //{
+            //    await GoToPinLocation(NavigationParameter);
+            //}
+            if (Global.NavigationParameter?.GetType() == typeof(PinModel))
             {
-                await GoToPinLocation(NavigationParameter);
+                await GoToPinLocation(Global.NavigationParameter);
             }
         }
-
         private Task GoToPinLocation(object obj)
         {
             if (obj.GetType() == typeof(PinModel))
@@ -184,12 +187,11 @@ namespace MapNotepad.ViewModel
                 Pin = Extensions.PinExtension.ToPinModel(obj as PinViewModel);
             }
             IsFocus = IsFocus == false;
-            NavigationParameter = null;
+            Global.NavigationParameter = null;
             IsFocus = IsFocus == false;
 
             return Task.CompletedTask;
         }
-
         private void OnClearClick(object obj)
         {
             CurrentPin = null;
@@ -200,7 +202,6 @@ namespace MapNotepad.ViewModel
             {
                 CurrentPin = pinModel;
             }
-
         }
         private Task OnLogoutCommand()
         {

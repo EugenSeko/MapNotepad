@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<d:BaseContentPage
     x:Class="MapNotepad.Views.MapPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:MapNotepad.Controls"
+    xmlns:d="clr-namespace:MapNotepad.Views;assembly=MapNotepad"
     xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
     Title="Maps">
 
@@ -104,17 +105,10 @@
                 </Grid>
             </Grid>
             <ImageButton
-                Margin="0,0,18,18"
-                Padding="12"
-                BackgroundColor="{DynamicResource White}"
-                BorderWidth="6"
                 Command="{Binding GoToMyLocationCommand, Source={x:Reference map}}"
-                CornerRadius="90"
-                HeightRequest="55"
                 HorizontalOptions="End"
-                Source="ic_location.png"
-                VerticalOptions="End"
-                WidthRequest="55">
+                Source="icon_myloc"
+                VerticalOptions="End">
                 <ImageButton.Triggers>
                     <DataTrigger
                         Binding="{Binding Source={x:Reference popup}, Path=IsVisible}"
@@ -126,4 +120,4 @@
             </ImageButton>
         </Grid>
     </ContentPage.Content>
-</ContentPage>
+</d:BaseContentPage>

@@ -5,7 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:Behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
     xmlns:local="clr-namespace:MapNotepad.Controls"
-    x:Name="customEntry">
+    x:Name="customEntry"
+    BorderColor="#E5E5E5"
+    CornerRadius="6">
     <StackLayout Orientation="Horizontal">
         <local:NoUnderlineEntry
             BackgroundColor="{Binding BackgroundColor, Source={x:Reference customEntry}}"

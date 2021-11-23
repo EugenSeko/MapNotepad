@@ -146,9 +146,16 @@ namespace MapNotepad.ViewModel
             await _pinservice.UpdatePinAsync(pinModel);
             var pinvm = obj as PinViewModel;
             var index = PinList.IndexOf(pinvm);
-            PinList.Remove(pinvm);
             pinvm.IsFavorite = pinModel.IsFavorite;
-            PinList.Insert(index, pinvm);
+            if (index == 0)
+            {
+                PinList.Insert(index +1, pinvm);
+            }
+            else
+            {
+                PinList.Insert(index, pinvm);
+            }
+            PinList.RemoveAt(index);
         }
 
         private Task OnLogoutCommand()
@@ -158,7 +165,8 @@ namespace MapNotepad.ViewModel
         }
         private async Task GoToPinLocation(object obj)
         {
-            NavigationParameter ??= PinExtension.ToPinModel(obj as PinViewModel);
+           // NavigationParameter ??= PinExtension.ToPinModel(obj as PinViewModel);
+            Global.NavigationParameter ??= PinExtension.ToPinModel(obj as PinViewModel);
             await GoToMainPagePageAsync();
         }
         private async Task OnDeleteButtonCommand(object obj)

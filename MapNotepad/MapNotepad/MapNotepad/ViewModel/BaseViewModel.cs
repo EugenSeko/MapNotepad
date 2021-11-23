@@ -26,7 +26,7 @@ namespace MapNotepad.ViewModel
         }
         public async Task GoToMainPageListPageAsync()
         {
-            await _navigationService.NavigateAsync("/MainPage?selectedTab=PinsListPage");
+            await _navigationService.NavigateAsync("MainPage?selectedTab=PinsListPage");
         }
         public async Task GoToMainPagePageAsync()
         {
