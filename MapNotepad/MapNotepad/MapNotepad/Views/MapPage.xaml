@@ -19,7 +19,6 @@
                 VerticalOptions="Fill">
                 <local:SearchBar
                     Grid.Row="0"
-                    LeftButtonCommand="{Binding GoToSettingsPageCommand}"
                     RightButtonCommand="{Binding LogoutCommand}"
                     Text="{Binding SearchEntry}" />
 

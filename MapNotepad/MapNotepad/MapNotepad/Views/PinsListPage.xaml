@@ -27,7 +27,6 @@
             <Grid RowDefinitions="0.07*,0.93*">
                 <local:SearchBar
                     Grid.Row="0"
-                    LeftButtonCommand="{Binding GoToSettingsPageCommand}"
                     RightButtonCommand="{Binding LogoutCommand}"
                     Text="{Binding SearchEntry}" />
                 <CollectionView
