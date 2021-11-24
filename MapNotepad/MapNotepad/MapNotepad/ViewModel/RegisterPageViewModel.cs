@@ -4,25 +4,22 @@ using Prism.Navigation;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace MapNotepad.ViewModel
 {
     class RegisterPageViewModel : BaseViewModel
     {
         private readonly IAuthentificationService _authentificationService;
-        public RegisterPageViewModel(INavigationService navigationService, IAuthentificationService authentificationService):base(navigationService)
+        public RegisterPageViewModel(INavigationService navigationService, 
+                                     IAuthentificationService authentificationService):base(navigationService)
         {
             _authentificationService = authentificationService;
             LeftButtonTap = SingleExecutionCommand.FromFunc(GoBackAsync);
             NextButtonTap = SingleExecutionCommand.FromFunc(OnNextButtonTapAsync, () => true); 
         }
-
         #region --- Public Properties ---
         public ICommand LeftButtonTap { get; set; }
         public ICommand NextButtonTap { get; set; }
-
-
         public bool IsEmailErrorMessageVisible => EmailErrorMessage != null && EmailErrorMessage != "";
         private string _emailErrorMessage;
         public string EmailErrorMessage
@@ -40,8 +37,6 @@ namespace MapNotepad.ViewModel
             get => _email;
             set => SetProperty(ref _email, value);
         }
-
-
         public bool IsNameErrorMessageVisible => NameErrorMessage != null && NameErrorMessage != "";
         private string _nameErrorMessage;
         public string NameErrorMessage
@@ -82,7 +77,6 @@ namespace MapNotepad.ViewModel
                         }
                         break;
                     }
-
             }
         }
         #endregion
@@ -112,20 +106,17 @@ namespace MapNotepad.ViewModel
                         NameErrorMessage = "Empty field";
                         EmailErrorMessage = "Empty field";
                         break;
-
                     }
                 case Enums.ValidationResults.IncorrectEmail: 
                     {
                         EmailErrorMessage = "Incorrect email";
                         break;
-
                     }
                 case Enums.ValidationResults.Correct:
                     {
-                        _authentificationService.Register(Name, Email);
+                       _authentificationService.Register(Name, Email);
                        await GoToRegisterAndPasswordPageAsync();
-                        break;
-
+                       break;
                     }
             }
         }

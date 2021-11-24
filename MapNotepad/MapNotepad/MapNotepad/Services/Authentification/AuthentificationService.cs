@@ -3,49 +3,45 @@ using MapNotepad.Model;
 using MapNotepad.Services.Repository;
 using MapNotepad.Services.Settings;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MapNotepad.Services.Authentification
 {
   public  class AuthentificationService : IAuthentificationService
     {
-        // NOTE: переписать методы используя регулярные выражения, если будет время
         private readonly INavigationService _navigationService;
         private readonly IRepository _repository;
         private readonly ISettingsManager _settingsManager;
-        public AuthentificationService(IRepository repository, ISettingsManager settingsManager, INavigationService navigationService)
+        public AuthentificationService(IRepository repository,
+                                       ISettingsManager settingsManager, 
+                                       INavigationService navigationService)
         {
             _repository = repository;
             _settingsManager = settingsManager;
             _navigationService = navigationService;
         }
-
+        #region --- Interface implementation ---
         public void Register(string username, string email)
         {
-                _settingsManager.UserId = email;
-                _settingsManager.UserName = username;
-               
+            Helpers.Global.UserId = email;
+            _settingsManager.UserName = username;
         }
-
-        public async void RegisterAsync(string password)
+        public async Task RegisterAsync(string password)
         {
             await _repository.InsertAsync(new UserModel()
             {
                 UserName = _settingsManager.UserName,
-                Email = _settingsManager.UserId,
+                Email = Helpers.Global.UserId,
                 Password = password
             });
+            _settingsManager.UserId = Helpers.Global.UserId;
+            Helpers.Global.UserId = null;
         }
-
         public async Task< ValidationResults> ValidateAsync(string username, string email)
         {
             ValidationResults resultValue = new ValidationResults();
             var users = await _repository.GetAllAsync<UserModel>();
-
             
             if ((username == null || username == "" ) && (email == null || email == ""))
             {
@@ -59,12 +55,9 @@ namespace MapNotepad.Services.Authentification
             {
                 resultValue = ValidationResults.EmptyEmail;
             }
-            
             else
             {
                 var subs = email.Split("@");
-
-                
                 if (subs.Length != 2)
                 {
                     resultValue = ValidationResults.IncorrectEmail;
@@ -82,14 +75,11 @@ namespace MapNotepad.Services.Authentification
                     resultValue = ValidationResults.Correct;
                 }
             }
-
             return resultValue;
         }
-
         public ValidationResults Validate(string password)
         {
             var validationResult = new ValidationResults();
-
             if (password == null || password == "")
             {
                 validationResult = ValidationResults.EmptyPassword;
@@ -110,16 +100,12 @@ namespace MapNotepad.Services.Authentification
             {
                 validationResult = ValidationResults.Correct;
             }
-
             return validationResult;
         }
-
         public async Task<VerficationResult> VerificateAsync(string email, string password)
         {
           VerficationResult result = new VerficationResult();
-
           var users =  await _repository.GetAllAsync<UserModel>();
-
             if(users?.Count(x => x.Email == email) == 0)
             {
                 result = VerficationResult.NoSuchEmail;
@@ -140,15 +126,14 @@ namespace MapNotepad.Services.Authentification
                     }
                 }
             }
-           
             return result;
         }
-
         public async Task Logout()
         {
             _settingsManager.UserId = null;
             _settingsManager.UserName = null;
            await _navigationService.NavigateAsync("/LoginAndRegisterPage");
         }
+        #endregion
     }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "124598732874",
+    "project_id": "mapnotepad-331111",
+    "storage_bucket": "mapnotepad-331111.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124598732874:android:08c8f463a454ab584bbeb3",
+        "android_client_info": {
+          "package_name": "com.companyname.mapnotepad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124598732874-lr2rv09hedorbk8lipmoc5r7t6efqtmo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFr60qzcGQ6shUGUpAS9wOpCRltt3Ytzg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124598732874-lr2rv09hedorbk8lipmoc5r7t6efqtmo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

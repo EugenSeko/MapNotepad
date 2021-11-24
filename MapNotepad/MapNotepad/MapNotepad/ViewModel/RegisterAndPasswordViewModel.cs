@@ -1,7 +1,5 @@
 ﻿using MapNotepad.Services.Authentification;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using MapNotepad.Helpers;
@@ -20,7 +18,6 @@ namespace MapNotepad.ViewModel
         #region --- Public Properties ---
         public ICommand LeftButtonTap { get; set; }
         public ICommand BlueButtonTap { get; set; }
-
         public bool IsPasswordErrorMessageVisible => PasswordErrorMessage != null && PasswordErrorMessage != "";
         private string _passwordErrorMessage;
         public string PasswordErrorMessage
@@ -38,7 +35,6 @@ namespace MapNotepad.ViewModel
             get => _password;
             set => SetProperty(ref _password, value);
         }
-
         public bool IsConfirmPasswordErrorMessageVisible => ConfirmPasswordErrorMessage != null && ConfirmPasswordErrorMessage != "";
         private string _confirmpasswordErrorMessage;
         public string ConfirmPasswordErrorMessage
@@ -62,7 +58,6 @@ namespace MapNotepad.ViewModel
         {
             PasswordErrorMessage = null;
             ConfirmPasswordErrorMessage = null;
-
             switch (_authentificationService.Validate(Password))
             {
                 case Enums.ValidationResults.EmptyPassword:
@@ -94,16 +89,15 @@ namespace MapNotepad.ViewModel
                     {
                         if (Password != ConfirmPassword && Password != null && Password != "")
                         {
-                            ConfirmPasswordErrorMessage = "Incorrect confirm";
+                            ConfirmPasswordErrorMessage = "Field does not match";
                             break;
                         }
                         else
                         {
-                            _authentificationService.RegisterAsync(Password);
+                           await _authentificationService.RegisterAsync(Password);
                            await GoToLoginPageAsync();
                             break;
                         }
-
                     }
             }
         }

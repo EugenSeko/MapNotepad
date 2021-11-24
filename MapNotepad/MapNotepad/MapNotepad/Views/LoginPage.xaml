@@ -8,7 +8,6 @@
     <d:BaseContentPage.Content>
         <StackLayout>
             <controls:CustomToolbar Title="Log In" LeftButtonCommand="{Binding LeftButtonTap}" />
-
             <StackLayout Padding="20,5,30,5">
                 <Label Margin="20,1,0,2" Text="Email" />
                 <controls:CustomEntry Placeholder="Enter email" Text="{Binding Email}">
@@ -26,7 +25,6 @@
                     IsVisible="{Binding IsEmailErrorMessageVisible}"
                     Style="{DynamicResource ErrorMessage}"
                     Text="{Binding EmailErrorMessage}" />
-
                 <Label Margin="20,25,0,2" Text="Password" />
                 <controls:CustomEntry
                     IsPassword="True"
@@ -46,17 +44,13 @@
                     IsVisible="{Binding IsPasswordErrorMessageVisible}"
                     Style="{DynamicResource ErrorMessage}"
                     Text="{Binding PasswordErrorMessage}" />
-
                 <Button
                     Margin="0,44,0,0"
                     Command="{Binding BlueButtonTap}"
                     Style="{DynamicResource BlueButton}"
                     Text="Log in" />
-
                 <controls:CustomOrLine />
-
                 <ImageButton Style="{DynamicResource GoogleButton}" />
-
             </StackLayout>
         </StackLayout>
     </d:BaseContentPage.Content>

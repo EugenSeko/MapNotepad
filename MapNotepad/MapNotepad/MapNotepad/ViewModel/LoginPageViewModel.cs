@@ -1,31 +1,27 @@
 ﻿using MapNotepad.Services.Authentification;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using MapNotepad.Helpers;
-using Xamarin.Forms;
+using MapNotepad.Services.Settings;
 
 namespace MapNotepad.ViewModel
 {
     class LoginPageViewModel : BaseViewModel
     {
         private readonly IAuthentificationService _authentificationService;
-        public LoginPageViewModel(INavigationService navigationService, IAuthentificationService authentificationService) : base(navigationService)
+        private readonly ISettingsManager _settingsManager;
+        public LoginPageViewModel(INavigationService navigationService, 
+            IAuthentificationService authentificationService, 
+            ISettingsManager settingsManager) : base(navigationService)
         {
+            _settingsManager = settingsManager;
             _authentificationService = authentificationService;
-            LeftButtonTap = SingleExecutionCommand.FromFunc(GoBackAsync);
-            BlueButtonTap = SingleExecutionCommand.FromFunc(OnBlueButtonTap, () => true);
-
+            Init();
         }
-
         #region --- Public Properties ---
         public ICommand LeftButtonTap { get; set; }
         public ICommand BlueButtonTap { get; set; }
-
-
         public bool IsEmailErrorMessageVisible => EmailErrorMessage != null && EmailErrorMessage != "";
         private string _emailErrorMessage;
         public string EmailErrorMessage
@@ -43,7 +39,6 @@ namespace MapNotepad.ViewModel
             get => _email;
             set => SetProperty(ref _email, value);
         }
-
         public bool IsPasswordErrorMessageVisible => PasswordErrorMessage != null && PasswordErrorMessage != "";
         private string _passwordErrorMessage;
         public string PasswordErrorMessage
@@ -62,17 +57,22 @@ namespace MapNotepad.ViewModel
             set => SetProperty(ref _password, value);
         }
         #endregion
-        #region --- Overrides ---
-        #endregion
         #region --- Private Helpers ---
+        private void Init()
+        {
+            LeftButtonTap = SingleExecutionCommand.FromFunc(GoBackAsync);
+            BlueButtonTap = SingleExecutionCommand.FromFunc(OnBlueButtonTap, () => true);
+            if (_settingsManager.UserId != null)
+            {
+                Email = _settingsManager.UserId;
+            }
+        }
         private async Task OnBlueButtonTap()
         {
             PasswordErrorMessage = null;
             EmailErrorMessage = null;
-
-            var authRes = await _authentificationService.ValidateAsync(Password, Email);
-            var verifRes = await _authentificationService.VerificateAsync(Email, Password);
-
+            Enums.ValidationResults authRes = await _authentificationService.ValidateAsync(Password, Email);
+            Enums.VerficationResult verifRes = await _authentificationService.VerificateAsync(Email, Password);
             switch (authRes)
             {
                 case Enums.ValidationResults.EmptyEmail:
@@ -117,10 +117,9 @@ namespace MapNotepad.ViewModel
                                 }
                         }
                         break;
-
                     }
             }
         }
-            #endregion
+        #endregion
     }
 }
