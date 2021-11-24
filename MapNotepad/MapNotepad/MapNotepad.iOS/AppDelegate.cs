@@ -23,7 +23,7 @@ namespace MapNotepad.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
-            Xamarin.FormsGoogleMaps.Init("apikey");
+            Xamarin.FormsGoogleMaps.Init("AIzaSyBZxSogN03lGm5masTE8EbHF3aZSVJFhT8");
 
             ContextMenu.iOS.ContextMenuViewRenderer.Preserve(); //lib ContextCellView
 
