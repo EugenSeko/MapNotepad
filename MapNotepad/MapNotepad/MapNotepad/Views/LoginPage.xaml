@@ -50,7 +50,7 @@
                     Style="{DynamicResource BlueButton}"
                     Text="Log in" />
                 <controls:CustomOrLine />
-                <ImageButton Style="{DynamicResource GoogleButton}" />
+                <ImageButton Command="{Binding GoogleAuthCommand}" Style="{DynamicResource GoogleButton}" />
             </StackLayout>
         </StackLayout>
     </d:BaseContentPage.Content>

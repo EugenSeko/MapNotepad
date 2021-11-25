@@ -27,6 +27,12 @@ namespace MapNotepad.Services.Authentification
             Helpers.Global.UserId = email;
             _settingsManager.UserName = username;
         }
+        public void RegisterWithGoogleAccount(string username, string email)
+        {
+            _settingsManager.UserId = email;
+            _settingsManager.UserName = username;
+            Helpers.Global.UserId = null;
+        }
         public async Task RegisterAsync(string password)
         {
             await _repository.InsertAsync(new UserModel()

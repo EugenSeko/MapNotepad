@@ -26,6 +26,7 @@ namespace MapNotepad.Droid
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
             CrossCurrentActivity.Current.Init(this, savedInstanceState); // geolocator plugin
             ContextMenu.Droid.ContextMenuViewRenderer.Preserve(); //lib ContextCellView
+            global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
 
             LoadApplication(new App());
 
