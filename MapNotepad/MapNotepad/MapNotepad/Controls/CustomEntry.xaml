@@ -10,6 +10,7 @@
     CornerRadius="6">
     <StackLayout Orientation="Horizontal">
         <local:NoUnderlineEntry
+            x:Name="entry"
             BackgroundColor="{Binding BackgroundColor, Source={x:Reference customEntry}}"
             FontFamily="{Binding FontFamily, Source={x:Reference customEntry}}"
             HorizontalOptions="FillAndExpand"
@@ -31,8 +32,17 @@
             Command="{Binding ButtonCommand, Source={x:Reference customEntry}}"
             HeightRequest="24"
             HorizontalOptions="End"
-            IsVisible="{Binding IsButtonVisible, Source={x:Reference customEntry}}"
+            IsVisible="False"
             Source="{Binding ImageSource, Source={x:Reference customEntry}}"
-            WidthRequest="24" />
+            WidthRequest="24">
+            <ImageButton.Triggers>
+                <DataTrigger
+                    Binding="{Binding Source={x:Reference entry}, Path=Text.Length, Converter={StaticResource dataHasBeenEntered}}"
+                    TargetType="ImageButton"
+                    Value="true">
+                    <Setter Property="IsVisible" Value="True" />
+                </DataTrigger>
+            </ImageButton.Triggers>
+        </ImageButton>
     </StackLayout>
 </Frame>
