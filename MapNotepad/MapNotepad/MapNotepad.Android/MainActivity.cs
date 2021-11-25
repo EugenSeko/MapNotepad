@@ -11,7 +11,7 @@ using Plugin.CurrentActivity;
 
 namespace MapNotepad.Droid
 {
-    [Activity(Label = "MapNotepad", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
+    [Activity(Label = "MapNotepad", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -26,6 +26,7 @@ namespace MapNotepad.Droid
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
             CrossCurrentActivity.Current.Init(this, savedInstanceState); // geolocator plugin
             ContextMenu.Droid.ContextMenuViewRenderer.Preserve(); //lib ContextCellView
+            Acr.UserDialogs.UserDialogs.Init(this); 
             global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
 
             LoadApplication(new App());
