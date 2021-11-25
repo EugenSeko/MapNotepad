@@ -5,25 +5,23 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using MapNotepad.Helpers;
-using Xamarin.Forms;
 using MapNotepad.Services.Authentification;
 using Prism;
 using System.ComponentModel;
 using MapNotepad.Services.SearchService;
+using Acr.UserDialogs;
 
 namespace MapNotepad.ViewModel
 {
     class PinsListViewModel : BaseViewModel, IActiveAware
     {
-        // TODO: Пользователь нажимает на вкладу Список пинов и видит список пинов, название,
-        // описание и локацию.По тапу на пин пользователь переходит на карту с фокусировкой на выбранном пине.
         private readonly IAuthentificationService _authentifService;
         private readonly IPinService _pinservice;
         private readonly ISearchServise _searchService;
+        private int _initCounter;
 
         public PinsListViewModel(INavigationService navigationService, 
             IPinService pinService, 
@@ -41,7 +39,6 @@ namespace MapNotepad.ViewModel
         public ICommand GoToSettingsPageCommand { get; set; }
 
         public event EventHandler IsActiveChanged;
-
         private bool _isActive;
         public bool IsActive
         {
@@ -52,14 +49,12 @@ namespace MapNotepad.ViewModel
         {
             IsActiveChanged?.Invoke(this, EventArgs.Empty);
         }
-
         private PinViewModel _isFavorit;
         public PinViewModel IsFavorit
         {
             get => _isFavorit;
             set => SetProperty(ref _isFavorit, value);
         }
-       
         private ObservableCollection<PinViewModel> _pinList;
         public ObservableCollection<PinViewModel> PinList
         {
@@ -86,7 +81,6 @@ namespace MapNotepad.ViewModel
             {
                 // TODO: 
                 // Пользователь должен получить уведомление если по его запросу ничего не найдено.
-
                 var serchRes = _searchService.Search(SearchEntry, PinList);
                 if (serchRes.Count > 0)
                 {
@@ -94,6 +88,7 @@ namespace MapNotepad.ViewModel
                 }
                 if (!ShowCurrentPinList)
                 {
+                    _initCounter = 0;
                     InitAsync();
                 }
             }
@@ -111,24 +106,27 @@ namespace MapNotepad.ViewModel
         private List<PinModel> _constPinList;
         private async void InitAsync()
         {
-            AddButtonTapCommand = SingleExecutionCommand.FromFunc(GoToAddPinPageAsync);
-            GoToSettingsPageCommand = SingleExecutionCommand.FromFunc(GoToAddPinPageAsync);
-            LogoutCommand = SingleExecutionCommand.FromFunc(OnLogoutCommand);
-
-            var pl = new ObservableCollection<PinViewModel>();
-            var l = await _pinservice.GetPinsAsync();
-            foreach (var v in l)
+            if(_initCounter != 1)
             {
-                var pvm = PinExtension.ToPinViewModel(v);
-                pvm.DeleteCommand = SingleExecutionCommand.FromFunc(OnDeleteButtonCommand);
-                pvm.EditCommand = SingleExecutionCommand.FromFunc(OnEditButtonCommand);
-                pvm.FavoritChangeCommand = SingleExecutionCommand.FromFunc(OnFavoritChangeCommand);
-                pvm.MoveToPinLocationCommand = SingleExecutionCommand.FromFunc(GoToPinLocation);
-                pl.Add(pvm);
-            }
-            PinList = pl;
-        }
+                AddButtonTapCommand = SingleExecutionCommand.FromFunc(GoToAddPinPageAsync);
+                GoToSettingsPageCommand = SingleExecutionCommand.FromFunc(GoToAddPinPageAsync);
+                LogoutCommand = SingleExecutionCommand.FromFunc(OnLogoutCommand);
 
+                var pl = new ObservableCollection<PinViewModel>();
+                var l = await _pinservice.GetPinsAsync();
+                foreach (var v in l)
+                {
+                    var pvm = PinExtension.ToPinViewModel(v);
+                    pvm.DeleteCommand = SingleExecutionCommand.FromFunc(OnDeleteButtonCommand);
+                    pvm.EditCommand = SingleExecutionCommand.FromFunc(OnEditButtonCommand);
+                    pvm.FavoritChangeCommand = SingleExecutionCommand.FromFunc(OnFavoritChangeCommand);
+                    pvm.MoveToPinLocationCommand = SingleExecutionCommand.FromFunc(GoToPinLocation);
+                    pl.Add(pvm);
+                }
+                PinList = pl;
+            }
+            _initCounter++;
+        }
         private async Task OnFavoritChangeCommand(object obj)
         {
             var pinModel = PinExtension.ToPinModel(obj as PinViewModel);
@@ -147,11 +145,19 @@ namespace MapNotepad.ViewModel
             }
             PinList.RemoveAt(index);
         }
-
-        private Task OnLogoutCommand()
+        private async Task OnLogoutCommand()
         {
-            _authentifService.Logout();
-            return Task.CompletedTask;
+            var confirmConfig = new ConfirmConfig()
+            {
+                Message = "Do you want to logout?",
+                OkText = "Ok",
+                CancelText = "Cancel"
+            };
+            var confirm = await UserDialogs.Instance.ConfirmAsync(confirmConfig);
+            if (confirm)
+            {
+              await _authentifService.Logout();
+            }
         }
         private async Task GoToPinLocation(object obj)
         {
@@ -161,16 +167,24 @@ namespace MapNotepad.ViewModel
         }
         private async Task OnDeleteButtonCommand(object obj)
         {
-
-            PinList.Remove(obj as PinViewModel);
-            await _pinservice.DeletePinAsync(PinExtension.ToPinModel(obj as PinViewModel));
+            var confirmConfig = new ConfirmConfig()
+            {
+                Message = "Do you want to delete this pin?",
+                OkText = "Ok",
+                CancelText = "Cancel"
+            };
+            var confirm = await UserDialogs.Instance.ConfirmAsync(confirmConfig);
+            if (confirm)
+            {
+                PinList.Remove(obj as PinViewModel);
+                await _pinservice.DeletePinAsync(PinExtension.ToPinModel(obj as PinViewModel));
+            }
         }
         private async Task OnEditButtonCommand(object obj)
         {
             NavigationParameter = obj;
             await GoToAddPinPageAsync();
         }
-
         #endregion
     }
 }

@@ -1,7 +1,6 @@
 ﻿using MapNotepad.Helpers;
 using MapNotepad.Model;
 using Plugin.Geolocator;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -25,12 +24,9 @@ namespace MapNotepad.Controls
             MapClicked += CustomMapClicked;
             MapLongClicked += CustomMap_LongClickedAsync;
         }
-
         #region --- Public Properties ---
-
         private ICommand _goToMyLocationCommand;
         public ICommand GoToMyLocationCommand => _goToMyLocationCommand ??= SingleExecutionCommand.FromFunc(OnGoToMyLocationCommand);
-
 
         public static readonly BindableProperty PinProperty = BindableProperty.Create(
             propertyName: nameof(Pin),
@@ -43,7 +39,6 @@ namespace MapNotepad.Controls
             get { return (PinModel)GetValue(PinProperty); }
             set { SetValue(PinProperty, value); }
         }
-
         public static readonly BindableProperty IsInputVMPositionFocusProperty = BindableProperty.Create(
             propertyName: nameof(IsInputVMPositionFocus),
             returnType: typeof(bool),
@@ -55,7 +50,6 @@ namespace MapNotepad.Controls
             get { return (bool)GetValue(IsInputVMPositionFocusProperty); }
             set { SetValue(IsInputVMPositionFocusProperty, value);}
         }
-
         public static readonly BindableProperty MapClickedCommandProperty =
           BindableProperty.Create(nameof(MapClickedCommand), typeof(ICommand), typeof(CustomMap), null, BindingMode.TwoWay);
         public ICommand MapClickedCommand
@@ -63,7 +57,6 @@ namespace MapNotepad.Controls
             get { return (ICommand)GetValue(MapClickedCommandProperty); }
             set { SetValue(MapClickedCommandProperty, value); }
         }
-
         public static readonly BindableProperty MapLongClickedCommandProperty =
           BindableProperty.Create(nameof(MapLongClickedCommand), typeof(ICommand), typeof(CustomMap), null, BindingMode.TwoWay);
         public ICommand MapLongClickedCommand
@@ -71,7 +64,6 @@ namespace MapNotepad.Controls
             get { return (ICommand)GetValue(MapLongClickedCommandProperty); }
             set { SetValue(MapLongClickedCommandProperty, value); }
         }
-
         public static readonly BindableProperty PinClickedCommandProperty =
           BindableProperty.Create(nameof(PinClickedCommand), typeof(ICommand), typeof(CustomMap), null, BindingMode.TwoWay);
         public ICommand PinClickedCommand
@@ -79,20 +71,15 @@ namespace MapNotepad.Controls
             get { return (ICommand)GetValue(PinClickedCommandProperty); }
             set { SetValue(PinClickedCommandProperty, value); }
         }
-
         public static readonly BindableProperty PinClickedCommandParameterProperty =
          BindableProperty.Create(nameof(PinClickedCommandParameter), typeof(PinModel), typeof(CustomMap), null, BindingMode.TwoWay);
-
         public PinModel PinClickedCommandParameter
         {
             get { return (PinModel)GetValue(PinClickedCommandParameterProperty); }
             set { SetValue(PinClickedCommandParameterProperty, value); }
         }
-
-
         public static readonly BindableProperty PinSourceProperty =
             BindableProperty.Create(nameof(PinSource), typeof(List<PinModel>), typeof(CustomMap), null);
-
         public List<PinModel> PinSource
         {
             get { return (List<PinModel>)GetValue(PinSourceProperty); }
@@ -106,7 +93,7 @@ namespace MapNotepad.Controls
 
             if (propertyName == nameof(PinSource))
             {
-                if (PinSource?.Count >0)
+                if (PinSource?.Count > 0)
                 {
                     Pins.Clear();
                     foreach (PinModel item in PinSource)
@@ -189,7 +176,7 @@ namespace MapNotepad.Controls
             }
             catch
             {
-                Console.WriteLine("Geolocation is not available"); // TODO: тут будет юзер диалог
+                await Acr.UserDialogs.UserDialogs.Instance.AlertAsync("Need to turn on the gps");
             }
         }
         private async void CustomMap_LongClickedAsync(object sender, MapLongClickedEventArgs e)

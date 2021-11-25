@@ -22,7 +22,6 @@ namespace MapNotepad.Controls
                 }
             }
         }
-
         public ClickableContentView()
         {
 

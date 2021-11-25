@@ -9,7 +9,6 @@ using Prism.Ioc;
 using Prism.Unity;
 using Xamarin.Forms;
 using MapNotepad.Services.SearchService;
-using System.Collections.Generic;
 using MapNotepad.Resources;
 
 namespace MapNotepad
@@ -44,15 +43,9 @@ namespace MapNotepad
         protected override void OnInitialized()
         {
             InitializeComponent();
-
-            Current.Resources.MergedDictionaries.Add(new BaseStyles());
-
-            var settingsManager = Container.Resolve<ISettingsManager>();
-
            
-
-            // NavigationService.NavigateAsync($"/{nameof(LoginAndRegisterPage)}");
-
+            Current.Resources.MergedDictionaries.Add(new BaseStyles());
+            var settingsManager = Container.Resolve<ISettingsManager>();
             if (settingsManager.UserId == null)
             {
                 NavigationService.NavigateAsync("/" + nameof(LoginAndRegisterPage));

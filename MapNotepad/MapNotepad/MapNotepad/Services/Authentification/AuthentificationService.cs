@@ -5,19 +5,16 @@ using MapNotepad.Services.Settings;
 using Prism.Navigation;
 using System.Linq;
 using System.Threading.Tasks;
-using MapNotepad.Services.Authentification;
-using System.Windows.Input;
-using MapNotepad.Helpers;
 using System;
 using Xamarin.Auth.Presenters;
 using Xamarin.Forms;
-using Xamarin.Essentials;
 using Xamarin.Auth;
 using MapNotepad.AppConstants;
 using MapNotepad.Helpers.AuthHelpers;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using MapNotepad.ViewModel;
+using Acr.UserDialogs;
 
 namespace MapNotepad.Services.Authentification
 {
@@ -194,14 +191,10 @@ namespace MapNotepad.Services.Authentification
             User user = null;
             if (e.IsAuthenticated)
             {
-                // If the user is authenticated, request their basic user data from Google
-                // UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
                 var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
                 var response = await request.GetResponseAsync();
                 if (response != null)
                 {
-                    // Deserialize the data and store it in the account store
-                    // The users email address will be used to identify data in SimpleDB
                     string userJson = await response.GetResponseTextAsync();
                     user = JsonConvert.DeserializeObject<User>(userJson);
                 }
@@ -210,11 +203,14 @@ namespace MapNotepad.Services.Authentification
                     _settingsManager.UserId = user.Email;
                     _settingsManager.UserName = user.Name != null ? user.Name : user.Email.Split("@")[0];
                     Helpers.Global.UserId = null;
+
+                    UserDialogs.Instance.ShowLoading("Authorization ...");
+                    await Task.Delay(300);
                     await _navigationService.NavigateAsync("/MainPage");
                 }
                 else
                 {
-                    //user dialog
+                  await  UserDialogs.Instance.AlertAsync("Authorization via Google account failed, perhaps there is no Internet connection");
                 }
             }
         }

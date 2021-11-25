@@ -10,11 +10,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Xamarin.Forms.GoogleMaps;
 
 namespace MapNotepad.ViewModel
 {
@@ -23,6 +21,7 @@ namespace MapNotepad.ViewModel
         private readonly IPinService _pinService;
         private readonly ISearchServise _searchService;
         private readonly IAuthentificationService _authentifService;
+        private int _initCounter;
         public MapPageViewModel(INavigationService navigationService,
                                 PinService pinService,
                                 ISearchServise searchServise,
@@ -32,6 +31,7 @@ namespace MapNotepad.ViewModel
             _pinService = pinService;
             _searchService = searchServise;
             InitAsync();
+            Acr.UserDialogs.UserDialogs.Instance.HideLoading();
         }
         #region ---Public Properties---
         public ICommand PinClickCommand { get; set; }
@@ -110,8 +110,6 @@ namespace MapNotepad.ViewModel
             base.OnPropertyChanged(args);
             if (args.PropertyName == nameof(SearchEntry))
             {
-                // TODO: 
-                // Пользователь должен получить уведомление если по его запросу ничего не найдено.
                 CurrentPin = null;
                 ObserPinList = null;
 
@@ -146,34 +144,32 @@ namespace MapNotepad.ViewModel
                 }
             }
         }
-
         #endregion
         #region ---Private Helpers---
         private List<PinModel> _constPinList;
         private async void InitAsync()
         {
-            PinClickCommand = new Command<PinModel>(OnPinClick);
-            ClearClickCommand = new Command(OnClearClick);
-            GoToSettingsPageCommand = SingleExecutionCommand.FromFunc(GoToAddPinPageAsync);
-            LogoutCommand = SingleExecutionCommand.FromFunc(OnLogoutCommand);
-
-            var pinList = new List<PinModel>();
-            var allPinList = await _pinService.GetPinsAsync();
-            var favor_list = allPinList.Where(x => x.IsFavorite == true);
-            foreach (var p in favor_list)
+            if(_initCounter != 1)
             {
-                pinList.Add(p);
-            }
-            PinList = pinList;
-            _constPinList = PinList;
+                PinClickCommand = new Command<PinModel>(OnPinClick);
+                ClearClickCommand = new Command(OnClearClick);
+                GoToSettingsPageCommand = SingleExecutionCommand.FromFunc(GoToAddPinPageAsync);
+                LogoutCommand = SingleExecutionCommand.FromFunc(OnLogoutCommand);
 
-            //if (NavigationParameter?.GetType() == typeof(PinModel))
-            //{
-            //    await GoToPinLocation(NavigationParameter);
-            //}
-            if (Global.NavigationParameter?.GetType() == typeof(PinModel))
-            {
-                await GoToPinLocation(Global.NavigationParameter);
+                var pinList = new List<PinModel>();
+                var allPinList = await _pinService.GetPinsAsync();
+                var favor_list = allPinList.Where(x => x.IsFavorite == true);
+                foreach (var p in favor_list)
+                {
+                    pinList.Add(p);
+                }
+                PinList = pinList;
+                _constPinList = PinList;
+
+                if (Global.NavigationParameter?.GetType() == typeof(PinModel))
+                {
+                    await GoToPinLocation(Global.NavigationParameter);
+                }
             }
         }
         private Task GoToPinLocation(object obj)
