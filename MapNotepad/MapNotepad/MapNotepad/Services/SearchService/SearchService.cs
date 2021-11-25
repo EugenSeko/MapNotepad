@@ -5,20 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MapNotepad.Services.SearchService
 {
     public class SearchService : ISearchServise
     {
         private readonly IPinService _pinservice;
-
         public SearchService(IPinService pinService)
         {
             _pinservice = pinService;
         }
-
         public ObservableCollection<PinViewModel> Search(string search_query, ObservableCollection<PinViewModel> list)
         {
             List<PinModel> pmList = new List<PinModel>();

@@ -14,10 +14,12 @@ namespace MapNotepad.ViewModel
             _authentificationService = authentificationService;
             LeftButtonTap = SingleExecutionCommand.FromFunc(GoBackAsync);
             BlueButtonTap = SingleExecutionCommand.FromFunc(OnBlueButtonTap, () => true);
+            GoogleAuthCommand = SingleExecutionCommand.FromFunc(OnGoogleAuthCommand);
         }
         #region --- Public Properties ---
         public ICommand LeftButtonTap { get; set; }
         public ICommand BlueButtonTap { get; set; }
+        public ICommand GoogleAuthCommand { get; set; }
         public bool IsPasswordErrorMessageVisible => PasswordErrorMessage != null && PasswordErrorMessage != "";
         private string _passwordErrorMessage;
         public string PasswordErrorMessage
@@ -100,6 +102,11 @@ namespace MapNotepad.ViewModel
                         }
                     }
             }
+        }
+        private Task OnGoogleAuthCommand()
+        {
+            _authentificationService.RegisterWithGoogleAccount();
+            return Task.CompletedTask;
         }
         #endregion
     }

@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<d:BaseContentPage
+﻿<d:BaseContentPage
     x:Class="MapNotepad.Views.RegisterPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -66,7 +65,7 @@
                     </Button.Triggers>
                 </Button>
                 <controls:CustomOrLine Text="or" />
-                <ImageButton Style="{DynamicResource GoogleButton}" />
+                <ImageButton Command="{Binding GoogleAuthCommand}" Style="{DynamicResource GoogleButton}" />
             </StackLayout>
         </StackLayout>
     </d:BaseContentPage.Content>

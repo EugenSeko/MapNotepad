@@ -5,6 +5,19 @@ using MapNotepad.Services.Settings;
 using Prism.Navigation;
 using System.Linq;
 using System.Threading.Tasks;
+using MapNotepad.Services.Authentification;
+using System.Windows.Input;
+using MapNotepad.Helpers;
+using System;
+using Xamarin.Auth.Presenters;
+using Xamarin.Forms;
+using Xamarin.Essentials;
+using Xamarin.Auth;
+using MapNotepad.AppConstants;
+using MapNotepad.Helpers.AuthHelpers;
+using Newtonsoft.Json;
+using System.Diagnostics;
+using MapNotepad.ViewModel;
 
 namespace MapNotepad.Services.Authentification
 {
@@ -27,11 +40,39 @@ namespace MapNotepad.Services.Authentification
             Helpers.Global.UserId = email;
             _settingsManager.UserName = username;
         }
-        public void RegisterWithGoogleAccount(string username, string email)
+        public void RegisterWithGoogleAccount()
         {
-            _settingsManager.UserId = email;
-            _settingsManager.UserName = username;
-            Helpers.Global.UserId = null;
+            string clientId = null;
+            string redirectUri = null;
+            switch (Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    clientId = Constants.iOSClientId;
+                    redirectUri = Constants.iOSRedirectUrl;
+                    break;
+
+                case Device.Android:
+                    clientId = Constants.AndroidClientId;
+                    redirectUri = Constants.AndroidRedirectUrl;
+                    break;
+            }
+            var authenticator = new OAuth2Authenticator(
+                clientId,
+                null,
+                Constants.Scope,
+                new Uri(Constants.AuthorizeUrl),
+                new Uri(redirectUri),
+                new Uri(Constants.AccessTokenUrl),
+                null,
+                true);
+
+            authenticator.Completed += OnAuthCompleted;
+            authenticator.Error += OnAuthError;
+
+            AuthenticationState.Authenticator = authenticator;
+
+            var presenter = new OAuthLoginPresenter();
+            presenter.Login(authenticator);
         }
         public async Task RegisterAsync(string password)
         {
@@ -139,6 +180,53 @@ namespace MapNotepad.Services.Authentification
             _settingsManager.UserId = null;
             _settingsManager.UserName = null;
            await _navigationService.NavigateAsync("/LoginAndRegisterPage");
+        }
+        #endregion
+        #region --- Private Helpers ---
+        private async void OnAuthCompleted(object sender, AuthenticatorCompletedEventArgs e)
+        {
+            var authenticator = sender as OAuth2Authenticator;
+            if (authenticator != null)
+            {
+                authenticator.Completed -= OnAuthCompleted;
+                authenticator.Error -= OnAuthError;
+            }
+            User user = null;
+            if (e.IsAuthenticated)
+            {
+                // If the user is authenticated, request their basic user data from Google
+                // UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
+                var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
+                var response = await request.GetResponseAsync();
+                if (response != null)
+                {
+                    // Deserialize the data and store it in the account store
+                    // The users email address will be used to identify data in SimpleDB
+                    string userJson = await response.GetResponseTextAsync();
+                    user = JsonConvert.DeserializeObject<User>(userJson);
+                }
+                if (user != null && user.Email != null)
+                {
+                    _settingsManager.UserId = user.Email;
+                    _settingsManager.UserName = user.Name != null ? user.Name : user.Email.Split("@")[0];
+                    Helpers.Global.UserId = null;
+                    await _navigationService.NavigateAsync("/MainPage");
+                }
+                else
+                {
+                    //user dialog
+                }
+            }
+        }
+        private void OnAuthError(object sender, AuthenticatorErrorEventArgs e)
+        {
+            var authenticator = sender as OAuth2Authenticator;
+            if (authenticator != null)
+            {
+                authenticator.Completed -= OnAuthCompleted;
+                authenticator.Error -= OnAuthError;
+            }
+            Debug.WriteLine("Authentication error: " + e.Message);
         }
         #endregion
     }

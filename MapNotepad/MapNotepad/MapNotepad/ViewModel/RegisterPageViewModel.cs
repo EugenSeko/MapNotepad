@@ -15,11 +15,13 @@ namespace MapNotepad.ViewModel
         {
             _authentificationService = authentificationService;
             LeftButtonTap = SingleExecutionCommand.FromFunc(GoBackAsync);
-            NextButtonTap = SingleExecutionCommand.FromFunc(OnNextButtonTapAsync, () => true); 
+            NextButtonTap = SingleExecutionCommand.FromFunc(OnNextButtonTapAsync, () => true);
+            GoogleAuthCommand = SingleExecutionCommand.FromFunc(OnGoogleAuthCommand);
         }
         #region --- Public Properties ---
         public ICommand LeftButtonTap { get; set; }
         public ICommand NextButtonTap { get; set; }
+        public ICommand GoogleAuthCommand { get; set; }
         public bool IsEmailErrorMessageVisible => EmailErrorMessage != null && EmailErrorMessage != "";
         private string _emailErrorMessage;
         public string EmailErrorMessage
@@ -119,6 +121,11 @@ namespace MapNotepad.ViewModel
                        break;
                     }
             }
+        }
+        private Task OnGoogleAuthCommand()
+        {
+            _authentificationService.RegisterWithGoogleAccount();
+            return Task.CompletedTask;
         }
         #endregion
     }

@@ -3,7 +3,7 @@ using Android.Content;
 using Android.OS;
 using System;
 using Android.Content.PM;
-
+using Xamarin.Auth;
 
 namespace MapNotepad.Droid
 {
@@ -24,6 +24,13 @@ namespace MapNotepad.Droid
 
 			// Load redirectUrl page
 			Helpers.AuthHelpers.AuthenticationState.Authenticator.OnPageLoading(uri);
+
+			// -----------
+			CustomTabsConfiguration.CustomTabsClosingMessage = null;
+			var intent = new Intent(this, typeof(MainActivity));
+			intent.SetFlags(ActivityFlags.ClearTop | ActivityFlags.SingleTop);
+			StartActivity(intent);
+			//--------------
 
 			Finish();
 		}
