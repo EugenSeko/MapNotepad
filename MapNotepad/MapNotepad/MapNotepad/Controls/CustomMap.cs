@@ -23,6 +23,18 @@ namespace MapNotepad.Controls
             PinClicked += CustomMap_PinClicked;
             MapClicked += CustomMapClicked;
             MapLongClicked += CustomMap_LongClickedAsync;
+            var locator = CrossGeolocator.Current;
+            try
+            {
+                var position =  locator.GetPositionAsync();
+                MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Result.Latitude, position.Result.Longitude),
+                                                         Distance.FromMiles(1)));
+            }
+            catch
+            {
+                MoveToRegion(MapSpan.FromCenterAndRadius(new Position(48.45362264, 35.037614218),
+                                                        Distance.FromMiles(1)));
+            }
         }
         #region --- Public Properties ---
         private ICommand _goToMyLocationCommand;
@@ -129,7 +141,7 @@ namespace MapNotepad.Controls
                         Position = new Position(Pin.Latitude, Pin.Longitude),
                         Address = address
                     });
-                    MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(5000)));
+                    MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(500)));
                 }
                 else if(PinSource != null)
                 {
@@ -143,7 +155,7 @@ namespace MapNotepad.Controls
                         Position = new Position(Pin.Latitude, Pin.Longitude),
                         Address = Pin.Address ?? address
                     });
-                    MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(5000)));
+                    MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(500)));
                 }
             }
             if (propertyName == nameof(Pin) && PinSource == null && Pin !=null && Pin.Longitude !=0 && Pin.Latitude !=0)
@@ -160,7 +172,7 @@ namespace MapNotepad.Controls
                     Position = new Position(Pin.Latitude, Pin.Longitude),
                     Address = address
                 });
-                MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(5000)));
+                MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Pin.Latitude, Pin.Longitude), Distance.FromMeters(500)));
             }
         }
         #endregion
