@@ -18,8 +18,6 @@ namespace MapNotepad.Droid
         {
             base.OnCreate(savedInstanceState);
 
-           // Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");//lib ContextCellView
-
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 

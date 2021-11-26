@@ -93,6 +93,7 @@
                             BackgroundColor="Black"
                             HeightRequest="1" />
                         <Label
+                            Margin="20,6,0,16"
                             FontSize="Medium"
                             LineBreakMode="WordWrap"
                             MaxLines="3"
