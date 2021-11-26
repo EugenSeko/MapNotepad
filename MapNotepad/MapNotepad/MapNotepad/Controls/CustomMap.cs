@@ -24,17 +24,8 @@ namespace MapNotepad.Controls
             MapClicked += CustomMapClicked;
             MapLongClicked += CustomMap_LongClickedAsync;
             var locator = CrossGeolocator.Current;
-            try
-            {
-                var position =  locator.GetPositionAsync();
-                MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Result.Latitude, position.Result.Longitude),
-                                                         Distance.FromMiles(1)));
-            }
-            catch
-            {
-                MoveToRegion(MapSpan.FromCenterAndRadius(new Position(48.45362264, 35.037614218),
+            MoveToRegion(MapSpan.FromCenterAndRadius(new Position(48.45362264, 35.037614218),
                                                         Distance.FromMiles(1)));
-            }
         }
         #region --- Public Properties ---
         private ICommand _goToMyLocationCommand;
