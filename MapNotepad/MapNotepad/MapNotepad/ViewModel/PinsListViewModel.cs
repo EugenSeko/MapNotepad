@@ -24,9 +24,9 @@ namespace MapNotepad.ViewModel
         private int _initCounter;
 
         public PinsListViewModel(INavigationService navigationService, 
-            IPinService pinService, 
-            IAuthentificationService authentificationService, 
-            ISearchServise searchServise) :base(navigationService)
+                                 IPinService pinService, 
+                                 IAuthentificationService authentificationService, 
+                                 ISearchServise searchServise) :base(navigationService)
         {
             _pinservice = pinService;
             _searchService = searchServise;
@@ -161,7 +161,6 @@ namespace MapNotepad.ViewModel
         }
         private async Task GoToPinLocation(object obj)
         {
-           // NavigationParameter ??= PinExtension.ToPinModel(obj as PinViewModel);
             Global.NavigationParameter ??= PinExtension.ToPinModel(obj as PinViewModel);
             await GoToMainPagePageAsync();
         }

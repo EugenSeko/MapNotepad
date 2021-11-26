@@ -9,7 +9,8 @@ namespace MapNotepad.ViewModel
     class RegisterAndPasswordViewModel:BaseViewModel
     {
         private readonly IAuthentificationService _authentificationService;
-        public RegisterAndPasswordViewModel(INavigationService navigationService, IAuthentificationService authentificationService):base(navigationService)
+        public RegisterAndPasswordViewModel(INavigationService navigationService, 
+                                            IAuthentificationService authentificationService):base(navigationService)
         {
             _authentificationService = authentificationService;
             LeftButtonTap = SingleExecutionCommand.FromFunc(GoBackAsync);

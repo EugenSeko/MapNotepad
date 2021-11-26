@@ -13,7 +13,6 @@ namespace MapNotepad.Controls
             declaringType: typeof(LikeButton),
             defaultValue: true,
             defaultBindingMode: BindingMode.TwoWay);
-
         public bool IsFavorite
         {
             set => SetValue(IsFavoriteProperty, value);

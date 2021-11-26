@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MapNotepad.Helpers
+﻿namespace MapNotepad.Helpers
 {
     public static class Global
     {

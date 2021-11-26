@@ -1,10 +1,6 @@
 ﻿using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 using MapNotepad.Helpers;
-using Xamarin.Forms;
 
 namespace MapNotepad.ViewModel
 {
@@ -19,10 +15,6 @@ namespace MapNotepad.ViewModel
         #region --- Public Properties ---
         public ICommand LoginButtonTap { get; set; }
         public ICommand RegisterButtonTap { get; set; }
-        #endregion
-        #region --- Overrides ---
-        #endregion
-        #region --- Private Helpers ---
         #endregion
     }
 }

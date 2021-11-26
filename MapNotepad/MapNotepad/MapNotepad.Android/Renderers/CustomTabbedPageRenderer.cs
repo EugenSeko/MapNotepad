@@ -3,8 +3,6 @@ using MapNotepad.Droid;
 using Xamarin.Forms;
 using MapNotepad.Controls;
 using Xamarin.Forms.Platform.Android.AppCompat;
-using Google.Android.Material.Tabs;
-using AndroidX.ViewPager.Widget;
 using Android.Graphics.Drawables;
 using Xamarin.Forms.Platform.Android;
 using Google.Android.Material.BottomNavigation;
@@ -18,15 +16,11 @@ namespace MapNotepad.Droid
     public class CustomTabbedPageRenderer : TabbedPageRenderer
     {
         bool firstStartOnLayout = true;
-
         Xamarin.Forms.TabbedPage tabbedPage;
-
         BottomNavigationView bottomNavigationView;
-
         public CustomTabbedPageRenderer(Context context) : base(context)
         {
         }
-
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.TabbedPage> e)
         {
             base.OnElementChanged(e);
@@ -37,7 +31,6 @@ namespace MapNotepad.Droid
                 bottomNavigationView = (GetChildAt(0) as Android.Widget.RelativeLayout).GetChildAt(1) as BottomNavigationView;
             }
         }
-
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
         {
             base.OnLayout(changed, l, t, r, b);
@@ -48,7 +41,6 @@ namespace MapNotepad.Droid
 
                 SetupBottomNavigationView(item);
             }
-
             if (firstStartOnLayout)
             {
                 var bottomNavMenuView = bottomNavigationView.GetChildAt(0) as BottomNavigationMenuView;
@@ -82,7 +74,6 @@ namespace MapNotepad.Droid
 
             firstStartOnLayout = false;
         }
-
         void SetupBottomNavigationView(IMenuItem item)
         {
             int itemHeight = bottomNavigationView.Height;

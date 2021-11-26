@@ -3,7 +3,6 @@ using SQLite;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MapNotepad.Services.Repository
@@ -11,7 +10,6 @@ namespace MapNotepad.Services.Repository
    public class Repository : IRepository
     {
         private Lazy<SQLiteAsyncConnection> _database;
-
         public Repository()
         {
             _database = new Lazy<SQLiteAsyncConnection>(() =>
@@ -24,8 +22,6 @@ namespace MapNotepad.Services.Repository
                 return database;
             });
         }
-
-
         #region --- Public Methods ---
         public Task<int> DeleteAsync<T>(T entity) where T : IEntityBase, new()
         {

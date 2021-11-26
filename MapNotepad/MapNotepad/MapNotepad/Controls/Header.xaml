@@ -18,7 +18,6 @@
         HorizontalOptions="Center"
         Text="{Binding HeaderText}"
         VerticalOptions="Center" />
-
     <ImageButton
         Grid.Row="0"
         Grid.Column="2"

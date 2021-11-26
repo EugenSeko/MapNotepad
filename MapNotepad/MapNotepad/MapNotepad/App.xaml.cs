@@ -21,14 +21,12 @@ namespace MapNotepad
         #region --- Overrides ---
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //services
             containerRegistry.RegisterInstance<IRepository>(Container.Resolve<Repository>());
             containerRegistry.RegisterInstance<ISettingsManager>(Container.Resolve<SettingsManager>());
             containerRegistry.RegisterInstance<IAuthentificationService>(Container.Resolve<AuthentificationService>());
             containerRegistry.RegisterInstance<IPinService>(Container.Resolve<PinService>());
             containerRegistry.RegisterInstance<ISearchServise>(Container.Resolve<SearchService>());
 
-            //navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage,MainPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginAndRegisterPage, LoginAndRegisterPageViewModel>();

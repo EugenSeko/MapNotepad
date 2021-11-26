@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MapNotepad.Enums
+﻿namespace MapNotepad.Enums
 {
     public enum ValidationResults
     {
@@ -18,7 +14,6 @@ namespace MapNotepad.Enums
         BusyEmail,
         Correct
     }
-
     public enum VerficationResult
     {
         WrongPassword,
@@ -26,5 +21,4 @@ namespace MapNotepad.Enums
         NoSuchEmail,
         Correct
     }
-    
 }

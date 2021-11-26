@@ -14,8 +14,7 @@ namespace MapNotepad.ViewModel
         private readonly IPinService _pinservice;
         private bool isEdit;
         public AddPinViewModel(INavigationService navigationService, 
-                               IPinService pinService 
-                               ):base(navigationService)
+                               IPinService pinService) : base(navigationService)
         {
             _pinservice = pinService;
             Init();
@@ -25,8 +24,6 @@ namespace MapNotepad.ViewModel
         public ICommand OnButtonSaveCommand => SingleExecutionCommand.FromFunc(SavePin);
         public ICommand MapLongClickedCommand => new Command<PinModel>(OnMapLongClick);
         public ICommand UnFocusedCommand => SingleExecutionCommand.FromFunc(GoToPinLocation);
-       // public ICommand FocusedCommand => SingleExecutionCommand.FromFunc(OnGoToPinLocation);
-
         private PinModel _pin;
         public PinModel Pin 
         {
@@ -39,7 +36,6 @@ namespace MapNotepad.ViewModel
             get => _isFocus;
             set => SetProperty(ref _isFocus, value);
         }
-
         private string _headerText="Add Pin";
         public string HeaderText
         {

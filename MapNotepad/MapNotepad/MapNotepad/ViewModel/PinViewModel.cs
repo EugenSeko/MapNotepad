@@ -1,15 +1,10 @@
 ﻿using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
-using Xamarin.Forms.GoogleMaps;
 
 namespace MapNotepad.ViewModel
 {
     public class PinViewModel : BindableBase
     {
-
         #region --- Public Properties ---
         private ICommand _moveToPinLocationCommand;
         public ICommand MoveToPinLocationCommand
@@ -83,10 +78,6 @@ namespace MapNotepad.ViewModel
             get => _userId;
             set => SetProperty(ref _userId, value);
         }
-        #endregion
-        #region --- Overrides ---
-        #endregion
-        #region --- Private Helpers ---
         #endregion
     }
 }

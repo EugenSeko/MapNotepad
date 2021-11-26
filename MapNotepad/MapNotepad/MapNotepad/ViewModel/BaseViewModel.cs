@@ -1,9 +1,6 @@
 ﻿using MapNotepad.Views;
 using Prism.Mvvm;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MapNotepad.ViewModel
@@ -16,6 +13,7 @@ namespace MapNotepad.ViewModel
             _navigationService = navigationService;
         }
         protected static object NavigationParameter { get; set; }
+        #region --- Public Methods ---
         public Task GoBackAsync()
         {
             return Task.FromResult(_navigationService.GoBackAsync());
@@ -60,5 +58,6 @@ namespace MapNotepad.ViewModel
         {
             await _navigationService.NavigateAsync(nameof(PinsListPage));
         }
+        #endregion
     }
 }

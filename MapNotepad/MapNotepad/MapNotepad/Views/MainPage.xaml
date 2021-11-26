@@ -9,10 +9,8 @@
     android:TabbedPage.ToolbarPlacement="Bottom"
     SelectedTabColor="{DynamicResource Primary}"
     UnselectedTabColor="{DynamicResource Primary}">
-
     <controls:CustomTabbedPage.Children>
         <local:MapPage IconImageSource="ic_map.png" />
         <local:PinsListPage IconImageSource="ic_pin.png" />
     </controls:CustomTabbedPage.Children>
-
 </controls:CustomTabbedPage>

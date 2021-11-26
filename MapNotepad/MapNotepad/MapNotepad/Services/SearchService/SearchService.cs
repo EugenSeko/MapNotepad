@@ -15,6 +15,7 @@ namespace MapNotepad.Services.SearchService
         {
             _pinservice = pinService;
         }
+        #region --- Interface Implementation ---
         public ObservableCollection<PinViewModel> Search(string search_query, ObservableCollection<PinViewModel> list)
         {
             List<PinModel> pmList = new List<PinModel>();
@@ -81,6 +82,7 @@ namespace MapNotepad.Services.SearchService
            }
             return outValue;
         }
+        #endregion
         #region --- Private Helpers---
         private IEnumerable<PinModel> DoubleSearch(double coordinate,IEnumerable<PinModel> list)
         {

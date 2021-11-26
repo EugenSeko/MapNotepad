@@ -29,7 +29,6 @@
     <None Remove="Resources\Fonts\Montserrat-SemiBoldItalic.ttf" />
     <None Remove="Resources\Fonts\Montserrat-Thin.ttf" />
     <None Remove="Resources\Fonts\Montserrat-ThinItalic.ttf" />
-    <None Remove="Resources\Images\pic_enter_page.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,7 +50,6 @@
     <EmbeddedResource Include="Resources\Fonts\Montserrat-SemiBoldItalic.ttf" />
     <EmbeddedResource Include="Resources\Fonts\Montserrat-Thin.ttf" />
     <EmbeddedResource Include="Resources\Fonts\Montserrat-ThinItalic.ttf" />
-    <EmbeddedResource Include="Resources\Images\pic_enter_page.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -47,7 +47,6 @@
                     IsVisible="{Binding IsEmailErrorMessageVisible}"
                     Style="{DynamicResource ErrorMessage}"
                     Text="{Binding EmailErrorMessage}" />
-
                 <Button
                     Margin="0,44,0,0"
                     Command="{Binding NextButtonTap}"

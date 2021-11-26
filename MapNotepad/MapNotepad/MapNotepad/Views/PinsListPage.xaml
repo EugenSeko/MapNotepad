@@ -8,7 +8,6 @@
     xmlns:d="clr-namespace:MapNotepad.Views;assembly=MapNotepad"
     xmlns:local="clr-namespace:MapNotepad.Controls;assembly=MapNotepad"
     Title="Pins">
-
     <ContentPage.Resources>
         <ResourceDictionary>
             <conv:MenuFitWidthConverter x:Key="MenuFitWidthConverter" />
@@ -17,13 +16,11 @@
             <conv:IsMutedToBackgroundColorConverter x:Key="IsMutedToBackgroundColorConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-
     <ContentPage.Content>
         <Grid BackgroundColor="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-
             <Grid RowDefinitions="0.07*,0.93*">
                 <local:SearchBar
                     Grid.Row="0"
@@ -91,7 +88,6 @@
                                                 Source="ic_left_gray" />
                                         </StackLayout>
                                     </Frame>
-
                                 </context:SideContextMenuView.View>
                                 <context:SideContextMenuView.ContextTemplate>
                                     <DataTemplate>

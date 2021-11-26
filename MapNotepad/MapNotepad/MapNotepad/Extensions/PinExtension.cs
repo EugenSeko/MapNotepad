@@ -1,6 +1,4 @@
-﻿
-
-using MapNotepad.Model;
+﻿using MapNotepad.Model;
 using MapNotepad.ViewModel;
 
 namespace MapNotepad.Extensions
@@ -35,7 +33,6 @@ namespace MapNotepad.Extensions
                 Id = pinModel.Id,
                 Description = pinModel.Description,
                 Address = pinModel.Address,
-                        
             };
             return pinViewModel;
         }

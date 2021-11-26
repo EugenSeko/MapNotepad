@@ -115,6 +115,5 @@
         <Setter Property="RightImageSource" Value="ic_exid.png" />
         <Setter Property="LineColor" Value="{DynamicResource Gray}" />
     </Style>
-    <!--converters-->
     <converters:MultiTriggerConverter x:Key="dataHasBeenEntered" />
 </ResourceDictionary>

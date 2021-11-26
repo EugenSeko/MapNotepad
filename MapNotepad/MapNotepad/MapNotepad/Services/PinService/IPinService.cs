@@ -1,6 +1,4 @@
 ﻿using MapNotepad.Model;
-using MapNotepad.ViewModel;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

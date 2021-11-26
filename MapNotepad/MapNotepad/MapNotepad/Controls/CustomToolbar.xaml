@@ -28,7 +28,6 @@
             HorizontalOptions="EndAndExpand"
             Source="{Binding RightImageSource, Source={x:Reference customToolbar}}"
             WidthRequest="30">
-
             <ImageButton.Triggers>
                 <DataTrigger
                     Binding="{Binding IsEnabledRightButton, Source={x:Reference customToolbar}}"

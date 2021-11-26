@@ -11,7 +11,6 @@ namespace MapNotepad.Controls
         {
             InitializeComponent();
         }
-
         #region -- Public properties --
         public static readonly BindableProperty OnFocusedEventCommandProperty =
           BindableProperty.Create(nameof(OnFocusedEventCommand), typeof(ICommand), typeof(CustomEntry), null, BindingMode.TwoWay);
